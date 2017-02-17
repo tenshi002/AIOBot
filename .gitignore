@@ -1,0 +1,8 @@
+#Composer dependencies
+vendor/*
+
+#dossier IDE IntelliJ
+.idea/*
+
+# IntelliJ
+*.iml

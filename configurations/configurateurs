@@ -1,0 +1,8 @@
+[Doctrine]
+driver=pdo_sqlite
+user=root
+password=
+dbname=
+database.path=/var/www/html/dpc2/FCS/data/database/dpc2.sqlite
+proxies.path=/var/www/html/dpc2/FCS/conf/database/proxies
+schema.path=/var/www/html/dpc2/FCS/conf/database/schema
