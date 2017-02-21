@@ -1,12 +1,16 @@
 <?php
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tenshi002
- * Date: 18/02/2017
- * Time: 13:29
+ * Classe permettant de rediriger vers les différents controleurs
  */
 class Controller
 {
 
+    /**
+     * fonction permettant de récupérer le GET et dispatcher vers la bonne classe
+     */
+    public function run()
+    {
+
+    }
 }

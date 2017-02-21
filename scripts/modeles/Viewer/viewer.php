@@ -8,5 +8,15 @@
  */
 class viewer
 {
+    /**
+     * Id du viewer
+     * @var $id
+     */
+    private $id;
 
+    /**
+     * pseudo du viewer
+     * @var $pseudo string
+     */
+    private $pseudo;
 }
