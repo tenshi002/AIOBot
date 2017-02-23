@@ -46,8 +46,10 @@ class Application
 
     public function getController()
     {
-        $routeur = new Routeur();
-        $routeur->route();
+        //1 - récupérer l'url
+        //2 - exploser l'url
+        //3 - construire le namespace et le chemin
+        //4 - construire l'objet controleur
     }
 
     /**
