@@ -41,15 +41,48 @@ class Application
 
     public function run()
     {
-        $this->getController();
+        //1 - récupérer l'url
+        $module = $_GET['module'];
+        $action = $_GET['action'];
+        $controller = $_GET['controller'];
+
+        $this->getController($module, $controller, $action);
     }
 
-    public function getController()
+    public function getController($module, $controller, $action)
     {
-        //1 - récupérer l'url
-        //2 - exploser l'url
-        //3 - construire le namespace et le chemin
-        //4 - construire l'objet controleur
+
+        $fichierControleur = $controller . 'Controleur.php';
+        // tentative de chargement des nouveaux modules gérant les espaces de nom
+        $classeControleur = 'php\\' . $module . '\\' . $controller . 'Controleur';
+        $pathController = __DIR__ . '/../php/' . $module . '/' . $fichierControleur;
+
+        // chargement en prenant en compte l'autoloader
+        if(!class_exists($classeControleur))
+        {
+            // module sans espace de nom, donc non chargé
+            $classeControleur = $controller . 'Controleur';
+            //Vérification de l'existence du fichiers de controleurs cible
+            if(file_exists($pathController) && !class_exists($classeControleur))
+            {
+                require_once($pathController);
+            }
+        }
+        if(class_exists($classeControleur, false))
+        {
+            //Instanciation de la classe de controleurs
+            $controleur = new $classeControleur($module, $controller, $action);
+
+            //Construction du nom réel de la méthode appellé pour l'action concernée
+            $methodeControleur = 'execute' . ucfirst($action);
+            if(!method_exists($classeControleur, $methodeControleur))
+            {
+                throw new Exception('La méthode ' . $methodeControleur . ' n\'existe pas dans le controleur ' . $classeControleur);
+            }
+
+            //Appel de la méthode qui construit la réponse
+            $controleur->$methodeControleur();
+        }
     }
 
     /**
