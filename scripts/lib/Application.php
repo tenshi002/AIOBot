@@ -39,7 +39,16 @@ class Application
         $this->entityManager = EntityManager::create($this->getDbParams(), $this->getConfig());
     }
 
+    public function run()
+    {
+        $this->getController();
+    }
 
+    public function getController()
+    {
+        $routeur = new Routeur();
+        $routeur->route();
+    }
 
     /**
      * @return mixed
