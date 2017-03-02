@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <root>
-    <defisSetup>
-        
-    </defisSetup>
+    <defis id="1" game="ark" defis="">
+
+    </defis>
+    <defis id="2" game="ark" defis="">
+
+    </defis>
 </root>
