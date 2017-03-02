@@ -54,8 +54,8 @@ class Application
 
         $fichierControleur = $controller . 'Controleur.php';
         // tentative de chargement des nouveaux modules gérant les espaces de nom
-        $classeControleur = 'php\\' . $module . '\\' . $controller . 'Controleur';
-        $pathController = __DIR__ . '/../php/' . $module . '/' . $fichierControleur;
+        $classeControleur = 'controllers\\' . $controller . 'Controleur';
+        $pathController = __DIR__ . '/../controllers/' . $fichierControleur;
 
         // chargement en prenant en compte l'autoloader
         if(!class_exists($classeControleur))
@@ -71,7 +71,8 @@ class Application
         if(class_exists($classeControleur, false))
         {
             //Instanciation de la classe de controleurs
-            $controleur = new $classeControleur($module, $controller, $action);
+//            $controleur = new $classeControleur($module, $controller, $action);
+            $controleur = new $classeControleur();
 
             //Construction du nom réel de la méthode appellé pour l'action concernée
             $methodeControleur = 'execute' . ucfirst($action);
