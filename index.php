@@ -13,5 +13,5 @@ $appLoader = new SplClassLoader('modeles', __DIR__ . '/scripts/modeles');
 
 $appLoader->register();
 
-$app = new Application();
-//$app->run();
+$app = Application::getInstance();
+$app->run();

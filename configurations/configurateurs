@@ -6,3 +6,9 @@ dbname=
 database.path=/var/www/html/dpc2/FCS/data/database/dpc2.sqlite
 proxies.path=/var/www/html/dpc2/FCS/conf/database/proxies
 schema.path=/var/www/html/dpc2/FCS/conf/database/schema
+[IrcTwitch]
+serveurHostName=irc.chat.twitch.tv
+port=6667
+password=oauth:l1y06nz7xuatiutwolccs6vc2w8doo
+nickname=tenshi002
+username=tenshi002

@@ -14,6 +14,10 @@ class Application
 {
     private $entityManager;
 
+    private $routeur;
+
+    static private $instance = null;
+
     /**
      * chemin vers le fichier entity
      *
@@ -36,59 +40,42 @@ class Application
     {
 //        $this->config = Setup::createAnnotationMetadataConfiguration($this->getPaths(), $this->isIsDevMode());
 //        $this->entityManager = EntityManager::create($this->getDbParams(), $this->getConfig());
-        $phergieConnection = new Connection();
-        $phergieConnection
-            ->setServerHostname('irc.chat.twitch.tv')
-            ->setServerPort(6667)
-            ->setPassword('oauth:l1y06nz7xuatiutwolccs6vc2w8doo')
-            ->setNickname('tenshi002')
-            ->setUsername('tenshi002')
-            ->setRealname('steven souppaya');
+//        $phergieConnection = new Connection();
+//        $phergieConnection
+//            ->setServerHostname('irc.chat.twitch.tv')
+//            ->setServerPort(6667)
+//            ->setPassword('oauth:l1y06nz7xuatiutwolccs6vc2w8doo')
+//            ->setNickname('tenshi002')
+//            ->setUsername('tenshi002');
     }
+
+    /**
+     * Retourne une instance de cette classe.
+     * Si la classe n'était pas instancié auparavant, une instance est créée
+     *
+     * @return Application
+     */
+    public static function getInstance()
+    {
+        if(is_null(self::$instance))
+        {
+            self::$instance = new Application();
+        }
+        return self::$instance;
+    }
+
+
 
     public function run()
     {
         //1 - récupérer l'url
-        $action = $_GET['a'];
-        $controller = $_GET['c'];
+        $actionId = $_GET['a'];
+        $controllerId = $_GET['c'];
 
-        $this->getController($controller, $action);
+        $this->routeur = Routeur::getInstance();
+        $this->routeur->getRouteur($actionId, $controllerId);
     }
 
-    public function getController($controller, $action)
-    {
-
-        $fichierControleur = $controller . 'Controleur.php';
-        // tentative de chargement des nouveaux modules gérant les espaces de nom
-        $classeControleur = 'controllers\\' . $controller . 'Controleur';
-        $pathController = __DIR__ . '/../controllers/' . $fichierControleur;
-        // chargement en prenant en compte l'autoloader
-        if(!class_exists($classeControleur))
-        {
-            // module sans espace de nom, donc non chargé
-            $classeControleur = $controller . 'Controleur';
-            //Vérification de l'existence du fichiers de controleurs cible
-            if(file_exists($pathController) && !class_exists($classeControleur))
-            {
-                require_once($pathController);
-            }
-        }
-        if(class_exists($classeControleur, false))
-        {
-            //Instanciation de la classe de controleurs
-            $controleur = new $classeControleur();
-
-            //Construction du nom réel de la méthode appellé pour l'action concernée
-            $methodeControleur = 'execute' . ucfirst($action);
-            if(!method_exists($classeControleur, $methodeControleur))
-            {
-                throw new Exception('La méthode ' . $methodeControleur . ' n\'existe pas dans le controleur ' . $classeControleur);
-            }
-
-            //Appel de la méthode qui construit la réponse
-            $controleur->$methodeControleur();
-        }
-    }
 
     /**
      * @return mixed
