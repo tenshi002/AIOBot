@@ -10,6 +10,5 @@ class strawpollControleur
 {
     public function executeRunStrawpoll()
     {
-
     }
 }

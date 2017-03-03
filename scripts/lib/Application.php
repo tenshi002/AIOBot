@@ -2,8 +2,7 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\orm\EntityManager;
+use Phergie\Irc\Connection;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,28 +34,34 @@ class Application
 
     public function __construct()
     {
-        $this->config = Setup::createAnnotationMetadataConfiguration($this->getPaths(), $this->isIsDevMode());
-        $this->entityManager = EntityManager::create($this->getDbParams(), $this->getConfig());
+//        $this->config = Setup::createAnnotationMetadataConfiguration($this->getPaths(), $this->isIsDevMode());
+//        $this->entityManager = EntityManager::create($this->getDbParams(), $this->getConfig());
+        $phergieConnection = new Connection();
+        $phergieConnection
+            ->setServerHostname('irc.chat.twitch.tv')
+            ->setServerPort(6667)
+            ->setPassword('oauth:l1y06nz7xuatiutwolccs6vc2w8doo')
+            ->setNickname('tenshi002')
+            ->setUsername('tenshi002')
+            ->setRealname('steven souppaya');
     }
 
     public function run()
     {
         //1 - récupérer l'url
-        $module = $_GET['module'];
-        $action = $_GET['action'];
-        $controller = $_GET['controller'];
+        $action = $_GET['a'];
+        $controller = $_GET['c'];
 
-        $this->getController($module, $controller, $action);
+        $this->getController($controller, $action);
     }
 
-    public function getController($module, $controller, $action)
+    public function getController($controller, $action)
     {
 
         $fichierControleur = $controller . 'Controleur.php';
         // tentative de chargement des nouveaux modules gérant les espaces de nom
         $classeControleur = 'controllers\\' . $controller . 'Controleur';
         $pathController = __DIR__ . '/../controllers/' . $fichierControleur;
-
         // chargement en prenant en compte l'autoloader
         if(!class_exists($classeControleur))
         {
@@ -71,7 +76,6 @@ class Application
         if(class_exists($classeControleur, false))
         {
             //Instanciation de la classe de controleurs
-//            $controleur = new $classeControleur($module, $controller, $action);
             $controleur = new $classeControleur();
 
             //Construction du nom réel de la méthode appellé pour l'action concernée
