@@ -32,9 +32,7 @@ class bot
         // le script doit tourner indéfiniement
         set_time_limit(0);
 
-        $socket = fsockopen($this->getServeurHostName(), $this->getPort(), $errno, $errstr, 30);
-        file_put_contents(__DIR__ . '/../../../testBot.txt', $errno, FILE_APPEND);
-        file_put_contents(__DIR__ . '/../../../testBot.txt', $errstr, FILE_APPEND);
+        $socket = fsockopen('irc.chat.twitch.tv', '6667', $errno, $errstr, 30);
         if(!$socket)
         {
             //TODO créer un logeur
@@ -44,31 +42,30 @@ class bot
         file_put_contents(__DIR__ . '/../../../testBot.txt', "< PASS\r\n", FILE_APPEND);
         fputs($socket, "PASS oauth:cofsyzpg5xkqeqq2cr85dtcui4txb6\r\n");
         file_put_contents(__DIR__ . '/../../../testBot.txt', "< USER\r\n", FILE_APPEND);
-        fputs($socket, "USER tenshi002 tata tati toto\r\n");
+        fputs($socket, "USER tenshi002 tenshi002 tati toto\r\n");
         file_put_contents(__DIR__ . '/../../../testBot.txt', "< NICK\r\n", FILE_APPEND);
         fputs($socket, "NICK tenshi002\r\n");
-
-        $continuer = 1;
-        while($continuer)
-        {
-            file_put_contents(__DIR__ . '/../../../testBot.txt', "coucou\r\n", FILE_APPEND);
-            $donnees = fgets($socket, 1024);
-            $retour = explode(':', $donnees);
-            file_put_contents(__DIR__ . '/../../../testBot.txt', "> PING\r\n", FILE_APPEND);
-
-            if(rtrim($retour[0]) === 'PING')
-            {
-                file_put_contents(__DIR__ . '/../../../testBot.txt', "> PING\r\n", FILE_APPEND);
-                file_put_contents(__DIR__ . '/../../../testBot.txt', "< PONG :$retour[1]\r\n", FILE_APPEND);
-                fputs($socket, 'PONG :' . $retour[1]);
-                $continuer = 0;
-            }
-            if($donnees)
-            {
-                echo $donnees;
-            }
-        }
         fputs($socket, "JOIN #tenshi002\r\n");
+        stream_set_timeout($socket, 0);
+        $continuer = 1;
+//        while($continuer)
+//        {
+//            $donnees = fgets($socket, 1024);
+//            $retour = explode(':', $donnees);
+//
+//            if(rtrim($retour[0]) === 'PING')
+//            {
+//                file_put_contents(__DIR__ . '/../../../testBot.txt', "> PING\r\n", FILE_APPEND);
+//                file_put_contents(__DIR__ . '/../../../testBot.txt', "< PONG :$retour[1]\r\n", FILE_APPEND);
+//                fputs($socket, 'PONG :' . $retour[1]);
+//                $continuer = 0;
+//            }
+//            if($donnees)
+//            {
+//                echo $donnees;
+//            }
+//        }
+//        fputs($socket, "JOIN #tenshi002\r\n");
 
 
         // Boucle principale du programme :
@@ -84,9 +81,9 @@ class bot
                 $parserSocket = new Parser();
                 $message = $parserSocket->parse($donnees);
 
-                file_put_contents(__DIR__ . '/../../../testBot.txt', "> $message[3]\r\n", FILE_APPEND);
-                socket_close($socket);
-                die();
+                file_put_contents(__DIR__ . '/../../../testBot.txt', "steven> " . $message['params']['all'] ."\r\n", FILE_APPEND);
+//                socket_close($socket);
+//                die();
             }
 
             usleep(100); // On fait « dormir » le programme afin d'économiser l'utilisation du processeur.
