@@ -10,6 +10,7 @@ echo "Page index ok";
  */
 $appLoader = new SplClassLoader('lib', __DIR__ . '/scripts/lib');
 $appLoader = new SplClassLoader('modeles', __DIR__ . '/scripts/modeles');
+$appLoader = new SplClassLoader('Zend_Config_Ini', __DIR__ . '/vendor/zendframework');
 
 $appLoader->register();
 

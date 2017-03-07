@@ -19,7 +19,7 @@ class routeur
     {
         if(is_null(self::$instance))
         {
-            self::$instance = new Application();
+            self::$instance = new Routeur();
         }
         return self::$instance;
     }

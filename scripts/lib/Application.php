@@ -1,8 +1,11 @@
 <?php
 
-require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Phergie\Irc\Connection;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/Configuration.php';
+require_once __DIR__ . '/bot/bot.php';
+
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,6 +18,11 @@ class Application
     private $entityManager;
 
     private $routeur;
+
+    /**
+     * @var $configurateur Configuration
+     */
+    private $configurateur;
 
     static private $instance = null;
 
@@ -72,8 +80,23 @@ class Application
         $actionId = $_GET['a'];
         $controllerId = $_GET['c'];
 
-        $this->routeur = Routeur::getInstance();
-        $this->routeur->getRouteur($actionId, $controllerId);
+        //2- initialisation du fichier config
+        $this->configurateur = new Configuration();
+        $this->configurateur->initContainer();
+        echo 'tati1 ';
+        $bot = new bot();
+        echo 'tata1 ';
+        $bot->iniConnexion();
+        echo 'tato1 ';
+
+        //3- on met en place le routeur
+//        $this->routeur = Routeur::getInstance();
+//        $this->routeur->getRouteur($actionId, $controllerId);
+    }
+
+    public function getConfigurateur($name)
+    {
+        return $this->configurateur->get($name);
     }
 
 
