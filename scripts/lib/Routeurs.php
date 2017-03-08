@@ -32,7 +32,11 @@ class routeur
     {
         $route = new Route($controller, $action);
 
+        // on match les id avec ceux du fichier xml
+        $xmlParser = new xmlParser();
+        $xmlParser->mappingAttribut();
 
+        $this->getController($route);
     }
 
     private function getController(Route $route)
