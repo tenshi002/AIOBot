@@ -2,6 +2,8 @@
 
 namespace lib;
 
+use modeles\Route\Route;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Tenshi002

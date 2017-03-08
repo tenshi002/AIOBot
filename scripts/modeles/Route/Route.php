@@ -1,5 +1,7 @@
 <?php
 
+namespace modeles\Route;
+
 /**
  * Created by IntelliJ IDEA.
  * User: ssouppaya

@@ -1,4 +1,7 @@
 <routes>
+    <route controllerId='0' controllerName="elusionne" actionId="1" actionName="initConnexion"/>
+    <route controllerId='0' controllerName="elusionne" actionId="2" actionName="readChat"/>
+
     <route controllerId='1' controllerName="defisArk" actionId="1" actionName="randomDefis"/>
     <route controllerId='1' controllerName="defisArk" actionId="2" actionName="*"/>
 

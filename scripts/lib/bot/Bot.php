@@ -25,7 +25,11 @@ class Bot
     private $channel;
     private $socket;
 
+    /**
+     * @var Logger
+     */
     private $logger;
+    private $pathLogger = __DIR__ . '/../../../logs';
 
     public static function getInstance()
     {
@@ -45,19 +49,18 @@ class Bot
         $this->nickname = $this->application->getConfigurateur('irctwitch.nickname');
         $this->username = $this->application->getConfigurateur('irctwitch.username');
         $this->channel = $this->application->getConfigurateur('irctwitch.channel');
-//        $this->logger = new Logger();
+        $this->logger = new Logger($this->getPathLogger());
     }
 
     public function iniConnexion()
     {
-        // le script doit tourner indéfiniement
         set_time_limit(0);
 
         $this->socket = fsockopen($this->getServeurHostName(), $this->getPort(), $errno, $errstr, 30);
         if(!$this->socket)
         {
             //TODO créer un logeur
-            file_put_contents(__DIR__ . '/../../../testBot.txt', "echec de la connexion irc\r\n", FILE_APPEND);
+            $this->logger->addError("echec de la connexion irc\r\n");
             exit();
         }
         fputs($this->getSocket(), "PASS " . $this->getPassword() . "\r\n");
@@ -79,16 +82,16 @@ class Bot
 
             if($donnees)
             {
-                file_put_contents(__DIR__ . '/../../../testBot.txt', "steven> " . $donnees . "\r\n", FILE_APPEND);
+                // on log les retours du serveur irc
+                $this->logger->addInfo($donnees);
             }
 
             if(preg_match('#:(.+):End Of /NAMES list.#i', $donnees))
             {
                 $continuer = 0;
-                fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :Je suis presente Maitre.\r\n");
+                $this->writeMessage("Je suis à votre service Maitre.");
             }
         }
-
     }
 
 
@@ -108,9 +111,23 @@ class Bot
 
             if($donnees)
             {
-                file_put_contents(__DIR__ . '/../../../testBot.txt', "steven> " . $message['params']['text'] . "\r\n", FILE_APPEND);
+                $this->logger->addInfo($message['params']['text']);
             }
         }
+    }
+
+    public function writeMessage($message)
+    {
+        fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :" . $message . "\r\n");
+    }
+
+    /**
+     * @param $destinataire string pseudo du destinataire
+     * @param $message string message à envoyer
+     */
+    public function privateMessage($destinataire, $message)
+    {
+        fputs($this->getSocket(), "NOTICE #" . $destinataire . " :" . $message . "\r\n");
     }
 
     /**
@@ -167,6 +184,14 @@ class Bot
     public function getSocket()
     {
         return $this->socket;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathLogger()
+    {
+        return $this->pathLogger;
     }
 
 

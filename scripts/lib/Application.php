@@ -79,8 +79,8 @@ class Application
         $bot->iniConnexion();
 
         //3- on met en place le routeur
-//        $this->routeur = Routeur::getInstance();
-//        $this->routeur->getRouteur($actionId, $controllerId);
+        $this->routeur = Routeur::getInstance();
+        $this->routeur->getRouteur($actionId, $controllerId);
     }
 
     public function getConfigurateur($name)
