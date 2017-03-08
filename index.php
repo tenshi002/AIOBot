@@ -1,18 +1,20 @@
 <?php
 
+use lib\Application;
+
 require_once __DIR__ . '/scripts/lib/SplClassLoader.php';
-require_once __DIR__ . '/scripts/lib/Application.php';
 
 echo "Page index ok";
 
 /*
  *  Definie le chargement des namespaces
  */
-$appLoader = new SplClassLoader('lib', __DIR__ . '/scripts/lib');
-$appLoader = new SplClassLoader('modeles', __DIR__ . '/scripts/modeles');
-$appLoader = new SplClassLoader('Zend_Config_Ini', __DIR__ . '/vendor/zendframework');
-
-$appLoader->register();
+$libLoader = new SplClassLoader('lib', __DIR__ . '/scripts');
+$libLoader->register();
+$modelesLoader = new SplClassLoader('modeles', __DIR__ . '/scripts');
+$modelesLoader->register();
+$controllerLoader = new SplClassLoader('controllers', __DIR__ . '/scripts');
+$controllerLoader->register();
 
 $app = Application::getInstance();
 $app->run();

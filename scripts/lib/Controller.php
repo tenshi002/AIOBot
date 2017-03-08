@@ -1,5 +1,7 @@
 <?php
 
+namespace lib;
+
 /**
  * Classe permettant de rediriger vers les différents controleurs
  */

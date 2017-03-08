@@ -1,10 +1,11 @@
 <?php
 
+namespace lib;
 
+use lib\bot\Bot;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/Configuration.php';
-require_once __DIR__ . '/bot/bot.php';
 
 
 /**
@@ -46,15 +47,6 @@ class Application
 
     public function __construct()
     {
-//        $this->config = Setup::createAnnotationMetadataConfiguration($this->getPaths(), $this->isIsDevMode());
-//        $this->entityManager = EntityManager::create($this->getDbParams(), $this->getConfig());
-//        $phergieConnection = new Connection();
-//        $phergieConnection
-//            ->setServerHostname('irc.chat.twitch.tv')
-//            ->setServerPort(6667)
-//            ->setPassword('oauth:l1y06nz7xuatiutwolccs6vc2w8doo')
-//            ->setNickname('tenshi002')
-//            ->setUsername('tenshi002');
     }
 
     /**
@@ -83,11 +75,8 @@ class Application
         //2- initialisation du fichier config
         $this->configurateur = new Configuration();
         $this->configurateur->initContainer();
-        echo 'tati1 ';
-        $bot = new bot();
-        echo 'tata1 ';
+        $bot = Bot::getInstance();
         $bot->iniConnexion();
-        echo 'tato1 ';
 
         //3- on met en place le routeur
 //        $this->routeur = Routeur::getInstance();

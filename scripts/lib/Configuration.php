@@ -1,5 +1,7 @@
 <?php
 
+namespace lib;
+
 use Zend\Config\Reader\Ini;
 
 

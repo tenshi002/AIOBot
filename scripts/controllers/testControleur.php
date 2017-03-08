@@ -1,5 +1,7 @@
 <?php
 
+namespace controllers;
+
 /**
  * Created by IntelliJ IDEA.
  * User: ssouppaya

@@ -1,14 +1,14 @@
 <?php
 
-namespace lib;
+namespace lib\bot;
 
 /**
  * Created by IntelliJ IDEA.
  * User: ssouppaya
- * Date: 16/02/17
- * Time: 15:11
+ * Date: 08/03/17
+ * Time: 09:13
  */
-class PDO
+class ircParser
 {
 
 }
