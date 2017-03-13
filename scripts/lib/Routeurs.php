@@ -3,6 +3,8 @@
 namespace lib;
 
 use modeles\Route\Route;
+use Monolog\Logger;
+use lib\xmlParser;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,9 +12,9 @@ use modeles\Route\Route;
  * Date: 16/02/2017
  * Time: 21:42
  */
-class routeur
+class Routeurs
 {
-    const NODE_ROUTEUR = 'routeur';
+    const NODE_ROUTE = 'route';
 
     private static $instance = null;
 
@@ -21,18 +23,23 @@ class routeur
      */
     private $routes = array();
 
+    private $logger;
+
     /**
      * @var string
      */
     private $filepathRouteurs = __DIR__ . '/../../configurations/routeurs.xml';
 
-    public function __construct(){}
+    public function __construct()
+    {
+        $this->logger = new Logger(__DIR__ . '/../../' . Application::getInstance()->getConfigurateur('logger.general'));
+    }
 
     public static function getInstance()
     {
         if(is_null(self::$instance))
         {
-            self::$instance = new Routeur();
+            self::$instance = new Routeurs();
         }
         return self::$instance;
     }
@@ -86,16 +93,19 @@ class routeur
     private function loadRouteurConfig()
     {
         $xmlParser = new xmlParser($this->filepathRouteurs);
-        $nodesRouteur = $xmlParser->getNodes(self::NODE_ROUTEUR);
-
-        foreach($nodesRouteur as $node)
+        $nodesRouteur = $xmlParser->getNodes(self::NODE_ROUTE);
+        if($nodesRouteur !== false)
         {
-            $route = new Route();
-            foreach(Route::getMappingAttributes() as $attributeClasse => $attributeXml)
+            foreach($nodesRouteur as $node)
             {
-                $route->set{$attributeClasse}($node->getAttributes(utf8_encode($attributeXml)));
+                $route = new Route();
+                foreach(Route::getMappingAttributes() as $attributeClasse => $attributeXml)
+                {
+                    $setter = 'set' . ucfirst($attributeClasse);
+                    $route->$setter($node->getAttribute(utf8_encode($attributeXml)));
+                }
+                $this->routes[] = $route;
             }
-            $this->routes[] = $route;
         }
     }
 

@@ -2,8 +2,6 @@
 
 namespace lib;
 
-use lib\bot\Bot;
-
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/Configuration.php';
 
@@ -64,8 +62,6 @@ class Application
         return self::$instance;
     }
 
-
-
     public function run()
     {
         //1 - récupérer l'url
@@ -77,8 +73,8 @@ class Application
         $this->configurateur->initContainer();
 
         //3- on met en place le routeur
-        $this->routeur = Routeur::getInstance();
-        $this->routeur->getRouteur($actionId, $controllerId);
+        $this->routeur = Routeurs::getInstance();
+        $this->routeur->getRouteur($controllerId, $actionId);
     }
 
     public function getConfigurateur($name)

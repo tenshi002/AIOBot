@@ -12,6 +12,6 @@ class testControleur
 {
     public function executeTest()
     {
-        echo 'test';
+        echo 'le routage fonctionne très bien';
     }
 }
