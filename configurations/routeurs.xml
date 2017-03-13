@@ -1,6 +1,6 @@
 <routes>
     <route controllerId='0' controllerName="elusionne" actionId="1" actionName="initConnexion"/>
-    <route controllerId='0' controllerName="elusionne" actionId="2" actionName="readChat"/>
+    <!--<route controllerId='0' controllerName="elusionne" actionId="2" actionName="readChat"/>-->
 
     <route controllerId='1' controllerName="defisArk" actionId="1" actionName="randomDefis"/>
     <route controllerId='1' controllerName="defisArk" actionId="2" actionName="*"/>
@@ -9,6 +9,7 @@
     <route controllerId='2' controllerName="strawpoll" actionId="2" actionName="*"/>
     <route controllerId='2' controllerName="strawpoll" actionId="3" actionName="*"/>
 
+    <route controllerId='3' controllerName="combats" actionId="1" actionName="combatSolo"/>
 
-    <route controllerId='3' controllerName="test" actionId="1" actionName="test"/>
+    <route controllerId='4' controllerName="test" actionId="1" actionName="test"/>
 </routes>

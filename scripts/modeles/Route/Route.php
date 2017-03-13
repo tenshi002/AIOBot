@@ -18,11 +18,13 @@ class Route
 
     private $actionName;
 
-    public function __construct($controllerId, $actionId)
-    {
-        $this->controllerId = $controllerId;
-        $this->actionId = $actionId;
-    }
+    private static $mappingAttributes = array(
+        'controllerId' => 'controllerId',
+        'controllerName' => 'controllerName',
+        'actionId' => 'actionId',
+        'actionName' => 'actionName');
+
+    public function __construct(){}
 
     /**
      * @return mixed
@@ -86,6 +88,14 @@ class Route
     public function setActionName($actionName)
     {
         $this->actionName = $actionName;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getMappingAttributes()
+    {
+        return self::$mappingAttributes;
     }
 
 

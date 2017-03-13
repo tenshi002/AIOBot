@@ -92,7 +92,7 @@ class Bot
                 $this->writeMessage("Je suis à votre service Maitre.");
             }
         }
-    }
+        }
 
 
     public function readChat()

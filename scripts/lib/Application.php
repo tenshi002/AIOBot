@@ -75,8 +75,6 @@ class Application
         //2- initialisation du fichier config
         $this->configurateur = new Configuration();
         $this->configurateur->initContainer();
-        $bot = Bot::getInstance();
-        $bot->iniConnexion();
 
         //3- on met en place le routeur
         $this->routeur = Routeur::getInstance();
