@@ -3,6 +3,7 @@
 namespace lib\bot;
 
 use lib\Application;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Phergie\Irc\Parser;
 
@@ -15,7 +16,7 @@ use Phergie\Irc\Parser;
  */
 class Bot
 {
-    private static $instance;
+    private static $instance = null;
     private $application;
     private $serveurHostName;
     private $port;
@@ -24,6 +25,7 @@ class Bot
     private $username;
     private $channel;
     private $socket;
+    private $sendMessage = null;
 
     /**
      * @var Logger
@@ -49,26 +51,25 @@ class Bot
         $this->nickname = $this->application->getConfigurateur('irctwitch.nickname');
         $this->username = $this->application->getConfigurateur('irctwitch.username');
         $this->channel = $this->application->getConfigurateur('irctwitch.channel');
-        $this->logger = new Logger($this->getPathLogger());
+        $this->logger = new Logger('bot');
+        $this->logger->pushHandler(new StreamHandler($this->getPathLogger() . '/botLog.txt'));
     }
 
     public function iniConnexion()
     {
         set_time_limit(0);
 
-        $this->socket = fsockopen($this->getServeurHostName(), $this->getPort(), $errno, $errstr, 30);
-        if(!$this->socket)
+        $this->setSocket(fsockopen($this->getServeurHostName(), $this->getPort(), $errno, $errstr, 30));
+        if(!$this->getSocket())
         {
             //TODO créer un logeur
             $this->logger->addError("echec de la connexion irc\r\n");
             exit();
         }
-        fputs($this->getSocket(), "PASS " . $this->getPassword() . "\r\n");
-        fputs($this->getSocket(), "USER " . $this->getUsername() . $this->getUsername() . " tati toto\r\n");
-        fputs($this->getSocket(), "NICK " . $this->getNickname() . "\r\n");
-        fputs($this->getSocket(), "JOIN " . $this->getChannel() . "\r\n");
-
-        stream_set_timeout($this->getSocket(), 0);
+        fwrite($this->getSocket(), "PASS " . $this->getPassword() . "\r\n");
+        fwrite($this->getSocket(), "USER " . $this->getUsername() . $this->getUsername() . " tati toto\r\n");
+        fwrite($this->getSocket(), "NICK " . $this->getNickname() . "\r\n");
+        fwrite($this->getSocket(), "JOIN " . $this->getChannel() . "\r\n");
 
         $continuer = 1;
         while($continuer) // Boucle pour la connexion.
@@ -77,8 +78,9 @@ class Bot
             $retour = explode(':', $donnees);
             if(rtrim($retour[0]) == 'PING')
             {
-                fputs($this->getSocket(), 'PONG :' . $retour[1]);
+                fwrite($this->getSocket(), 'PONG :' . $retour[1]);
             }
+            flush();
 
             if($donnees)
             {
@@ -91,34 +93,47 @@ class Bot
                 $continuer = 0;
                 $this->writeMessage("Je suis à votre service Maitre.");
             }
+            $sendMessage = $this->getSendMessage();
+            if(isset($sendMessage) && !is_null($sendMessage))
+            {
+                $this->logger->addInfo('ya un msg');
+                $this->writeMessage($sendMessage);
+            }
         }
-        }
+    }
 
 
     public function readChat()
     {
         $phergieParser = new Parser();
-        while(1)
+        while(!feof($this->getSocket()))
         {
             $donnees = fgets($this->getSocket(), 1024);
             $retour = explode(':', $donnees);
             $message = $phergieParser->parse($donnees);
+            flush();
 
             if(rtrim($retour[0]) == 'PING')
             {
-                fputs($this->getSocket(), 'PONG :' . $retour[1]);
+                fwrite($this->getSocket(), 'PONG :' . $retour[1]);
             }
 
             if($donnees)
             {
                 $this->logger->addInfo($message['params']['text']);
             }
+            $sendMessage = $this->getSendMessage();
+            if(isset($sendMessage) && !is_null($sendMessage))
+            {
+                $this->logger->addInfo('ya un msg');
+                $this->writeMessage($sendMessage);
+            }
         }
     }
 
     public function writeMessage($message)
     {
-        fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :" . $message . "\r\n");
+        fwrite($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :" . $message . "\r\n");
     }
 
     /**
@@ -127,7 +142,7 @@ class Bot
      */
     public function privateMessage($destinataire, $message)
     {
-        fputs($this->getSocket(), "NOTICE #" . $destinataire . " :" . $message . "\r\n");
+        fwrite($this->getSocket(), "NOTICE #" . $destinataire . " :" . $message . "\r\n");
     }
 
     /**
@@ -187,11 +202,36 @@ class Bot
     }
 
     /**
+     * @param mixed $socket
+     */
+    public function setSocket($socket)
+    {
+        $this->socket = $socket;
+    }
+
+    /**
      * @return string
      */
     public function getPathLogger()
     {
         return $this->pathLogger;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSendMessage()
+    {
+        return $this->sendMessage;
+    }
+
+    /**
+     * @param mixed $sendMessage
+     */
+    public function setSendMessage($sendMessage)
+    {
+        Application::getInstance()->getLogger()->addDebug('on prepare le message');
+        $this->sendMessage = $sendMessage;
     }
 
 

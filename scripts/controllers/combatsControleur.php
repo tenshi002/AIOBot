@@ -22,8 +22,7 @@ class combatsControleur
 
     public function executeCombatSolo()
     {
-        $pathLogger = __DIR__ . '/../../' . Application::getInstance()->getConfigurateur('logger.general');
-        $logger = new Logger($pathLogger);
+        $logger = Application::getInstance()->getLogger();
         $timestampActuel = time();
         //TODO récupérer l'heure de la commande
         //TODO vérifier si la commande n'a pas déjà était executé avant si le fichier n'existe pas on le crée

@@ -2,6 +2,10 @@
 
 namespace lib;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use lib\bot\Bot;
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/Configuration.php';
 
@@ -40,7 +44,7 @@ class Application
         'dbname' => '',
     );
 
-    private $config;
+    private $logger;
 
 
     public function __construct()
@@ -72,6 +76,9 @@ class Application
         $this->configurateur = new Configuration();
         $this->configurateur->initContainer();
 
+        $bot = Bot::getInstance();
+        $bot->writeMessage("coucou c'est moi, Elusionne");
+
         //3- on met en place le routeur
         $this->routeur = Routeurs::getInstance();
         $this->routeur->getRouteur($controllerId, $actionId);
@@ -82,6 +89,22 @@ class Application
         return $this->configurateur->get($name);
     }
 
+    public function getLogger($pathLogger = null)
+    {
+        if(!is_null($pathLogger))
+        {
+            $path = __DIR__ . '/../../' . Application::getInstance()->getConfigurateur($pathLogger);
+            $this->logger = new Logger('autres');
+            $this->logger->pushHandler(new StreamHandler($path));
+        }
+        else
+        {
+            $pathGeneral = __DIR__ . '/../../' . Application::getInstance()->getConfigurateur('logger.general');
+            $this->logger = new Logger('generale');
+            $this->logger->pushHandler(new StreamHandler($pathGeneral));
+        }
+        return $this->logger;
+    }
 
     /**
      * @return mixed
@@ -145,21 +168,5 @@ class Application
     public function setDbParams($dbParams)
     {
         $this->dbParams = $dbParams;
-    }
-
-    /**
-     * @return \Doctrine\ORM\Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * @param \Doctrine\ORM\Configuration $config
-     */
-    public function setConfig($config)
-    {
-        $this->config = $config;
     }
 }

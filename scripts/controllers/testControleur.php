@@ -2,6 +2,9 @@
 
 namespace controllers;
 
+use lib\bot\Bot;
+use lib\Application;
+
 /**
  * Created by IntelliJ IDEA.
  * User: ssouppaya
@@ -12,6 +15,11 @@ class testControleur
 {
     public function executeTest()
     {
-        echo 'le routage fonctionne très bien';
+        $logger = Application::getInstance()->getLogger();
+        $elusionne = Bot::getInstance();
+        $logger->addDebug('tata');
+        $elusionne->setSendMessage("le routage fonctionne très bien");
+        $logger->addDebug('toto');
+//        echo 'le routage fonctionne très bien';
     }
 }
