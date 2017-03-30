@@ -47,7 +47,7 @@ class ircParser
             // on s�pare la commande et les arguments
             $commande = array_splice($textExplode, 0, 1);
             // on ajoute l'utilisateur en premier element des arguments
-            $args = array_merge(array($commande, $user), $textExplode);
+            $args = array_merge(array(substr($commande[0], 1), $user), $textExplode);
 
             $this->commandes->getCommandes(substr($commande[0], 1), $args) ;
 

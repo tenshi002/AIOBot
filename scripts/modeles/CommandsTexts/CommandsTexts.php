@@ -1,4 +1,6 @@
 <?php
+namespace modeles\CommandsTexts;
+
 use lib\Application;
 use lib\xmlParser;
 

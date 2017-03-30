@@ -8,14 +8,13 @@
 
 namespace controllers;
 
-
-use CommandsTexts;
 use lib\bot\Bot;
+use modeles\CommandsTexts\CommandsTexts;
 
-class randomText
+class randomTextControleur
 {
 
-    public function randomText($args)
+    public function executeRandomTexts($args)
     {
         $elusionne = Bot::getInstance();
         $commandsTexts = new CommandsTexts();

@@ -1,4 +1,6 @@
 <?php
+namespace modeles\CommandsTexts;
+use DOMNode;
 
 /**
  * Created by IntelliJ IDEA.
