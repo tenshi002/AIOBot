@@ -18,8 +18,10 @@ class testControleur
         $logger = Application::getInstance()->getLogger();
         $elusionne = Bot::getInstance();
         $logger->addDebug('tata');
-        $elusionne->setSendMessage("le routage fonctionne très bien");
+        $elusionne->privateMessage("tenshi002", "le routage 2 fonctionne tres bien");
         $logger->addDebug('toto');
 //        echo 'le routage fonctionne très bien';
     }
+
+
 }

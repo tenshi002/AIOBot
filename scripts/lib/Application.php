@@ -76,9 +76,6 @@ class Application
         $this->configurateur = new Configuration();
         $this->configurateur->initContainer();
 
-        $bot = Bot::getInstance();
-        $bot->writeMessage("coucou c'est moi, Elusionne");
-
         //3- on met en place le routeur
         $this->routeur = Routeurs::getInstance();
         $this->routeur->getRouteur($controllerId, $actionId);

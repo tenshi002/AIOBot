@@ -6,7 +6,7 @@
  * Time: 09:22
  */
 
-namespace modeles;
+namespace modeles\Combattant;
 
 
 class Combattant
@@ -26,8 +26,8 @@ class Combattant
     public function __construct($name)
     {
         $this->name = $name;
-        $this->life = 10;
-        $this->initiative = random_int(1, 20);
+        $this->life = 20;
+        $this->initiative = random_int(1, 50);
     }
 
     /**

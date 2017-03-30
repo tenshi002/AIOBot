@@ -22,7 +22,8 @@ class Route
         'controllerId' => 'controllerId',
         'controllerName' => 'controllerName',
         'actionId' => 'actionId',
-        'actionName' => 'actionName');
+        'actionName' => 'actionName'
+    );
 
     public function __construct(){}
 

@@ -1,0 +1,5 @@
+<commandes>
+    <commande name="commandsElusionne" controleur="bot" action="GetCommands"/>
+    <commande name="provoque" controleur="combats" action="CombatSolo"/>
+
+</commandes>

@@ -11,7 +11,7 @@ namespace controllers;
 
 use lib\Application;
 use lib\bot\Bot;
-use modeles\Combattant;
+use modeles\Combattant\Combattant;
 use Monolog\Logger;
 
 class combatsControleur
@@ -20,79 +20,88 @@ class combatsControleur
     private $filepathTimer = __DIR__ . '/../../timers/combatTimer.txt';
     private $fileName = '';
 
-    public function executeCombatSolo()
+    public function executeCombatSolo($args)
     {
         $logger = Application::getInstance()->getLogger();
         $timestampActuel = time();
         //TODO récupérer l'heure de la commande
         //TODO vérifier si la commande n'a pas déjà était executé avant si le fichier n'existe pas on le crée
-        if(file_exists($this->filepathTimer))
-        {
-            //on vérifie récupère le temps timestamp enregistré
-            $timestampLimit = file_get_contents($this->filepathTimer);
-            if(isset($timestampLimit))
-            {
-                $diffTimer = $timestampLimit - $timestampActuel;
-                if($diffTimer > 0)
-                {
-                    $logger->addInfo('Commande Combat Solo execute recemment.');
-                    return;
-                }
-                else
-                {
-                    //on set le nouveau timestamp
-                    //$newTimestamp = $timestampActuel +
-                    //file_put_contents($this->filepathTimer, $newTimestamp);
-                }
-            }
+//        if(file_exists($this->filepathTimer))
+//        {
+//            //on vérifie récupère le temps timestamp enregistré
+//            $timestampLimit = file_get_contents($this->filepathTimer);
+//            if(isset($timestampLimit))
+//            {
+//                $diffTimer = $timestampLimit - $timestampActuel;
+//                if($diffTimer > 0)
+//                {
+//                    $logger->addInfo('Commande Combat Solo execute recemment.');
+//                    return;
+//                }
+//                else
+//                {
+//                    //on set le nouveau timestamp
+//                    //$newTimestamp = $timestampActuel +
+//                    //file_put_contents($this->filepathTimer, $newTimestamp);
+//                }
+//            }
+//
+//        }
+//        else
+//        {
+//            //on crée le fichier
+//            //on set le nouveau timestamp
+//            //$newTimestamp = $timestampActuel +
+//            //file_put_contents($this->filepathTimer, $newTimestamp);
+//        }
 
-        }
-        else
-        {
-            //on crée le fichier
-            //on set le nouveau timestamp
-            //$newTimestamp = $timestampActuel +
-            //file_put_contents($this->filepathTimer, $newTimestamp);
-        }
 
-
-        $timer = Application::getInstance()->getConfigurateur('timer.commandes');
+//        $timer = Application::getInstance()->getConfigurateur('timer.commandes');
         $elusionne = Bot::getInstance();
 
         //1 - on récupère les pseudos
-        $fighter1Name = $_GET['v1'];
-        $fighter2Name = $_GET['v2'];
 
-        $fighter1 = new Combattant($fighter1Name);
-        $fighter2 = new Combattant($fighter2Name);
+        $fighter1Name = $args[0];
+        $fighter2Name = $args[1];
 
-
-        //2 - on initialise le combat
-        $endOfFight = false;
-        $results = array();
-        $round = 0;
-        if($elusionne)
+        if($fighter1Name === $fighter2Name)
         {
-            //1 - on affiche le message du début de combat :
-            $elusionne->writeMessage($fighter1Name . ' défi ' . $fighter2Name . ' dans un combat singulier à mort.');
-            while(!$endOfFight)
+            $elusionne->writeMessage('Tu ne peux pas te combattre toi-même petit coquinou (sauf si tu veux te faire hara-kiri ???');
+        }
+        else
+        {
+            $fighter1 = new Combattant($fighter1Name);
+            $fighter2 = new Combattant($fighter2Name);
+
+
+            //2 - on initialise le combat
+            $endOfFight = false;
+            $results = array();
+            $round = 0;
+            if($elusionne)
             {
-                $round++;
-                if($fighter1->getInitiative() > $fighter2->getInitiative())
+                //1 - on affiche le message du début de combat :
+                $elusionne->writeMessage($fighter1Name . ' défi ' . $fighter2Name . ' dans un combat singulier à mort.');
+                while(!$endOfFight)
                 {
-                    $results = $this->fight($fighter1, $fighter2);
+                    $round++;
+                    if($fighter1->getInitiative() > $fighter2->getInitiative())
+                    {
+                        $results = $this->fight($fighter1, $fighter2);
+                    }
+                    else
+                    {
+                        $results = $this->fight($fighter2, $fighter1);
+                    }
+                    $endOfFight = $results['endOfFight'];
                 }
-                else
+                if($endOfFight)
                 {
-                    $results = $this->fight($fighter2, $fighter1);
+                    $elusionne->writeMessage('Le gagnant du combat est : ' . $results['victoire'] . '. Le combat s\'est terminé en ' . $round . ' round.');
                 }
-                $endOfFight = $results['endOfFight'];
-            }
-            if($endOfFight)
-            {
-                echo 'Le gagnant du combat est : ' . $results['victoire'] . '. Le combat s\'est terminé en ' . $round . ' round.';
             }
         }
+
     }
 
     private function fight(Combattant $fighter1, Combattant $fighter2)
@@ -102,7 +111,7 @@ class combatsControleur
         if($fighter2->getLife() <= 0)
         {
             $result['endOfFight'] = true;
-            $result['victoire'] = $fighter1;
+            $result['victoire'] = $fighter1->getName();
             return $result;
         }
 
@@ -110,7 +119,7 @@ class combatsControleur
         if($fighter1->getLife() <= 0)
         {
             $result['endOfFight'] = true;
-            $result['victoire'] = $fighter1;
+            $result['victoire'] = $fighter2->getName();
             return $result;
         }
         return $result['endOfFight'] = false;

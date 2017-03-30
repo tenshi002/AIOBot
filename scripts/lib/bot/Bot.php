@@ -3,10 +3,9 @@
 namespace lib\bot;
 
 use lib\Application;
+use lib\bot\ircParser;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Phergie\Irc\Parser;
-
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,7 +24,7 @@ class Bot
     private $username;
     private $channel;
     private $socket;
-    private $sendMessage = null;
+    private $ircParser;
 
     /**
      * @var Logger
@@ -37,8 +36,10 @@ class Bot
     {
         if(is_null(self::$instance))
         {
+            Application::getInstance()->getLogger()->addDebug('le bot n\'est pas instancie');
             self::$instance = new Bot();
         }
+        Application::getInstance()->getLogger()->addDebug('Le bot est instancie');
         return self::$instance;
     }
 
@@ -53,12 +54,75 @@ class Bot
         $this->channel = $this->application->getConfigurateur('irctwitch.channel');
         $this->logger = new Logger('bot');
         $this->logger->pushHandler(new StreamHandler($this->getPathLogger() . '/botLog.txt'));
+        $this->ircParser = new ircParser();
+
+        $this->connexionServeur();
     }
 
+    /**
+     * On récupère les informations envoyé au serveur
+     */
     public function iniConnexion()
     {
         set_time_limit(0);
+        $continuer = 1;
+        while($continuer) // Boucle pour la connexion.
+        {
+            $donnees = fgets($this->getSocket(), 1024);
+            $retour = explode(':', $donnees);
+            if(rtrim($retour[0]) == 'PING')
+            {
+                $this->logger->addInfo('Twitch demande le pong  : ' . $retour[1]);
+                fwrite($this->getSocket(), 'PONG :' . $retour[1]);
+            }
 
+            if($donnees)
+            {
+                // on log les retours du serveur irc
+                $this->logger->addInfo($donnees);
+                $this->ircParser->checkMessage($donnees);
+            }
+
+            if(preg_match('#:(.+):End Of /NAMES list.#i', $donnees))
+            {
+                $this->writeMessage("Je suis à votre service Maitre.");
+            }
+        }
+    }
+
+    /**
+     * Le bot quitte le chat
+     */
+    public function leaveChannel()
+    {
+        Application::getInstance()->getLogger()->addInfo('on quitte le channel : ' . $this->getChannel());
+        fwrite($this->getSocket(), "PART " . $this->getChannel() . "\r\n");
+    }
+
+    /**
+     * Ecrit un message dans le chat
+     * @param $message
+     */
+    public function writeMessage($message)
+    {
+        fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :" . utf8_encode($message) . "\r\n");
+    }
+
+    /**
+     * Envoie d'un mp au destinataire passé en paramètre
+     * @param $destinataire string pseudo du destinataire
+     * @param $message string message à envoyer
+     */
+    public function privateMessage($destinataire, $message)
+    {
+        fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " : /w " . $destinataire . " " . utf8_encode($message) . "\r\n");
+    }
+
+    /**
+     *
+     */
+    private function connexionServeur()
+    {
         $this->setSocket(fsockopen($this->getServeurHostName(), $this->getPort(), $errno, $errstr, 30));
         if(!$this->getSocket())
         {
@@ -70,79 +134,6 @@ class Bot
         fwrite($this->getSocket(), "USER " . $this->getUsername() . $this->getUsername() . " tati toto\r\n");
         fwrite($this->getSocket(), "NICK " . $this->getNickname() . "\r\n");
         fwrite($this->getSocket(), "JOIN " . $this->getChannel() . "\r\n");
-
-        $continuer = 1;
-        while($continuer) // Boucle pour la connexion.
-        {
-            $donnees = fgets($this->getSocket(), 1024);
-            $retour = explode(':', $donnees);
-            if(rtrim($retour[0]) == 'PING')
-            {
-                fwrite($this->getSocket(), 'PONG :' . $retour[1]);
-            }
-            flush();
-
-            if($donnees)
-            {
-                // on log les retours du serveur irc
-                $this->logger->addInfo($donnees);
-            }
-
-            if(preg_match('#:(.+):End Of /NAMES list.#i', $donnees))
-            {
-                $continuer = 0;
-                $this->writeMessage("Je suis à votre service Maitre.");
-            }
-            $sendMessage = $this->getSendMessage();
-            if(isset($sendMessage) && !is_null($sendMessage))
-            {
-                $this->logger->addInfo('ya un msg');
-                $this->writeMessage($sendMessage);
-            }
-        }
-    }
-
-
-    public function readChat()
-    {
-        $phergieParser = new Parser();
-        while(!feof($this->getSocket()))
-        {
-            $donnees = fgets($this->getSocket(), 1024);
-            $retour = explode(':', $donnees);
-            $message = $phergieParser->parse($donnees);
-            flush();
-
-            if(rtrim($retour[0]) == 'PING')
-            {
-                fwrite($this->getSocket(), 'PONG :' . $retour[1]);
-            }
-
-            if($donnees)
-            {
-                $this->logger->addInfo($message['params']['text']);
-            }
-            $sendMessage = $this->getSendMessage();
-            if(isset($sendMessage) && !is_null($sendMessage))
-            {
-                $this->logger->addInfo('ya un msg');
-                $this->writeMessage($sendMessage);
-            }
-        }
-    }
-
-    public function writeMessage($message)
-    {
-        fwrite($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :" . $message . "\r\n");
-    }
-
-    /**
-     * @param $destinataire string pseudo du destinataire
-     * @param $message string message à envoyer
-     */
-    public function privateMessage($destinataire, $message)
-    {
-        fwrite($this->getSocket(), "NOTICE #" . $destinataire . " :" . $message . "\r\n");
     }
 
     /**
@@ -215,23 +206,6 @@ class Bot
     public function getPathLogger()
     {
         return $this->pathLogger;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSendMessage()
-    {
-        return $this->sendMessage;
-    }
-
-    /**
-     * @param mixed $sendMessage
-     */
-    public function setSendMessage($sendMessage)
-    {
-        Application::getInstance()->getLogger()->addDebug('on prepare le message');
-        $this->sendMessage = $sendMessage;
     }
 
 
