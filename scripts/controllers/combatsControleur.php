@@ -61,8 +61,8 @@ class combatsControleur
 
         //1 - on récupère les pseudos
 
-        $fighter1Name = $args[0];
-        $fighter2Name = $args[1];
+        $fighter1Name = $args[1];
+        $fighter2Name = $args[2];
 
         if($fighter1Name === $fighter2Name)
         {

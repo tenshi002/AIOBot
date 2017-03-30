@@ -44,10 +44,10 @@ class ircParser
         {
             $this->logger->addDebug('On execute la commande');
             $textExplode = explode(' ', $text);
-            // on sépare la commande et les arguments
+            // on sï¿½pare la commande et les arguments
             $commande = array_splice($textExplode, 0, 1);
             // on ajoute l'utilisateur en premier element des arguments
-            $args = array_merge(array($user), $textExplode);
+            $args = array_merge(array($commande, $user), $textExplode);
 
             $this->commandes->getCommandes(substr($commande[0], 1), $args) ;
 

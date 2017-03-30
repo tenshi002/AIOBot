@@ -1,0 +1,7 @@
+<commandsText>
+    <commandText name="ivy">
+        <text id="0" texte="ivy te griffe" />
+        <text id="1" texte="ivy pousse un petit ronronnement" />
+        <text id="2" texte="ivy te fait un calin" />
+    </commandText>
+</commandsText>

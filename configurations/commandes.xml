@@ -1,5 +1,5 @@
 <commandes>
-    <commande name="commandsElusionne" controleur="bot" action="GetCommands"/>
-    <commande name="provoque" controleur="combats" action="CombatSolo"/>
-
+    <commande name="commandsElusionne" controleur="bot" action="GetCommands" commentaire="commandsElusionne"/>
+    <commande name="provoque" controleur="combats" action="CombatSolo" commentaire="provoque [pseudo]"/>
+    <commande name="ivy" controleur="randomText" action="randomText" commentaire="ivy"/>
 </commandes>

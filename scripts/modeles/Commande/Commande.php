@@ -17,8 +17,10 @@ class Commande
 
     private $action;
 
+    private $commentaire;
+
     /**
-     * Argument à passer en paramètre de la fonction
+     * Argument ï¿½ passer en paramï¿½tre de la fonction
      * @var array
      */
     private $args;
@@ -26,7 +28,8 @@ class Commande
     private static $mappingAttributes = array(
         'name' => 'name',
         'controleur' => 'controleur',
-        'action' => 'action'
+        'action' => 'action',
+        'commentaire' => 'commentaire'
     );
 
     public function __construct(){}
@@ -77,6 +80,22 @@ class Commande
     public function setAction($action)
     {
         $this->action = $action;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
+    }
+
+    /**
+     * @param mixed $commentaire
+     */
+    public function setCommentaire($commentaire)
+    {
+        $this->commentaire = $commentaire;
     }
 
     /**
