@@ -48,13 +48,16 @@ class Commandes
 
     public function getCommandes($nameCommande, $args = array())
     {
-
+        $this->logger->addDebug($nameCommande);
         $commande = $this->getCommande($nameCommande);
-        if(is_array($args) && !empty($args))
+        if($commande !== false)
         {
-            $commande->setArgs($args);
+            if(is_array($args) && !empty($args))
+            {
+                $commande->setArgs($args);
+            }
+            $this->getController($commande);
         }
-        $this->getController($commande);
     }
 
     /**
@@ -66,7 +69,7 @@ class Commandes
         $commandesName = array();
         foreach($this->commandes as $commande)
         {
-            $commandesName[] = $commande->getName();
+            $commandesName[] = $commande->getCommentaire();
         }
         return $commandesName;
     }
@@ -136,7 +139,7 @@ class Commandes
     }
 
     /**
-     * @param Commande $commandeName
+     * @param string $commandeName
      * @return bool|Commande
      */
     private function getCommande($commandeName)
@@ -154,7 +157,7 @@ class Commandes
         }
         else
         {
-            //TODO ajouter un logger
+            $this->logger->addError('La commande : ' . $commandeName->getName() . ' n\'existe pas dans le fichier de commande');
         }
         return false;
     }

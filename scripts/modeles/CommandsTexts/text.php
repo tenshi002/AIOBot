@@ -1,6 +1,7 @@
 <?php
 namespace modeles\CommandsTexts;
 
+use DOMElement;
 use DOMNode;
 
 /**
@@ -11,15 +12,16 @@ use DOMNode;
  */
 class text
 {
+    const NODE_TEXT = 'text';
     private $id;
     private $text;
 
     private $mappingAttributes = array(
         'id' => 'id',
-        'text' => 'text'
+        'text' => 'texte'
     );
 
-    public function __construct(DOMNode $nodeText = null)
+    public function __construct(DOMElement $nodeText = null)
     {
         if(isset($nodeText) && !is_null($nodeText))
         {

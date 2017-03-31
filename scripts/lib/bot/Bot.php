@@ -115,7 +115,8 @@ class Bot
      */
     public function privateMessage($destinataire, $message)
     {
-        fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " : /w " . $destinataire . " " . utf8_encode($message) . "\r\n");
+        Application::getInstance()->getLogger()->addError("PRIVMSG " . $this->getChannel() . " :/w " . $destinataire . " " . utf8_encode($message) . "\r\n");
+        fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :/w " . $destinataire . " " . utf8_encode($message) . "\r\n");
     }
 
     /**

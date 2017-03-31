@@ -63,16 +63,21 @@ class combatsControleur
 
         $fighter1Name = $args[1];
         $fighter2Name = $args[2];
+        $botName = Application::getInstance()->getConfigurateur('irctwitch.username');
 
         if($fighter1Name === $fighter2Name)
         {
             $elusionne->writeMessage('Tu ne peux pas te combattre toi-même petit coquinou (sauf si tu veux te faire hara-kiri ???');
         }
+        elseif($fighter2Name === $botName)
+        {
+            $elusionne->writeMessage('/me met KO ' . $fighter1Name . ' en un coup !!!');
+            $elusionne->writeMessage('Tu pensais me battre ? moi ? Tu en es très loin Kappa ');
+        }
         else
         {
             $fighter1 = new Combattant($fighter1Name);
             $fighter2 = new Combattant($fighter2Name);
-
 
             //2 - on initialise le combat
             $endOfFight = false;

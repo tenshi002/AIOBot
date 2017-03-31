@@ -20,7 +20,7 @@ class Commande
     private $commentaire;
 
     /**
-     * Argument ï¿½ passer en paramï¿½tre de la fonction
+     * Argument à passer en paramï¿½tre de la fonction
      * @var array
      */
     private $args;
@@ -107,7 +107,7 @@ class Commande
     }
 
     /**
-     * @param mixed $args
+     * @param array $args
      */
     public function setArgs($args)
     {

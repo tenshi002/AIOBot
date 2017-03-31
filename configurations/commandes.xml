@@ -2,4 +2,6 @@
     <commande name="commandsElusionne" controleur="bot" action="GetCommands" commentaire="commandsElusionne"/>
     <commande name="provoque" controleur="combats" action="CombatSolo" commentaire="provoque [pseudo]"/>
     <commande name="ivy" controleur="randomText" action="randomTexts" commentaire="ivy"/>
+    <commande name="multitwitch" controleur="randomText" action="generateMultitwitch" commentaire="multitwitch [pseudo] [etc...]"/>
+    <commande name="friendzoune" controleur="randomText" action="randomTexts" commentaire="friendzoune [pseudo] [etc...]"/>
 </commandes>

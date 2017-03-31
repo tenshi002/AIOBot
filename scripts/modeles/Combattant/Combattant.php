@@ -26,8 +26,8 @@ class Combattant
     public function __construct($name)
     {
         $this->name = $name;
-        $this->life = 20;
-        $this->initiative = random_int(1, 50);
+        $this->life = 30;
+        $this->initiative = random_int(1, 100);
     }
 
     /**

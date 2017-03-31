@@ -18,24 +18,28 @@ class CommandsTexts
      * @var CommandsText[]
      */
     private $commandsTexts = array();
+    private $logger;
 
 
     public function __construct()
     {
-        $logger = Application::getInstance()->getLogger();
+        $this->logger = Application::getInstance()->getLogger();
 
         if(!file_exists($this->filepath))
         {
-            $logger->addError('Le fichier contenant les texts randoms n\'existe pas ...');
+            $this->logger->addError('Le fichier contenant les texts randoms n\'existe pas ...');
         }
         else
         {
             $xmlParser = new xmlParser($this->filepath);
-            $nodesCommandText = $xmlParser->getNodes('CommandText');
-            if($nodesCommandText->length > 0)
+            /** @var $nodesCommandText \DOMNodeList*/
+            $nodesCommandsTexts = $xmlParser->getNodes(CommandsText::NODE_NAME);
+            if($nodesCommandsTexts->length > 0)
             {
-                foreach($nodesCommandText as $nodeCommandText)
+                /** @var $nodeCommandsText \DOMNode*/
+                foreach($nodesCommandsTexts as $nodeCommandText)
                 {
+                    /** @var $nodeCommandText \DOMNode */
                     $commandText = new CommandsText($nodeCommandText);
                     $this->commandsTexts[] = $commandText;
                 }
@@ -63,7 +67,7 @@ class CommandsTexts
     }
 
     /**
-     * @return array
+     * @return CommandsText[]
      */
     public function getCommandsTexts()
     {

@@ -1,7 +1,15 @@
 <commandsText>
-    <commandText name="ivy">
+    <commandText name="ivy" arguments="0">
         <text id="0" texte="ivy te griffe" />
         <text id="1" texte="ivy pousse un petit ronronnement" />
         <text id="2" texte="ivy te fait un calin" />
+    </commandText>
+    <commandText name="friendzoune" arguments="1">
+        <text id="0" texte="T'es gentil mais t'es juste un pote pour moi %2$s !" />
+        <text id="1" texte="Oulà ! d'où tu essayes de m'approcher %2$s !" />
+        <text id="2" texte="Restons juste ami, c'est mieux ainsi %2$s " />
+    </commandText>
+    <commandText name="multitwitch" arguments="x">
+        <text id="0" texte="En multitwitch avec %2$s : http://www.multitwitch.tv/tenshi002/"/>
     </commandText>
 </commandsText>

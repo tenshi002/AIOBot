@@ -1,6 +1,7 @@
 <?php
 namespace modeles\CommandsTexts;
 use DOMNode;
+use lib\Application;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,17 +11,23 @@ use DOMNode;
  */
 class CommandsText
 {
+    const NODE_NAME = 'commandText';
     private $name;
+    private $arguments;
     /**
      * @var text[]
      */
     private $texts = array();
+    private $logger;
+
     private $mappingAttributes = array(
-        'name' => 'name'
+        'name' => 'name',
+        'arguments' => 'arguments'
     );
 
-    public function __construct(DOMNode $nodeCommandText = null)
+    public function __construct(\DOMElement $nodeCommandText = null)
     {
+        $this->logger = Application::getInstance()->getLogger();
         if(isset($nodeCommandText) && !is_null($nodeCommandText))
         {
             foreach($this->mappingAttributes as $attributeClasse => $attributeXml)
@@ -29,13 +36,13 @@ class CommandsText
                 $this->$setter($nodeCommandText->getAttribute(utf8_encode($attributeXml)));
             }
 
-            $childsNodesText = $nodeCommandText->childNodes;
+            $childsNodesText = $nodeCommandText->getElementsByTagName(text::NODE_TEXT);
             if($childsNodesText->length > 0)
             {
                 foreach($childsNodesText as $nodeText)
                 {
                     $text = new text($nodeText);
-                    $texts[] = $text;
+                    $this->texts[] = $text;
                 }
             }
         }
@@ -58,7 +65,23 @@ class CommandsText
     }
 
     /**
-     * @return Text[]
+     * @return mixed
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
+
+    /**
+     * @param mixed $arguments
+     */
+    public function setArguments($arguments)
+    {
+        $this->arguments = $arguments;
+    }
+
+    /**
+     * @return text[]
      */
     public function getTexts()
     {

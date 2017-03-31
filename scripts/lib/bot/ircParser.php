@@ -40,10 +40,10 @@ class ircParser
 
         $regexCommande = '^' . $this->commandeCaractere . '([a-z])+';
 
-        if(preg_match('/' . $regexCommande . '/', $text))
+        if(preg_match('/' . $regexCommande . '/', trim($text)))
         {
             $this->logger->addDebug('On execute la commande');
-            $textExplode = explode(' ', $text);
+            $textExplode = explode(' ', trim($text));
             // on s�pare la commande et les arguments
             $commande = array_splice($textExplode, 0, 1);
             // on ajoute l'utilisateur en premier element des arguments

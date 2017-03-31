@@ -26,14 +26,12 @@ class botControleur
         $elusionne = Bot::getInstance();
         $listeCommande = Commandes::getInstance()->getListeCommands();
         $commandsList = '';
-        Application::getInstance()->getLogger()->addDebug($args);
-        Application::getInstance()->getLogger()->addDebug($args[0]);
         foreach($listeCommande as $commandeName)
         {
             $commandsList = $commandsList . $commandeName . " | ";
             Application::getInstance()->getLogger()->addDebug($commandsList);
         }
-        $elusionne->privateMessage($args[0], $commandsList);
+        $elusionne->privateMessage($args[1], $commandsList);
     }
 
     public function executeQuit()
