@@ -8,7 +8,7 @@ namespace controllers;
  * Date: 02/03/17
  * Time: 16:26
  */
-class strawpollControleur
+class StrawpollControleur
 {
     public function executeRunStrawpoll()
     {

@@ -45,7 +45,7 @@ class Route
      */
     public function getPHPClass()
     {
-        return 'controllers\\' . $this->module . '\\' . $this->controller . 'Controller';
+        return 'controllers\\' . ucfirst($this->module) . '\\' . ucfirst($this->controller) . 'Controller';
     }
 
     /**
@@ -53,7 +53,7 @@ class Route
      */
     public function getPHPPath()
     {
-        return '../controllers/' . $this->module . '/' . $this->controller . 'Controller.php';
+        return '../controllers/' . ucfirst($this->module) . '/' . ucfirst($this->controller) . 'Controller.php';
     }
 
     /**

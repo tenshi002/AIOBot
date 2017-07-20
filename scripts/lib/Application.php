@@ -2,6 +2,8 @@
 
 namespace lib;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use lib\bot\Bot;
@@ -71,6 +73,7 @@ class Application
         //1- initialisation du fichier config
         $this->configurateur = new Configuration();
         $this->configurateur->initContainer();
+        $this->getEntityManager();
 
         //2- on met en place le routeur
         $this->routeur = Routeur::getInstance();
@@ -93,7 +96,7 @@ class Application
         else
         {
             $pathGeneral = __DIR__ . '/../../' . Application::getInstance()->getConfigurateur('logger.general');
-            $this->logger = new Logger('generale');
+            $this->logger = new Logger('general');
             $this->logger->pushHandler(new StreamHandler($pathGeneral));
         }
         return $this->logger;
@@ -104,6 +107,24 @@ class Application
      */
     public function getEntityManager()
     {
+        if(is_null($this->entityManager))
+        {
+            $isDevMode = true;
+            $config = Setup::createYAMLMetadataConfiguration(array(
+                Application::getInstance()->getConfigurateur('doctrine.schema.path'),
+                $isDevMode,
+                Application::getInstance()->getConfigurateur('doctrine.proxies.path'),
+            ));
+
+            $dbParams = array(
+                'driver'   => Application::getInstance()->getConfigurateur('doctrine.driver'),
+                'user'     => Application::getInstance()->getConfigurateur('doctrine.user'),
+                'password' => Application::getInstance()->getConfigurateur('doctrine.password'),
+                'dbname'   => Application::getInstance()->getConfigurateur('doctrine.dbname'),
+            );
+
+            $this->entityManager = EntityManager::create($dbParams, $config);
+        }
         return $this->entityManager;
     }
 

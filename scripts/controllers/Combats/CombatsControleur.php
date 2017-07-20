@@ -14,7 +14,7 @@ use lib\bot\Bot;
 use modeles\Combattant\Combattant;
 use Monolog\Logger;
 
-class combatsControleur
+class CombatsControleur
 {
 
     private $filepathTimer = __DIR__ . '/../../timers/combatTimer.txt';

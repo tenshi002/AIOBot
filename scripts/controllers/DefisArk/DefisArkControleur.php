@@ -9,7 +9,7 @@ namespace controllers;
  * Time: 16:49
  */
 
-class defisArkControleur
+class DefisArkControleur
 {
     public function executeRandomDefis()
     {

@@ -11,8 +11,9 @@ namespace controllers;
 use lib\Application;
 use lib\bot\Bot;
 use lib\Commandes;
+use lib\Controller;
 
-class botControleur
+class BotControleur extends Controller
 {
 
     public function executeInitConnexion()

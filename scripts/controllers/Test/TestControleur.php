@@ -11,7 +11,7 @@ use lib\Application;
  * Date: 03/03/17
  * Time: 09:16
  */
-class testControleur
+class TestControleur
 {
     public function executeTest()
     {

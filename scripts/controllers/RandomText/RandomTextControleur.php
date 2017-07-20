@@ -12,7 +12,7 @@ use lib\Application;
 use lib\bot\Bot;
 use modeles\CommandsTexts\CommandsTexts;
 
-class randomTextControleur
+class RandomTextControleur
 {
 
     public function executeRandomTexts($args)
