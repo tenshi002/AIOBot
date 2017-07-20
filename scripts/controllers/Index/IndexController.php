@@ -8,11 +8,12 @@
 
 namespace controllers\Index;
 
+use lib\Controller;
 
-class IndexController
+class IndexController extends Controller
 {
     public function executeIndex()
     {
-        echo 'lpol';
+
     }
 }

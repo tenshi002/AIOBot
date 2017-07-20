@@ -4,6 +4,7 @@ namespace lib;
 
 use Exception;
 use lib\HTTP\HTTPRequest;
+use lib\HTTP\HTTPResponse;
 use Monolog\Logger;
 
 /**
@@ -27,9 +28,9 @@ class Routeur
         $this->logger = new Logger(__DIR__ . '/../../' . Application::getInstance()->getConfigurateur('logger.general'));
         $HTTPRequest = HTTPRequest::getInstance();
         $this->route = new Route(
-            $HTTPRequest->getGetParameter('module'),
-            $HTTPRequest->getGetParameter('controller'),
-            $HTTPRequest->getGetParameter('action')
+            $HTTPRequest->getGetParameter('module', Constantes::BASE_MODULE),
+            $HTTPRequest->getGetParameter('controller', Constantes::BASE_CONTROLLER),
+            $HTTPRequest->getGetParameter('action', Constantes::BASE_ACTION)
         );
     }
 
@@ -54,7 +55,11 @@ class Routeur
             require_once $this->route->getPHPPath();
         }
 
-        $controller = new $controllerClass();
+        $controller = new $controllerClass(
+            $this->route->getModule(),
+            $this->route->getController(),
+            $this->route->getAction()
+        );
 
 
         $method = 'execute' . ucfirst($this->route->getAction());
@@ -64,6 +69,12 @@ class Routeur
         }
 
         $controller->$method();
+
+        HTTPResponse::getInstance(
+            $this->route->getModule(),
+            $this->route->getController(),
+            $this->route->getAction()
+        )->sendResponse();
     }
 
 }
