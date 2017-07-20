@@ -68,17 +68,13 @@ class Application
 
     public function run()
     {
-        //1 - récupérer l'url
-        $actionId = $_GET['a'];
-        $controllerId = $_GET['c'];
-
-        //2- initialisation du fichier config
+        //1- initialisation du fichier config
         $this->configurateur = new Configuration();
         $this->configurateur->initContainer();
 
-        //3- on met en place le routeur
-        $this->routeur = Routeurs::getInstance();
-        $this->routeur->getRouteur($controllerId, $actionId);
+        //2- on met en place le routeur
+        $this->routeur = Routeur::getInstance();
+        $this->routeur->route();
     }
 
     public function getConfigurateur($name)

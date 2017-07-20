@@ -43,7 +43,7 @@ class Bot
         return self::$instance;
     }
 
-    public function __construct()
+    private function __construct()
     {
         $this->application = Application::getInstance();
         $this->serveurHostName = $this->application->getConfigurateur('irctwitch.serveurHostName');
