@@ -7,9 +7,6 @@ use Doctrine\ORM\Tools\Setup;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/Configuration.php';
-
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,21 +26,6 @@ class Application
     private $configurateur;
 
     static private $instance = null;
-
-    /**
-     * chemin vers le fichier entity
-     *
-     * @var $path string
-     */
-    private $paths = array('');
-    private $isDevMode = false;
-
-    private $dbParams = array(
-        'driver' => 'pdo_mysql',
-        'user' => 'root',
-        'password' => '',
-        'dbname' => '',
-    );
 
     private $logger;
 
@@ -139,53 +121,5 @@ class Application
     public function setEntityManager($entityManager)
     {
         $this->entityManager = $entityManager;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPaths()
-    {
-        return $this->paths;
-    }
-
-    /**
-     * @param string $paths
-     */
-    public function setPaths($paths)
-    {
-        $this->paths = $paths;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isIsDevMode()
-    {
-        return $this->isDevMode;
-    }
-
-    /**
-     * @param boolean $isDevMode
-     */
-    public function setIsDevMode($isDevMode)
-    {
-        $this->isDevMode = $isDevMode;
-    }
-
-    /**
-     * @return array
-     */
-    public function getDbParams()
-    {
-        return $this->dbParams;
-    }
-
-    /**
-     * @param array $dbParams
-     */
-    public function setDbParams($dbParams)
-    {
-        $this->dbParams = $dbParams;
     }
 }
