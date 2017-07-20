@@ -6,7 +6,7 @@
  * Date: 03/03/2017
  * Time: 19:50
  */
-class routeTraitement
+class RouteTraitement
 {
     public function __construct()
     {

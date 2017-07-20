@@ -15,7 +15,7 @@ class CommandsText
     private $name;
     private $arguments;
     /**
-     * @var text[]
+     * @var Text[]
      */
     private $texts = array();
     private $logger;
@@ -36,12 +36,12 @@ class CommandsText
                 $this->$setter($nodeCommandText->getAttribute(utf8_encode($attributeXml)));
             }
 
-            $childsNodesText = $nodeCommandText->getElementsByTagName(text::NODE_TEXT);
+            $childsNodesText = $nodeCommandText->getElementsByTagName(Text::NODE_TEXT);
             if($childsNodesText->length > 0)
             {
                 foreach($childsNodesText as $nodeText)
                 {
-                    $text = new text($nodeText);
+                    $text = new Text($nodeText);
                     $this->texts[] = $text;
                 }
             }
@@ -81,7 +81,7 @@ class CommandsText
     }
 
     /**
-     * @return text[]
+     * @return Text[]
      */
     public function getTexts()
     {

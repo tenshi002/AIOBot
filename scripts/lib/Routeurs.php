@@ -2,6 +2,7 @@
 
 namespace lib;
 
+use Exception;
 use modeles\Route\Route;
 use Monolog\Logger;
 use lib\xmlParser;

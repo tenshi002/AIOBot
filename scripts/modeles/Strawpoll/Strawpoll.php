@@ -3,7 +3,7 @@
 /**
  * Sondage
  */
-class strawpoll
+class Strawpoll
 {
     private $id;
 

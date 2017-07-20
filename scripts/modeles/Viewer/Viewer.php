@@ -6,7 +6,7 @@
  * Date: 17/02/17
  * Time: 13:21
  */
-class viewer
+class Viewer
 {
     /**
      * Id du viewer

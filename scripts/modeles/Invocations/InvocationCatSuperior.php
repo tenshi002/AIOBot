@@ -3,7 +3,7 @@
 /**
  * Classe permettant d'invoquer un Dieu chat de classe supérieur
  */
-class invocationCatSuperior extends invocation
+class InvocationCatSuperior extends invocation
 {
 
 }

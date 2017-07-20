@@ -6,7 +6,7 @@
  * Date: 02/03/17
  * Time: 16:03
  */
-class question
+class Question
 {
     private $id;
 

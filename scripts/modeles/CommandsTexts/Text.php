@@ -10,7 +10,7 @@ use DOMNode;
  * Date: 31/03/2017
  * Time: 00:13
  */
-class text
+class Text
 {
     const NODE_TEXT = 'text';
     private $id;

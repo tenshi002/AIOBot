@@ -6,7 +6,7 @@
  * Date: 02/03/17
  * Time: 14:27
  */
-class defisGenerique
+class DefisGenerique
 {
     /**
      * id du défis

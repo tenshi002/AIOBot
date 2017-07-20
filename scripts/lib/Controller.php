@@ -5,7 +5,7 @@ namespace lib;
 /**
  * Classe permettant de rediriger vers les différents controleurs
  */
-class Controller
+abstract class Controller
 {
 
     /**
