@@ -15,12 +15,12 @@ use lib\Constantes;
 class HTTPResponse
 {
     /**
-     * Type de réponse SMARTY
+     * Type de rÃ©ponse SMARTY
      */
     const CONTENT_TYPE_DEFAULT = 'TWIG';
 
     /**
-     * Type de réponse JSON
+     * Type de rÃ©ponse JSON
      */
     const CONTENT_TYPE_JSON = 'JSON';
 
@@ -30,7 +30,7 @@ class HTTPResponse
     const CONTENT_TYPE_REDIRECT = 'REDIRECT';
 
     /**
-     * Pour forcer le navigateu à télécharger le fichier au lieu de l'afficher
+     * Pour forcer le navigateu Ã  tÃ©lÃ©charger le fichier au lieu de l'afficher
      */
     const CONTENT_TYPE_FORCE_DOWNLOAD = 'FORCE-DOWNLOAD';
 
@@ -40,64 +40,64 @@ class HTTPResponse
     const ENCODING_UTF8 = 'UTF8';
 
     /**
-     * @var string Type de la réponse
+     * @var string Type de la rÃ©ponse
      */
     protected $contentType;
 
     /**
-     * @var string Contenu de la réponse. Peut être vide, par exemple dans le cas d'utilisation de smarty
+     * @var string Contenu de la rÃ©ponse. Peut Ãªtre vide, par exemple dans le cas d'utilisation de smarty
      */
     protected $content = '';
 
     /**
-     * @var string Le module appellé
+     * @var string Le module appellÃ©
      */
     protected $module;
 
     /**
-     * @var string L'action du module appellé
+     * @var string L'action du module appellÃ©
      */
     protected $action;
 
     /**
-     * @var string Le controleur du module appellé
+     * @var string Le controleur du module appellÃ©
      */
     protected $controller;
 
     /**
-     * @var string Le template appellé dans le cas d'une réponse de type TWIG
+     * @var string Le template appellÃ© dans le cas d'une rÃ©ponse de type TWIG
      */
     protected $template = '';
 
     /**
-     * Le mime type à envoyer avec le fichier
+     * Le mime type Ã  envoyer avec le fichier
      *
      * @var string
      */
     protected $MimeType;
 
     /**
-     * Le chemin du fichier à envoyer
+     * Le chemin du fichier Ã  envoyer
      *
      * @var string
      */
     protected $FilePath;
 
     /**
-     * Le nom du fichier à envoyer lors d'un téléchargement
-     * Correspond, par défaut, au nom du fichier spécifié par FilePath
+     * Le nom du fichier Ã  envoyer lors d'un tÃ©lÃ©chargement
+     * Correspond, par dÃ©faut, au nom du fichier spÃ©cifiÃ© par FilePath
      *
      * @var string
      */
     protected $FileName;
 
     /**
-     * @var array Les variables passées au template Smarty
+     * @var array Les variables passÃ©es au template Smarty
      */
     protected $templatesVars = array();
 
     /**
-     * Encodage de la réponse
+     * Encodage de la rÃ©ponse
      *
      * @var string
      */

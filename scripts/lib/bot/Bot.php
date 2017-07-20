@@ -60,7 +60,7 @@ class Bot
     }
 
     /**
-     * On récupère les informations envoyé au serveur
+     * On rÃ©cupÃ¨re les informations envoyÃ© au serveur
      */
     public function iniConnexion()
     {
@@ -85,7 +85,7 @@ class Bot
 
             if(preg_match('#:(.+):End Of /NAMES list.#i', $donnees))
             {
-                $this->writeMessage("Je suis à votre service Maitre.");
+                $this->writeMessage("Je suis Ã  votre service Maitre.");
             }
         }
     }
@@ -109,9 +109,9 @@ class Bot
     }
 
     /**
-     * Envoie d'un mp au destinataire passé en paramètre
+     * Envoie d'un mp au destinataire passÃ© en paramÃ¨tre
      * @param $destinataire string pseudo du destinataire
-     * @param $message string message à envoyer
+     * @param $message string message Ã  envoyer
      */
     public function privateMessage($destinataire, $message)
     {
@@ -127,7 +127,7 @@ class Bot
         $this->setSocket(fsockopen($this->getServeurHostName(), $this->getPort(), $errno, $errstr, 30));
         if(!$this->getSocket())
         {
-            //TODO créer un logeur
+            //TODO crÃ©er un logeur
             $this->logger->addError("echec de la connexion irc\r\n");
             exit();
         }

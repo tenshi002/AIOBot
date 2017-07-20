@@ -9,7 +9,7 @@
 class DefisGenerique
 {
     /**
-     * id du défis
+     * id du dÃ©fis
      * @var
      */
     private $id;
@@ -21,13 +21,13 @@ class DefisGenerique
     private $defis = array();
 
     /**
-     * nom du jeu sur laquel appliquer le défis
+     * nom du jeu sur laquel appliquer le dÃ©fis
      * @var
      */
     private $game;
 
     /**
-     * Chemin du fichier ou lire les défis
+     * Chemin du fichier ou lire les dÃ©fis
      * @var $filefilepath string
      */
     private $filefilepath;

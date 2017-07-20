@@ -77,15 +77,15 @@ class Commandes
     private function getController(Commande $commande)
     {
         $fichierControleur = $commande->getControleur() . 'Controleur.php';
-        // tentative de chargement des nouveaux modules gérant les espaces de nom
+        // tentative de chargement des nouveaux modules gÃ©rant les espaces de nom
         $classeControleur = 'controllers\\' . $commande->getControleur() . 'Controleur';
         $pathController = __DIR__ . '/../controllers/' . $fichierControleur;
         // chargement en prenant en compte l'autoloader
         if(!class_exists($classeControleur))
         {
-            // module sans espace de nom, donc non chargé
+            // module sans espace de nom, donc non chargÃ©
             $classeControleur = $commande->getControleur() . 'Controleur';
-            //Vérification de l'existence du fichiers de controleurs cible
+            //VÃ©rification de l'existence du fichiers de controleurs cible
             if(file_exists($pathController) && !class_exists($classeControleur))
             {
                 require_once($pathController);
@@ -96,15 +96,15 @@ class Commandes
             //Instanciation de la classe de controleurs
             $controleur = new $classeControleur();
 
-            //Construction du nom réel de la méthode appellé pour l'action concernée
+            //Construction du nom rÃ©el de la mÃ©thode appellÃ© pour l'action concernÃ©e
             $methodeControleur = 'execute' . ucfirst($commande->getAction());
             if(!method_exists($classeControleur, $methodeControleur))
             {
                 //TODO on log l'exception
-                throw new Exception('La méthode ' . $methodeControleur . ' n\'existe pas dans le controleur ' . $classeControleur);
+                throw new Exception('La mÃ©thode ' . $methodeControleur . ' n\'existe pas dans le controleur ' . $classeControleur);
             }
 
-            //Appel de la méthode qui construit la réponse
+            //Appel de la mÃ©thode qui construit la rÃ©ponse
             if(is_array($commande->getArgs()) && !empty($commande->getArgs()))
             {
                 $controleur->$methodeControleur($commande->getArgs());

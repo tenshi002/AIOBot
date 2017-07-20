@@ -40,8 +40,8 @@ class Configuration
     }
 
     /**
-     * @param $arrays array tableau dans lequel rechercher les données à partir des clés
-     * @param $keys array tableau à une dimension contenant les clés
+     * @param $arrays array tableau dans lequel rechercher les donnÃ©es Ã  partir des clÃ©s
+     * @param $keys array tableau Ã  une dimension contenant les clÃ©s
      * @return bool|string
      */
     private function getConfigurationValue($arrays, $keys)

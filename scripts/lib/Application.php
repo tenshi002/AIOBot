@@ -39,7 +39,7 @@ class Application
 
     /**
      * Retourne une instance de cette classe.
-     * Si la classe n'était pas instancié auparavant, une instance est créée
+     * Si la classe n'Ã©tait pas instanciÃ© auparavant, une instance est crÃ©Ã©e
      *
      * @return Application
      */
