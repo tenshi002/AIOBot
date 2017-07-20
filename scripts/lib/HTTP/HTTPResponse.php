@@ -97,6 +97,11 @@ class HTTPResponse
      */
     protected $templatesVars = array();
 
+    protected $cssFiles = array();
+
+    protected $jsFiles = array();
+
+
     /**
      * Encodage de la réponse
      *
@@ -104,8 +109,14 @@ class HTTPResponse
      */
     protected $encoding = self::ENCODING_UTF8;
 
+    /**
+     * @var self
+     */
     private static $instance;
 
+    /**
+     * @var \Twig_Environment
+     */
     private $twig;
 
     public static function getInstance($module = null, $controller = Constantes::BASE_CONTROLLER, $action = Constantes::BASE_ACTION)
@@ -133,9 +144,157 @@ class HTTPResponse
         $this->initTwig();
     }
 
+    private function setDefaultTemplate()
+    {
+        $this->template = '/' . $this->module . '/' . $this->action . '.twig';
+    }
+
+    public function sendResponse()
+    {
+        if(empty($this->template) && $this->contentType === self::CONTENT_TYPE_DEFAULT)
+        {
+            $this->setDefaultTemplate();
+        }
+
+        switch($this->contentType)
+        {
+            case self::CONTENT_TYPE_DEFAULT:
+                $this->displayTemplate();
+                break;
+            case self::CONTENT_TYPE_JSON:
+                $this->displayJSON();
+                exit(0);
+                break;
+            case self::CONTENT_TYPE_FORCE_DOWNLOAD:
+                $this->displayDownload();
+                exit(0);
+                break;
+            case self::CONTENT_TYPE_REDIRECT:
+                $this->redirect();
+                break;
+        }
+    }
+
+    private function displayTemplate()
+    {
+        $this->twig->render(
+            $this->template,
+            $this->templatesVars
+        );
+    }
+
+    private function displayJSON()
+    {
+        header('Content-type: application/json');
+        $this->headerNoCache();
+        $varList = $this->content;
+        $json = json_encode($varList);
+        /* Compatibilité Chrome avec Json version fat */
+        header('Content-Length: ' . strlen($json));
+        echo $json;
+    }
+
+    private function redirect()
+    {
+        header('Location: ' . $this->content);
+    }
+
+    private function displayDownload()
+    {
+        if(!empty($this->MimeType))
+        {
+            header('Content-type: ' . $this->MimeType);
+        }
+        else
+        {
+            header('Content-type: application/octet-stream');
+        }
+        header('Content-Transfer-Encoding: binary');
+        if($this->FileName !== null)
+        {
+            header('Content-Disposition: attachment; filename="' . $this->FileName . '"');
+        }
+        $this->headerNoCache();
+        if(isset($this->FilePath))
+        {
+            if($this->FileName === null)
+            {
+                header('Content-Disposition: attachment; filename="' . basename($this->FilePath) . '"');
+            }
+            header('Content-Length: ' . filesize($this->FilePath));
+            // dump du contenu du fichier
+            readfile($this->FilePath);
+        }
+        else
+        {
+            echo $this->content;
+        }
+    }
+
+    private function headerNoCache()
+    {
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+    }
+
     private function initTwig()
     {
         $loader = new \Twig_Loader_Filesystem(Application::getInstance()->getApplicationBasePath() . '/scripts/views');
-        $this->twig = new \Twig_Environment($loader, array('cache' => Application::getInstance()->getApplicationBasePath() . '/cache'));
+        $this->twig = new \Twig_Environment($loader /*, array('cache' => Application::getInstance()->getApplicationBasePath() . '/cache')*/);
     }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTemplatesVars()
+    {
+        return $this->templatesVars;
+    }
+
+    public function addTemplateVar($name, $value)
+    {
+        $this->templatesVars[$name] = $value;
+    }
+
+    public function addTemplateVars(array $array)
+    {
+        foreach($array as $key => $value)
+        {
+            $this->addTemplateVar($key, $value);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTwig()
+    {
+        return $this->twig;
+    }
+
+
 }

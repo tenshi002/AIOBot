@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    {% for css_file in css_files %}
+        <link rel="stylesheet" href="/public/css/{{ css_file }}"/>
+    {% endfor %}
+</head>
