@@ -10,6 +10,7 @@ namespace lib\HTTP;
 
 
 use Exception;
+use lib\Application;
 use lib\Constantes;
 
 class HTTPResponse
@@ -129,10 +130,12 @@ class HTTPResponse
         $this->controller = $controller;
         $this->action = $action;
         $this->contentType = self::CONTENT_TYPE_DEFAULT;
+        $this->initTwig();
     }
 
     private function initTwig()
     {
-
+        $loader = new \Twig_Loader_Filesystem(Application::getInstance()->getApplicationBasePath() . '/scripts/views');
+        $this->twig = new \Twig_Environment($loader, array('cache' => Application::getInstance()->getApplicationBasePath() . '/cache'));
     }
 }
