@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use lib\bot\Bot;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/Configuration.php';
@@ -85,6 +84,10 @@ class Application
         return $this->configurateur->get($name);
     }
 
+    /**
+     * @param null $pathLogger
+     * @return Logger
+     */
     public function getLogger($pathLogger = null)
     {
         if(!is_null($pathLogger))
@@ -103,7 +106,7 @@ class Application
     }
 
     /**
-     * @return mixed
+     * @return EntityManager
      */
     public function getEntityManager()
     {
