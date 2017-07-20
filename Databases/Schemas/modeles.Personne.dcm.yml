@@ -12,21 +12,24 @@ modeles\Personne:
       unique: true
     monnaie:
       type: integer
-    oneToMany:
-      role:
-        targetEntity: modeles\Role
-        mappedBy: nom
-    manyToMany:
-      coffre:
-        targetEntity: modeles\Item
-        joinTable:
-          name: quantite
-          joinColumns:
-            user_id:
-              referencedColumnName: id
-          inverseJoinColumns:
-            item_id:
-              referencedColumnName: id
+  manyToOne:
+    role:
+      targetEntity: modeles\Role
+      inversedBy: personnes
+      joinColumn:
+        name: id
+        referencedColumnName: id
+  manyToMany:
+    coffre:
+      targetEntity: modeles\Item
+      joinTable:
+        name: quantite
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          item_id:
+            referencedColumnName: id
 
 
 

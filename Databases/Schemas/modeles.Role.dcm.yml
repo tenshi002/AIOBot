@@ -6,10 +6,7 @@ modeles\Role:
       type: integer
     nom:
       unique: true
-  manyToOne:
-      personne:
-        targetEntity: modeles\Personne
-        inversedBy: role
-        joinColumn:
-          name: id
-          referenceColumnName: id
+  oneToMany:
+    personnes:
+      targetEntity: modeles\Personne
+      mappedBy: role
