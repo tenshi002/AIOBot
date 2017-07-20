@@ -50,6 +50,9 @@ class Application
 
     public function __construct()
     {
+        //1- initialisation du fichier config
+        $this->configurateur = new Configuration();
+        $this->configurateur->initContainer();
     }
 
     /**
@@ -69,12 +72,6 @@ class Application
 
     public function run()
     {
-        //1- initialisation du fichier config
-        $this->configurateur = new Configuration();
-        $this->configurateur->initContainer();
-        $this->getEntityManager();
-
-        //2- on met en place le routeur
         $this->routeur = Routeur::getInstance();
         $this->routeur->route();
     }
@@ -103,6 +100,11 @@ class Application
             $this->logger->pushHandler(new StreamHandler($pathGeneral));
         }
         return $this->logger;
+    }
+
+    public function getApplicationBasePath()
+    {
+        return $_SERVER['DOCUMENT_ROOT'];
     }
 
     /**

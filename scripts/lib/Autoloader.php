@@ -16,7 +16,7 @@ class Autoloader
      * @param $class string Le nom de la classe à charger
      */
     static function autoload($class){
-        require './scripts/' . str_replace('\\','/',$class) . '.php';
+        require $_SERVER['DOCUMENT_ROOT'] . '/scripts/' . str_replace('\\','/',$class) . '.php';
     }
 
 }
