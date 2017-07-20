@@ -1,0 +1,14 @@
+modeles\Commande:
+  type: entity
+  table: commande
+  fields:
+    id:
+      type: integer
+    nom:
+      unique: true
+    sound:
+      unique: true
+  oneToMany:
+    reponses:
+      targetEntity: modeles\Texte
+      mappedBy: nom

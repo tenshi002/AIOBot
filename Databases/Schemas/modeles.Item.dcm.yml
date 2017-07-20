@@ -1,0 +1,17 @@
+modeles\Item:
+  type: entity
+  table: item
+  fields:
+    id:
+      type: integer
+    nom:
+      unique: true
+    value:
+      type: integer
+      nullable: true
+    damage:
+      type: integer
+      nullable: true
+    heal:
+      type: integer
+      nullable: true

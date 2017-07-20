@@ -1,0 +1,15 @@
+modeles\Texte:
+  type: entity
+  table: texte
+  fields:
+    id:
+      type: integer
+    text:
+      nullable: false
+  manyToOne:
+    text:
+      targetEntity: modeles\Commande
+      inversedBy: reponses
+      joinColumn:
+        name: id
+        referencedColumnName: id
