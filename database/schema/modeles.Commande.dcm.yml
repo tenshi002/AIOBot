@@ -1,6 +1,7 @@
 modeles\Commande:
   type: entity
   table: commande
+  repositoryClass: repositories\CommandeRepository
   fields:
     id:
       type: integer

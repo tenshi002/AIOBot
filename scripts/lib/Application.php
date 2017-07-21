@@ -3,6 +3,7 @@
 namespace lib;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Driver\YamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -55,6 +56,8 @@ class Application
     public function run()
     {
         $this->routeur = Routeur::getInstance();
+        //Test
+        $this->getEntityManager();
         $this->routeur->route();
     }
 
@@ -103,12 +106,19 @@ class Application
                 Application::getInstance()->getConfigurateur('doctrine.proxies.path'),
             ));
 
+            $driver = new YamlDriver(array(__DIR__ . '/../../database/schema'));
+            $config->setMetadataDriverImpl($driver);
+
+            $config->setProxyDir(__DIR__ . '/../../database/proxies');
+
             $dbParams = array(
                 'driver'   => Application::getInstance()->getConfigurateur('doctrine.driver'),
                 'user'     => Application::getInstance()->getConfigurateur('doctrine.user'),
                 'password' => Application::getInstance()->getConfigurateur('doctrine.password'),
                 'dbname'   => Application::getInstance()->getConfigurateur('doctrine.dbname'),
             );
+
+
 
             $this->entityManager = EntityManager::create($dbParams, $config);
         }

@@ -4,8 +4,6 @@ modeles\Texte:
   fields:
     id:
       type: integer
-    text:
-      nullable: false
   manyToOne:
     text:
       targetEntity: modeles\Commande
