@@ -14,6 +14,7 @@ use lib\Application;
 //require_once 'bootstrap.php';
 
 require_once __DIR__ . '/../scripts/lib/Application.php';
+require_once __DIR__ . '/../scripts/lib/Configuration.php';
 
 
 $app = Application::getInstance();
