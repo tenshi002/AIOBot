@@ -71,6 +71,11 @@ class HTTPResponse
     protected $template = '';
 
     /**
+     * @var string Le template de base de la page
+     */
+    protected $baseTemplate = '';
+
+    /**
      * Le mime type à envoyer avec le fichier
      *
      * @var string
@@ -141,7 +146,12 @@ class HTTPResponse
         $this->controller = $controller;
         $this->action = $action;
         $this->contentType = self::CONTENT_TYPE_DEFAULT;
-        $this->initTwig();
+        $this->addJSFiles(array(
+            'menu.js',
+            'jquery-3.2.1.min.js'
+        ));
+        $this->addCSSFile('menu.css');
+
     }
 
     private function setDefaultTemplate()
@@ -149,8 +159,18 @@ class HTTPResponse
         $this->template = '/' . $this->module . '/' . $this->action . '.twig';
     }
 
+    private function setDefaultBaseTemplate()
+    {
+        $this->baseTemplate = 'standard.twig';
+    }
+
     public function sendResponse()
     {
+        $this->compileVars();
+        if(empty($this->baseTemplate) && $this->contentType === self::CONTENT_TYPE_DEFAULT)
+        {
+            $this->setDefaultBaseTemplate();
+        }
         if(empty($this->template) && $this->contentType === self::CONTENT_TYPE_DEFAULT)
         {
             $this->setDefaultTemplate();
@@ -177,10 +197,16 @@ class HTTPResponse
 
     private function displayTemplate()
     {
-        $this->twig->render(
+        $this->content = $this->getTwig()->render(
+            $this->baseTemplate,
+            $this->templatesVars
+        );
+        $this->content .= $this->getTwig()->render(
             $this->template,
             $this->templatesVars
         );
+
+        echo $this->content;
     }
 
     private function displayJSON()
@@ -237,10 +263,17 @@ class HTTPResponse
         header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
     }
 
-    private function initTwig()
+    private function getTwig()
     {
-        $loader = new \Twig_Loader_Filesystem(Application::getInstance()->getApplicationBasePath() . '/scripts/views');
-        $this->twig = new \Twig_Environment($loader /*, array('cache' => Application::getInstance()->getApplicationBasePath() . '/cache')*/);
+        if(is_null($this->twig))
+        {
+            $loader = new \Twig_Loader_Filesystem(array(
+                Application::getInstance()->getApplicationBasePath() . '/scripts/views'),
+                Application::getInstance()->getApplicationBasePath() . '/scripts/views/' . $this->module
+            );
+            $this->twig = new \Twig_Environment($loader /*, array('cache' => Application::getInstance()->getApplicationBasePath() . '/cache')*/);
+        }
+        return $this->twig;
     }
 
     /**
@@ -268,6 +301,14 @@ class HTTPResponse
     }
 
     /**
+     * @param string $baseTemplate
+     */
+    public function setBaseTemplate($baseTemplate)
+    {
+        $this->baseTemplate = $baseTemplate;
+    }
+
+    /**
      * @return array
      */
     public function getTemplatesVars()
@@ -288,13 +329,35 @@ class HTTPResponse
         }
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTwig()
+    public function addJSFile($jsfile)
     {
-        return $this->twig;
+        $this->jsFiles[] = $jsfile;
     }
 
+    public function addJSFiles($jsFiles)
+    {
+        foreach($jsFiles as $jsFile)
+        {
+            $this->addJSFile($jsFile);
+        }
+    }
 
+    public function addCSSFile($cssfile)
+    {
+        $this->cssFiles[] = $cssfile;
+    }
+
+    public function addCSSFiles($cssFiles)
+    {
+        foreach($cssFiles as $cssFile)
+        {
+            $this->addCSSFile($cssFile);
+        }
+    }
+
+    private function compileVars()
+    {
+        $this->templatesVars['css_files'] = $this->cssFiles;
+        $this->templatesVars['js_files'] = $this->jsFiles;
+    }
 }

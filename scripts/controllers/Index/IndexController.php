@@ -14,6 +14,6 @@ class IndexController extends Controller
 {
     public function executeIndex()
     {
-
+        $this->getHTTPResponse()->addTemplateVar('title', 'LOLPAGE');
     }
 }

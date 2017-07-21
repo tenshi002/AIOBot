@@ -118,8 +118,6 @@ class Application
                 'dbname'   => Application::getInstance()->getConfigurateur('doctrine.dbname'),
             );
 
-
-
             $this->entityManager = EntityManager::create($dbParams, $config);
         }
         return $this->entityManager;
