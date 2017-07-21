@@ -1,9 +1,13 @@
 modeles\Personne:
   type: entity
   table: personne
+  repositoryClass: repositories\PersonneRepository
+  id:
+      id:
+        type: integer
+        generator:
+          strategy: AUTO
   fields:
-    id:
-      type: integer
     pseudo:
       unique: true
     oauth:

@@ -1,9 +1,12 @@
 modeles\Texte:
   type: entity
   table: texte
-  fields:
-    id:
-      type: integer
+  repositoryClass: repositories\TexteRepository
+  id:
+      id:
+        type: integer
+        generator:
+          strategy: AUTO
   manyToOne:
     text:
       targetEntity: modeles\Commande

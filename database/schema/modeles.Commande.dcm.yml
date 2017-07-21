@@ -2,9 +2,12 @@ modeles\Commande:
   type: entity
   table: commande
   repositoryClass: repositories\CommandeRepository
-  fields:
+  id:
     id:
       type: integer
+      generator:
+        strategy: AUTO
+  fields:
     nom:
       unique: true
     sound:

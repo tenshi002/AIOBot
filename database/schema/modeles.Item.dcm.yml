@@ -1,9 +1,13 @@
 modeles\Item:
   type: entity
   table: item
+  repositoryClass: repositories\ItemRepository
+  id:
+      id:
+        type: integer
+        generator:
+          strategy: AUTO
   fields:
-    id:
-      type: integer
     nom:
       unique: true
     value:

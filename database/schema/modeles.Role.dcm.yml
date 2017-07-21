@@ -1,9 +1,13 @@
 modeles\Role:
   type: entity
   table: role
+  repositoryClass: repositories\RoleRepository
+  id:
+      id:
+        type: integer
+        generator:
+          strategy: AUTO
   fields:
-    id:
-      type: integer
     nom:
       unique: true
   oneToMany:
