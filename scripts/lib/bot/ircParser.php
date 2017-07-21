@@ -17,14 +17,17 @@ class ircParser
     private $phergieParser;
     private $logger;
     private $commandeCaractere;
+    //TODO Refaire le traitement des commandes
     private $commandes;
 
     public function __construct()
     {
         $this->logger = Application::getInstance()->getLogger();
+        //TODO A intégrer dans le configurateur
 //        $this->commandeCaractere = Application::getInstance()->getConfigurateur('commande.caractere');
         $this->commandeCaractere = '~';
-        $this->commandes = Commandes::getInstance();
+        //TODO Refaire le traitement des commandes
+//        $this->commandes = Commandes::getInstance();
         $this->phergieParser = new Parser();
 
     }
@@ -49,7 +52,8 @@ class ircParser
             // on ajoute l'utilisateur en premier element des arguments
             $args = array_merge(array(substr($commande[0], 1), $user), $textExplode);
 
-            $this->commandes->getCommandes(substr($commande[0], 1), $args) ;
+            //TODO Refaire le traitement des commandes
+//            $this->commandes->getCommandes(substr($commande[0], 1), $args) ;
 
         }
 
