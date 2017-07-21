@@ -7,16 +7,19 @@ class Autoloader
     /**
      * Enregistre notre autoloader
      */
-    static function register(){
+    static function register()
+    {
         spl_autoload_register(array(__CLASS__, 'autoload'));
     }
 
     /**
      * Inclue le fichier correspondant à notre classe
+     *
      * @param $class string Le nom de la classe à charger
      */
-    static function autoload($class){
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/scripts/' . str_replace('\\','/',$class) . '.php';
+    static function autoload($class)
+    {
+        require_once __DIR__ . '/../../scripts/' . str_replace('\\', '/', $class) . '.php';
     }
 
 }

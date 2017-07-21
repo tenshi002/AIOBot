@@ -9,13 +9,17 @@
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use lib\Application;
+use lib\Autoloader;
 
 // replace with file to your own project bootstrap
 //require_once 'bootstrap.php';
 
 require_once __DIR__ . '/../scripts/lib/Application.php';
 require_once __DIR__ . '/../scripts/lib/Configuration.php';
+require_once __DIR__ . '/../scripts/lib/Autoloader.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
+Autoloader::register();
 
 $app = Application::getInstance();
 
