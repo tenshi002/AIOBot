@@ -1,0 +1,13 @@
+{% include 'common/header.twig' %}
+<body>
+{% include 'common/navigation.twig' %}
+
+{% block content %}
+
+{% endblock %}
+
+{% for js_file in js_files %}
+    <script href="/public/js/{{ js_file }}"></script>
+{% endfor %}
+</body>
+</html>
