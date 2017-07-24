@@ -32,6 +32,16 @@ class Quest
      */
     private $recompense;
 
+    /**
+     * @var string
+     */
+    private $resultat;
+
+    /**
+     * @var \modeles\Quest
+     */
+    private $personne;
+
 
     /**
      * Get id
@@ -138,5 +148,52 @@ class Quest
     {
         return $this->recompense;
     }
-}
 
+    /**
+     * Set resultat
+     *
+     * @param string $resultat
+     *
+     * @return Quest
+     */
+    public function setResultat($resultat)
+    {
+        $this->resultat = $resultat;
+
+        return $this;
+    }
+
+    /**
+     * Get resultat
+     *
+     * @return string
+     */
+    public function getResultat()
+    {
+        return $this->resultat;
+    }
+
+    /**
+     * Set personne
+     *
+     * @param \modeles\Quest $personne
+     *
+     * @return Quest
+     */
+    public function setPersonne(\modeles\Quest $personne = null)
+    {
+        $this->personne = $personne;
+
+        return $this;
+    }
+
+    /**
+     * Get personne
+     *
+     * @return \modeles\Quest
+     */
+    public function getPersonne()
+    {
+        return $this->personne;
+    }
+}

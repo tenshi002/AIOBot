@@ -1,12 +1,17 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: tenshi
+ * Date: 25/07/17
+ * Time: 01:12
+ */
 
 namespace modeles;
 
-/**
- * Personne
- */
-class Personne
+
+class Monstre
 {
+
     /**
      * @var integer
      */
@@ -23,29 +28,9 @@ class Personne
     private $life;
 
     /**
-     * @var string
-     */
-    private $oauth;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
      * @var integer
      */
     private $monnaie;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $quetes;
-
-    /**
-     * @var \modeles\Role
-     */
-    private $role;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -57,10 +42,7 @@ class Personne
      */
     public function __construct()
     {
-        $this->quetes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->coffre = new \Doctrine\Common\Collections\ArrayCollection();
-
-        $this->life = random_int(70, 100);
     }
 
     /**
@@ -78,7 +60,7 @@ class Personne
      *
      * @param string $pseudo
      *
-     * @return Personne
+     * @return Monstre
      */
     public function setPseudo($pseudo)
     {
@@ -102,7 +84,7 @@ class Personne
      *
      * @param integer $life
      *
-     * @return Personne
+     * @return Monstre
      */
     public function setLife($life)
     {
@@ -122,59 +104,11 @@ class Personne
     }
 
     /**
-     * Set oauth
-     *
-     * @param string $oauth
-     *
-     * @return Personne
-     */
-    public function setOauth($oauth)
-    {
-        $this->oauth = $oauth;
-
-        return $this;
-    }
-
-    /**
-     * Get oauth
-     *
-     * @return string
-     */
-    public function getOauth()
-    {
-        return $this->oauth;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return Personne
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
      * Set monnaie
      *
      * @param integer $monnaie
      *
-     * @return Personne
+     * @return Monstre
      */
     public function setMonnaie($monnaie)
     {
@@ -194,69 +128,11 @@ class Personne
     }
 
     /**
-     * Add quete
-     *
-     * @param \modeles\Quete $quete
-     *
-     * @return Personne
-     */
-    public function addQuete(\modeles\Quete $quete)
-    {
-        $this->quetes[] = $quete;
-
-        return $this;
-    }
-
-    /**
-     * Remove quete
-     *
-     * @param \modeles\Quete $quete
-     */
-    public function removeQuete(\modeles\Quete $quete)
-    {
-        $this->quetes->removeElement($quete);
-    }
-
-    /**
-     * Get quetes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getQuetes()
-    {
-        return $this->quetes;
-    }
-
-    /**
-     * Set role
-     *
-     * @param \modeles\Role $role
-     *
-     * @return Personne
-     */
-    public function setRole(\modeles\Role $role = null)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return \modeles\Role
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Add coffre
      *
      * @param \modeles\Item $coffre
      *
-     * @return Personne
+     * @return Monstre
      */
     public function addCoffre(\modeles\Item $coffre)
     {

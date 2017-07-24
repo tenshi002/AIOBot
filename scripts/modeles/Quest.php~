@@ -1,17 +1,12 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: ssouppaya
- * Date: 24/07/17
- * Time: 19:30
- */
 
 namespace modeles;
 
-
+/**
+ * Quest
+ */
 class Quest
 {
-
     /**
      * @var integer
      */
@@ -36,6 +31,16 @@ class Quest
      * @var integer
      */
     private $recompense;
+
+    /**
+     * @var string
+     */
+    private $resultat;
+
+    /**
+     * @var \modeles\Quest
+     */
+    private $personne;
 
 
     /**
@@ -142,5 +147,53 @@ class Quest
     public function getRecompense()
     {
         return $this->recompense;
+    }
+
+    /**
+     * Set resultat
+     *
+     * @param string $resultat
+     *
+     * @return Quest
+     */
+    public function setResultat($resultat)
+    {
+        $this->resultat = $resultat;
+
+        return $this;
+    }
+
+    /**
+     * Get resultat
+     *
+     * @return string
+     */
+    public function getResultat()
+    {
+        return $this->resultat;
+    }
+
+    /**
+     * Set personne
+     *
+     * @param \modeles\Quest $personne
+     *
+     * @return Quest
+     */
+    public function setPersonne(\modeles\Quest $personne = null)
+    {
+        $this->personne = $personne;
+
+        return $this;
+    }
+
+    /**
+     * Get personne
+     *
+     * @return \modeles\Quest
+     */
+    public function getPersonne()
+    {
+        return $this->personne;
     }
 }

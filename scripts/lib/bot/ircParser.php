@@ -27,7 +27,7 @@ class ircParser
 //        $this->commandeCaractere = Application::getInstance()->getConfigurateur('commande.caractere');
         $this->commandeCaractere = '~';
         //TODO Refaire le traitement des commandes
-//        $this->commandes = Commandes::getInstance();
+        $this->commandes = Commandes::getInstance();
         $this->phergieParser = new Parser();
 
     }
@@ -45,15 +45,21 @@ class ircParser
 
         if(preg_match('/' . $regexCommande . '/', trim($text)))
         {
+            $datas = array();
             $this->logger->addDebug('On execute la commande');
             $textExplode = explode(' ', trim($text));
             // on s�pare la commande et les arguments
-            $commande = array_splice($textExplode, 0, 1);
+            $nameCommande = array_splice($textExplode, 0, 1);
             // on ajoute l'utilisateur en premier element des arguments
-            $args = array_merge(array(substr($commande[0], 1), $user), $textExplode);
+            $datas['nameCommand'] = substr($nameCommande[0], 1);
+            $datas['user'] = $user;
+            $datas['datas'] = $textExplode;
+
+
+//            $args = array_merge(array(substr($nameCommande[0], 1), $user), $textExplode);
 
             //TODO Refaire le traitement des commandes
-//            $this->commandes->getCommandes(substr($commande[0], 1), $args) ;
+//            $this->commandes->getCommandes(substr($nameCommande[0], 1), $args) ;
 
         }
 

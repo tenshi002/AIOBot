@@ -18,6 +18,11 @@ class Personne
     private $pseudo;
 
     /**
+     * @var integer
+     */
+    private $life;
+
+    /**
      * @var string
      */
     private $oauth;
@@ -31,6 +36,11 @@ class Personne
      * @var integer
      */
     private $monnaie;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $quetes;
 
     /**
      * @var \modeles\Role
@@ -47,7 +57,10 @@ class Personne
      */
     public function __construct()
     {
+        $this->quetes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->coffre = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->life = random_int(70, 100);
     }
 
     /**
@@ -82,6 +95,30 @@ class Personne
     public function getPseudo()
     {
         return $this->pseudo;
+    }
+
+    /**
+     * Set life
+     *
+     * @param integer $life
+     *
+     * @return Personne
+     */
+    public function setLife($life)
+    {
+        $this->life = $life;
+
+        return $this;
+    }
+
+    /**
+     * Get life
+     *
+     * @return integer
+     */
+    public function getLife()
+    {
+        return $this->life;
     }
 
     /**
@@ -157,6 +194,40 @@ class Personne
     }
 
     /**
+     * Add quete
+     *
+     * @param \modeles\Quest $quete
+     *
+     * @return Personne
+     */
+    public function addQuete(\modeles\Quest $quete)
+    {
+        $this->quetes[] = $quete;
+
+        return $this;
+    }
+
+    /**
+     * Remove quete
+     *
+     * @param \modeles\Quest $quete
+     */
+    public function removeQuete(\modeles\Quest $quete)
+    {
+        $this->quetes->removeElement($quete);
+    }
+
+    /**
+     * Get quetes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuetes()
+    {
+        return $this->quetes;
+    }
+
+    /**
      * Set role
      *
      * @param \modeles\Role $role
@@ -214,4 +285,3 @@ class Personne
         return $this->coffre;
     }
 }
-

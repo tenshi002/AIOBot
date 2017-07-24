@@ -9,19 +9,22 @@
 namespace Actions\CommandesAvancee;
 
 
+use lib\Application;
+use lib\bot\Bot;
+use modeles\Personne;
+use repositories\PersonneRepository;
+
 class Duel
 {
-    public function initCombat()
+    public function executeAction($args)
     {
-
-
         $elusionne = Bot::getInstance();
 
         //1 - on r�cup�re les pseudos
 
         $fighter1Name = $args[1];
         $fighter2Name = $args[2];
-        $botName = Application::getInstance()->getConfigurateur('irctwitch.username');
+        $botName = Bot::getBotName();
 
         if($fighter1Name === $fighter2Name)
         {
@@ -34,8 +37,9 @@ class Duel
         }
         else
         {
-            $fighter1 = new Combattant($fighter1Name);
-            $fighter2 = new Combattant($fighter2Name);
+            $personneRepository = new PersonneRepository();
+            $fighter1 = $personneRepository->getPersonne($fighter1Name);
+            $fighter2 = $personneRepository->getPersonne($fighter2Name);
 
             //2 - on initialise le combat
             $endOfFight = false;

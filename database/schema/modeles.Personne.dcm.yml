@@ -10,12 +10,18 @@ modeles\Personne:
   fields:
     pseudo:
       unique: true
+    life:
+      type: integer
     oauth:
       unique: true
     email:
       unique: true
     monnaie:
       type: integer
+  oneToMany:
+    quetes:
+      targetEntity: modeles\Quest
+      mappedBy: personne
   manyToOne:
     role:
       targetEntity: modeles\Role

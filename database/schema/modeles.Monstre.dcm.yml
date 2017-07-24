@@ -1,0 +1,27 @@
+modeles\Monstre:
+  type: entity
+  table: monstre
+  repositoryClass: repositories\MonstreRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    pseudo:
+      unique: true
+    life:
+      type: integer
+    monnaie:
+      type: integer
+  manyToMany:
+      coffre:
+        targetEntity: modeles\Item
+        joinTable:
+          name: quantite
+          joinColumns:
+            user_id:
+              referencedColumnName: id
+          inverseJoinColumns:
+            item_id:
+              referencedColumnName: id

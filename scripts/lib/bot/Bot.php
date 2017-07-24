@@ -16,6 +16,7 @@ use Monolog\Logger;
 class Bot
 {
     private static $instance = null;
+    private static $botName;
     private $application;
     private $serveurHostName;
     private $port;
@@ -52,6 +53,8 @@ class Bot
         $this->nickname = $this->application->getConfigurateur('irctwitch.nickname');
         $this->username = $this->application->getConfigurateur('irctwitch.username');
         $this->channel = $this->application->getConfigurateur('irctwitch.channel');
+        self::$botName = $this->application->getConfigurateur('irctwitch.username');
+
         $this->logger = new Logger('bot');
         $this->logger->pushHandler(new StreamHandler($this->getPathLogger() . '/botLog.txt'));
         $this->ircParser = new ircParser();
@@ -135,6 +138,11 @@ class Bot
         fwrite($this->getSocket(), "USER " . $this->getUsername() . $this->getUsername() . " tati toto\r\n");
         fwrite($this->getSocket(), "NICK " . $this->getNickname() . "\r\n");
         fwrite($this->getSocket(), "JOIN " . $this->getChannel() . "\r\n");
+    }
+
+    public static function getBotName()
+    {
+        return self::$botName;
     }
 
     /**

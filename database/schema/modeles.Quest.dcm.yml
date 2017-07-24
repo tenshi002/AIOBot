@@ -1,6 +1,7 @@
 modeles\Quest:
   type: entity
   table: quest
+  repositoryClass: repositories\QuestRepository
   id:
     id:
       type: integer
@@ -15,3 +16,12 @@ modeles\Quest:
       type: text
     recompense:
       type: integer
+    resultat:
+      type: text
+  manyToOne:
+    personne:
+      targetEntity: modeles\Quest
+      inversedBy: quetes
+      joinColumn:
+        name: id
+        referencedColumnName: id
