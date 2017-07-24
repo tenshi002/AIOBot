@@ -31,20 +31,6 @@ class Role
     }
 
     /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Role
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Get id
      *
      * @return integer
@@ -112,3 +98,4 @@ class Role
         return $this->personnes;
     }
 }
+

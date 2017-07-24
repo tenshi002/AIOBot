@@ -18,6 +18,11 @@ class Item
     private $nom;
 
     /**
+     * @var string
+     */
+    private $type;
+
+    /**
      * @var integer
      */
     private $value;
@@ -32,20 +37,6 @@ class Item
      */
     private $heal;
 
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Item
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     /**
      * Get id
@@ -79,6 +70,30 @@ class Item
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Item
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -153,3 +168,4 @@ class Item
         return $this->heal;
     }
 }
+

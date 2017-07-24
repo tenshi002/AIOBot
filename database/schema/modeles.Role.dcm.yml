@@ -3,10 +3,10 @@ modeles\Role:
   table: role
   repositoryClass: repositories\RoleRepository
   id:
-      id:
-        type: integer
-        generator:
-          strategy: AUTO
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
   fields:
     nom:
       unique: true

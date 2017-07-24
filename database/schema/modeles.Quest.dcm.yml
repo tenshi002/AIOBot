@@ -1,0 +1,17 @@
+modeles\Quest:
+  type: entity
+  table: quest
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    idViewer:
+      type: integer
+    titre:
+      type: text
+    description:
+      type: text
+    recompense:
+      type: integer

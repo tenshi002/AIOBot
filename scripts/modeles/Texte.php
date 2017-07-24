@@ -19,20 +19,6 @@ class Texte
 
 
     /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Texte
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Get id
      *
      * @return integer
@@ -66,3 +52,4 @@ class Texte
         return $this->text;
     }
 }
+

@@ -3,10 +3,10 @@ modeles\Personne:
   table: personne
   repositoryClass: repositories\PersonneRepository
   id:
-      id:
-        type: integer
-        generator:
-          strategy: AUTO
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
   fields:
     pseudo:
       unique: true

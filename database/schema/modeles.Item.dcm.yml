@@ -3,13 +3,15 @@ modeles\Item:
   table: item
   repositoryClass: repositories\ItemRepository
   id:
-      id:
-        type: integer
-        generator:
-          strategy: AUTO
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
   fields:
     nom:
       unique: true
+    type:
+      type: text
     value:
       type: integer
       nullable: true

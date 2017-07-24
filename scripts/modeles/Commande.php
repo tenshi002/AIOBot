@@ -36,20 +36,6 @@ class Commande
     }
 
     /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Commande
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Get id
      *
      * @return integer
@@ -141,3 +127,4 @@ class Commande
         return $this->reponses;
     }
 }
+

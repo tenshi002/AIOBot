@@ -51,20 +51,6 @@ class Personne
     }
 
     /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Personne
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Get id
      *
      * @return integer
@@ -228,3 +214,4 @@ class Personne
         return $this->coffre;
     }
 }
+

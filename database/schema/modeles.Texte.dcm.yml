@@ -3,10 +3,10 @@ modeles\Texte:
   table: texte
   repositoryClass: repositories\TexteRepository
   id:
-      id:
-        type: integer
-        generator:
-          strategy: AUTO
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
   manyToOne:
     text:
       targetEntity: modeles\Commande
