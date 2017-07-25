@@ -55,7 +55,7 @@ class ircParser
             $datas['user'] = $user;
             $datas['datas'] = $textExplode;
 
-
+            $this->commandes->getCommandes($datas['nameCommand'], $datas);
 //            $args = array_merge(array(substr($nameCommande[0], 1), $user), $textExplode);
 
             //TODO Refaire le traitement des commandes
