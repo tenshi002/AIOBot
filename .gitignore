@@ -6,3 +6,6 @@ vendor/*
 
 # IntelliJ
 *.iml
+
+#composer
+composer.lock
