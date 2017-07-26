@@ -63,7 +63,15 @@ class Commandes
         else
         {
             // sinon c'est une classe texte définie dans la db
+            /** @var $commandeRepository CommandeRepository*/
             $commandeRepository = $this->entityManager->getRepository('modeles\Commande');
+            /** @var $commandeSimple \modeles\Commande*/
+            $commandeSimple = $commandeRepository->findOneBy(array('nom', $nameCommande));
+
+            $responses = $commandeSimple->getReponses();
+            //TODO à vérifier
+            return $responses[random_int(0, count($responses - 1))];
+
         }
     }
 }

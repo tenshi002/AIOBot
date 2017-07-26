@@ -6,6 +6,7 @@ use lib\Application;
 use lib\bot\ircParser;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Thread;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,7 +14,7 @@ use Monolog\Logger;
  * Date: 07/03/17
  * Time: 15:26
  */
-class Bot
+class Bot extends Thread
 {
     private static $instance = null;
     private static $botName;
@@ -60,6 +61,17 @@ class Bot
         $this->ircParser = new ircParser();
 
         $this->connexionServeur();
+    }
+
+    /**
+     * Execution du multi-thread
+     * Pour lancer le thread :
+     * $thread = new Bot();
+     * $thread->start();
+     */
+    public function run()
+    {
+        $this->iniConnexion();
     }
 
     /**
