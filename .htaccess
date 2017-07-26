@@ -1,14 +1,14 @@
-Options +FollowSymlinks
-RewriteEngine On
+#Options +FollowSymlinks
+#RewriteEngine On
 
 # Redirect Trailing Slashes...
-RewriteRule ^(.*)/$ /$1 [L,R=301]
+#RewriteRule ^(.*)/$ /$1 [L,R=301]
 
 # Handle Front Controller...
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteRule ^ index.php[L]
-RewriteRule ^([A-Za-z]+)/([A-Za-z]+)/([A-Za-z]+)$ /index.php?module=$1&controller=$2&action=$3 [QSA]
-RewriteRule ^([A-Za-z]+)/([A-Za-z]+)/([A-Za-z]+)\?(.*)$ /index.php?module=$1&controller=$2&action=$3&$4 [QSA]
-RewriteRule ^([A-Za-z]+)/([A-Za-z]+)$ /index.php?module=$1&controller=$1&action=$2 [QSA]
-RewriteRule ^([A-Za-z]+)/([A-Za-z]+)?(.*)$ /index.php?module=$1&controller=$1&action=$2&$3 [QSA]
+#RewriteRule ^([A-Za-z]+)/([A-Za-z]+)/([A-Za-z]+)$ /index.php?module=$1&controller=$2&action=$3 [QSA]
+#RewriteRule ^([A-Za-z]+)/([A-Za-z]+)/([A-Za-z]+)\?(.*)$ /index.php?module=$1&controller=$2&action=$3&$4 [QSA]
+#RewriteRule ^([A-Za-z]+)/([A-Za-z]+)$ /index.php?module=$1&controller=$1&action=$2 [QSA]
+#RewriteRule ^([A-Za-z]+)/([A-Za-z]+)?(.*)$ /index.php?module=$1&controller=$1&action=$2&$3 [QSA]

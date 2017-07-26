@@ -120,7 +120,7 @@ class HTTPResponse
     private static $instance;
 
     /**
-     * @var \Twig_Environment
+     * @var Twig_Environment
      */
     private $twig;
 
@@ -147,10 +147,12 @@ class HTTPResponse
         $this->action = $action;
         $this->contentType = self::CONTENT_TYPE_DEFAULT;
         $this->addJSFiles(array(
-            'menu.js',
-            'jquery-3.2.1.min.js'
+            'menu.js'
         ));
-        $this->addCSSFile('menu.css');
+        $this->addCSSFiles(array(
+            'menu.css',
+            'style.css'
+        ));
 
     }
 
@@ -197,14 +199,17 @@ class HTTPResponse
 
     private function displayTemplate()
     {
-        $this->content = $this->getTwig()->render(
-            $this->baseTemplate,
-            $this->templatesVars
-        );
-        $this->content .= $this->getTwig()->render(
-            $this->template,
-            $this->templatesVars
-        );
+        $template = $this->getTwig()->load($this->template);
+        $this->content = $template->display($this->templatesVars);
+
+//        $this->content = $this->getTwig()->render(
+//            $this->baseTemplate,
+//            $this->templatesVars
+//        );
+//        $this->content .= $this->getTwig()->render(
+//            $this->template,
+//            $this->templatesVars
+//        );
 
         echo $this->content;
     }

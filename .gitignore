@@ -9,3 +9,6 @@ vendor/*
 
 #composer
 composer.lock
+
+phpMyAdmin
+phpMyAdmin/*
