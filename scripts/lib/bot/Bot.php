@@ -123,6 +123,22 @@ class Bot extends Thread
         fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :" . utf8_encode($message) . "\r\n");
     }
 
+    public function timeoutViewer($pseudo, $time = 1)
+    {
+        Application::getInstance()->getLogger()->addError("PRIVMSG " . $this->getChannel() . " :/timeout " . $pseudo . " " . utf8_encode($time) . "\r\n");
+        fputs($this->getSocket(), "CLEARCHAT " . $this->getChannel() . " :" . utf8_encode($pseudo) . " @ban-duration=" . $time . "\r\n");
+        // ou
+        //fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :/timeout " . utf8_encode($pseudo) . " " . $time . "\r\n");
+    }
+
+    public function ban($pseudo)
+    {
+        Application::getInstance()->getLogger()->addError("PRIVMSG " . $this->getChannel() . " :/ban " . $pseudo . "\r\n");
+        fputs($this->getSocket(), "CLEARCHAT " . $this->getChannel() . " :" . utf8_encode($pseudo) . "\r\n");
+        // ou
+        //fputs($this->getSocket(), "PRIVMSG " . $this->getChannel() . " :/ban " . utf8_encode($pseudo) . "\r\n");
+    }
+
     /**
      * Envoie d'un mp au destinataire passé en paramètre
      * @param $destinataire string pseudo du destinataire

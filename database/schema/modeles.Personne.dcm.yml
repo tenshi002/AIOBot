@@ -18,6 +18,8 @@ modeles\Personne:
       unique: true
     monnaie:
       type: integer
+    permitLink:
+      type: string
   oneToMany:
     quetes:
       targetEntity: modeles\Quest

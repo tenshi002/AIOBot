@@ -4,6 +4,7 @@ namespace lib\bot;
 
 use lib\Application;
 use lib\Commandes;
+use lib\Moderations;
 use Phergie\Irc\Parser;
 
 /**
@@ -19,6 +20,7 @@ class ircParser
     private $commandeCaractere;
     //TODO Refaire le traitement des commandes
     private $commandes;
+    private $moderation;
 
     public function __construct()
     {
@@ -28,7 +30,11 @@ class ircParser
         $this->commandeCaractere = '~';
         //TODO Refaire le traitement des commandes
         $this->commandes = Commandes::getInstance();
+        $this->moderation = Moderations::getInstance();
         $this->phergieParser = new Parser();
+
+
+        //TODO récupérér le configurateur de moderation
 
     }
 
@@ -41,6 +47,7 @@ class ircParser
         $user = $donneesExplode['user'];
         $text = $donneesExplode['params']['text'];
 
+        //On détecte si c'est une commande ou non
         $regexCommande = '^' . $this->commandeCaractere . '([a-z])+';
 
         if(preg_match('/' . $regexCommande . '/', trim($text)))
@@ -56,13 +63,28 @@ class ircParser
             $datas['datas'] = $textExplode;
 
             $this->commandes->getCommandes($datas['nameCommand'], $datas);
-//            $args = array_merge(array(substr($nameCommande[0], 1), $user), $textExplode);
-
-            //TODO Refaire le traitement des commandes
-//            $this->commandes->getCommandes(substr($nameCommande[0], 1), $args) ;
-
         }
 
+        // Ce n'est pas une commande mais juste du texte
+        // 1 - on modère le texte :
+        if(Moderations::getStatusAntiLink() === 1)
+        {
+            $status = $this->moderation->antiLink($text);
+            if($status)
+            {
+                //on time out le viewer
+            }
+        }
+
+        // 2 - filtre anti-majuscule
+        if(Moderations::getStatusAntiSpamUppercase() === 1)
+        {
+            $status = $this->moderation->antiSpam($text);
+            if($status)
+            {
+                //on time out le viewer
+            }
+        }
     }
 
     /**

@@ -53,6 +53,11 @@ class Personne
     private $coffre;
 
     /**
+     * @var string
+     */
+    private $permitLink;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -60,7 +65,6 @@ class Personne
         $this->quetes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->coffre = new \Doctrine\Common\Collections\ArrayCollection();
 
-        $this->life = random_int(70, 100);
     }
 
     /**
@@ -283,5 +287,29 @@ class Personne
     public function getCoffre()
     {
         return $this->coffre;
+    }
+
+    /**
+     * Set permitLink
+     *
+     * @param string $permitLink
+     *
+     * @return Personne
+     */
+    public function setPermitLink($permitLink)
+    {
+        $this->permitLink = $permitLink;
+
+        return $this;
+    }
+
+    /**
+     * Get permitLink
+     *
+     * @return string
+     */
+    public function getPermitLink()
+    {
+        return $this->permitLink;
     }
 }
