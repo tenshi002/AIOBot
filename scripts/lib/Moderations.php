@@ -9,6 +9,8 @@
 namespace lib;
 
 
+use modeles\User;
+
 class Moderations
 {
     static private $instance = null;
@@ -18,18 +20,20 @@ class Moderations
     static private $statusAntiSpamEmote;
 
     private $logger;
+    private $user;
 
     public function __construct()
     {
         $applicationInstance = Application::getInstance();
         // fichier log modération
         $this->logger = $applicationInstance->getLogger('logger.moderation');
+        $this->user = new User();
 
-        //TODO récupérer la conf web du bot via un autre fichier ini ?
-        self::$statusAntiLink = $applicationInstance->getConfigurateur('moderation.antiLink');
-        self::$statusAuthorizeClipTwitch = $applicationInstance->getConfigurateur('moderation.authorizeClipTwitch');
-        self::$statusAntiSpamUppercase = $applicationInstance->getConfigurateur('moderation.antiSpamUppercase');
-        self::$statusAntiSpamEmote = $applicationInstance->getConfigurateur('moderation.antiSpamEmote');
+        //TODO récupérer la conf web à partir du modele User ?
+//        self::$statusAntiLink = $applicationInstance->getConfigurateur('moderation.antiLink');
+//        self::$statusAuthorizeClipTwitch = $applicationInstance->getConfigurateur('moderation.authorizeClipTwitch');
+//        self::$statusAntiSpamUppercase = $applicationInstance->getConfigurateur('moderation.antiSpamUppercase');
+//        self::$statusAntiSpamEmote = $applicationInstance->getConfigurateur('moderation.antiSpamEmote');
     }
 
     public static function getInstance()

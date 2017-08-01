@@ -4,6 +4,7 @@ namespace lib\bot;
 
 use lib\Application;
 use lib\bot\ircParser;
+use modeles\User;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Thread;
@@ -34,18 +35,18 @@ class Bot extends Thread
     private $logger;
     private $pathLogger = __DIR__ . '/../../../logs';
 
-    public static function getInstance()
-    {
-        if(is_null(self::$instance))
-        {
-            Application::getInstance()->getLogger()->addDebug('le bot n\'est pas instancie');
-            self::$instance = new Bot();
-        }
-        Application::getInstance()->getLogger()->addDebug('Le bot est instancie');
-        return self::$instance;
-    }
+//    public static function getInstance()
+//    {
+//        if(is_null(self::$instance))
+//        {
+//            Application::getInstance()->getLogger()->addDebug('le bot n\'est pas instancie');
+//            self::$instance = new Bot();
+//        }
+//        Application::getInstance()->getLogger()->addDebug('Le bot est instancie');
+//        return self::$instance;
+//    }
 
-    private function __construct()
+    private function __construct(User $user)
     {
         $this->application = Application::getInstance();
         $this->serveurHostName = $this->application->getConfigurateur('irctwitch.serveurHostName');
@@ -105,8 +106,16 @@ class Bot extends Thread
         }
     }
 
+    public function joinChannel()
+    {
+        Application::getInstance()->getLogger()->addInfo('on rejoind le channel : ' . $this->getChannel());
+        fwrite($this->getSocket(), "PART " . $this->getChannel() . "\r\n");
+    }
+
     /**
      * Le bot quitte le chat
+     * il peut arriver qu'il apparaisse encore dans la liste des viewers mais c'est normal
+     * le temps que twitch actualise
      */
     public function leaveChannel()
     {
@@ -156,6 +165,7 @@ class Bot extends Thread
     private function connexionServeur()
     {
         $this->setSocket(fsockopen($this->getServeurHostName(), $this->getPort(), $errno, $errstr, 30));
+        stream_set_blocking($this->socket, false);
         if(!$this->getSocket())
         {
             //TODO créer un logeur
@@ -166,6 +176,7 @@ class Bot extends Thread
         fwrite($this->getSocket(), "USER " . $this->getUsername() . $this->getUsername() . " tati toto\r\n");
         fwrite($this->getSocket(), "NICK " . $this->getNickname() . "\r\n");
         fwrite($this->getSocket(), "JOIN " . $this->getChannel() . "\r\n");
+        fwrite($this->getSocket(), "CAP REQ :twitch.tv/membership\r\n");
     }
 
     public static function getBotName()

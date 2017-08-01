@@ -37,6 +37,14 @@ modeles\User:
       type: datetime
     logo:
       type: string
+    botAntiSpam:
+      type: string
+    botAntiMaj:
+      type: string
+    botAntiLink:
+      type: string
+    botActiveClip:
+      type: string
   oneToMany:
     quetes:
       targetEntity: modeles\Quest
