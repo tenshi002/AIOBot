@@ -5,7 +5,8 @@
         "phergie/phergie-irc-bot-react": "^2.1",
         "zendframework/zendframework": "^3.0",
         "monolog/monolog": "^1.23",
-        "twig/twig": "^2.4"
+        "twig/twig": "^2.4",
+        "guzzlehttp/guzzle": "^6.3"
         }
 
 }

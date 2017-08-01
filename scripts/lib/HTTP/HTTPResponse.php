@@ -274,9 +274,11 @@ class HTTPResponse
                 $this->cache = true;
             }
             $loader = new \Twig_Loader_Filesystem(array(
-                Application::getInstance()->getApplicationBasePath() . '/scripts/views'),
-                Application::getInstance()->getApplicationBasePath() . '/scripts/views/' . $this->module
-            );
+                Application::getInstance()->getApplicationBasePath() . '/scripts/views',
+                Application::getInstance()->getApplicationBasePath() . '/scripts/views/' . $this->module,
+                Application::getInstance()->getApplicationBasePath() . '/public/templates',
+                Application::getInstance()->getApplicationBasePath() . '/public/templates/common'
+            ));
             if($this->cache)
             {
                 $this->twig = new \Twig_Environment($loader, array('cache' => Application::getInstance()->getApplicationBasePath() . '/cache'));
