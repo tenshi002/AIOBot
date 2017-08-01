@@ -18,7 +18,7 @@ modeles\Monstre:
       coffre:
         targetEntity: modeles\Item
         joinTable:
-          name: quantite
+          name: quantiteMonstreItem
           joinColumns:
             user_id:
               referencedColumnName: id

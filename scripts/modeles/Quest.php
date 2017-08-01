@@ -1,12 +1,17 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: nico
+ * Date: 01/08/17
+ * Time: 14:50
+ */
 
 namespace modeles;
 
-/**
- * Quest
- */
+
 class Quest
 {
+
     /**
      * @var integer
      */
@@ -40,7 +45,7 @@ class Quest
     /**
      * @var \modeles\Quest
      */
-    private $personne;
+    private $user;
 
 
     /**
@@ -172,35 +177,6 @@ class Quest
     {
         return $this->resultat;
     }
-
-    /**
-     * Set personne
-     *
-     * @param \modeles\Quest $personne
-     *
-     * @return Quest
-     */
-    public function setPersonne(\modeles\Quest $personne = null)
-    {
-        $this->personne = $personne;
-
-        return $this;
-    }
-
-    /**
-     * Get personne
-     *
-     * @return \modeles\Quest
-     */
-    public function getPersonne()
-    {
-        return $this->personne;
-    }
-    /**
-     * @var \modeles\Quest
-     */
-    private $user;
-
 
     /**
      * Set user

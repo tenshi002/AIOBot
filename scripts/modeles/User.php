@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: ssouppaya
+ * User: nico
  * Date: 01/08/17
- * Time: 16:04
+ * Time: 14:50
  */
 
 namespace modeles;
@@ -46,6 +46,36 @@ class User
      * @var string
      */
     private $permitLink;
+
+    /**
+     * @var string
+     */
+    private $twitchAccount;
+
+    /**
+     * @var string
+     */
+    private $twitchType;
+
+    /**
+     * @var string
+     */
+    private $bio;
+
+    /**
+     * @var \DateTime
+     */
+    private $created_at;
+
+    /**
+     * @var \DateTime
+     */
+    private $updated_at;
+
+    /**
+     * @var string
+     */
+    private $logo;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -99,6 +129,7 @@ class User
      * Get pseudo
      *
      * @return string
+     * @deprecated A utiliser que pour l'affichage - Préférer getTwitchAccount()
      */
     public function getPseudo()
     {
@@ -223,6 +254,150 @@ class User
     public function getPermitLink()
     {
         return $this->permitLink;
+    }
+
+    /**
+     * Set twitchAccount
+     *
+     * @param string $twitchAccount
+     *
+     * @return User
+     */
+    public function setTwitchAccount($twitchAccount)
+    {
+        $this->twitchAccount = $twitchAccount;
+
+        return $this;
+    }
+
+    /**
+     * Get twitchAccount
+     *
+     * @return string
+     */
+    public function getTwitchAccount()
+    {
+        return $this->twitchAccount;
+    }
+
+    /**
+     * Set twitchType
+     *
+     * @param string $twitchType
+     *
+     * @return User
+     */
+    public function setTwitchType($twitchType)
+    {
+        $this->twitchType = $twitchType;
+
+        return $this;
+    }
+
+    /**
+     * Get twitchType
+     *
+     * @return string
+     */
+    public function getTwitchType()
+    {
+        return $this->twitchType;
+    }
+
+    /**
+     * Set bio
+     *
+     * @param string $bio
+     *
+     * @return User
+     */
+    public function setBio($bio)
+    {
+        $this->bio = $bio;
+
+        return $this;
+    }
+
+    /**
+     * Get bio
+     *
+     * @return string
+     */
+    public function getBio()
+    {
+        return $this->bio;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return User
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return User
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * Set logo
+     *
+     * @param string $logo
+     *
+     * @return User
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return string
+     */
+    public function getLogo()
+    {
+        return $this->logo;
     }
 
     /**

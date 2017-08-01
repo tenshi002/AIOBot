@@ -1,12 +1,17 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: nico
+ * Date: 01/08/17
+ * Time: 14:50
+ */
 
 namespace modeles;
 
-/**
- * Role
- */
+
 class Role
 {
+
     /**
      * @var integer
      */
@@ -20,14 +25,14 @@ class Role
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $personnes;
+    private $users;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->personnes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -63,45 +68,6 @@ class Role
     {
         return $this->nom;
     }
-
-    /**
-     * Add personne
-     *
-     * @param \modeles\Personne $personne
-     *
-     * @return Role
-     */
-    public function addPersonne(\modeles\Personne $personne)
-    {
-        $this->personnes[] = $personne;
-
-        return $this;
-    }
-
-    /**
-     * Remove personne
-     *
-     * @param \modeles\Personne $personne
-     */
-    public function removePersonne(\modeles\Personne $personne)
-    {
-        $this->personnes->removeElement($personne);
-    }
-
-    /**
-     * Get personnes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPersonnes()
-    {
-        return $this->personnes;
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $users;
-
 
     /**
      * Add user

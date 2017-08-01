@@ -5,6 +5,7 @@ namespace lib;
 use lib\bot\Bot;
 use lib\HTTP\HTTPRequest;
 use lib\HTTP\HTTPResponse;
+use lib\Twitch\TwitchApi;
 
 /**
  * Classe permettant de rediriger vers les différents controleurs
@@ -24,6 +25,11 @@ abstract class Controller
      * @var HTTPResponse
      */
     protected $HTTPResponse;
+
+    /**
+     * @var TwitchApi
+     */
+    protected $twitchAPI;
 
     /**
      * @var Bot
@@ -136,4 +142,17 @@ abstract class Controller
     {
         $this->bot = $bot;
     }
+
+    /**
+     * @return TwitchApi
+     */
+    public function getTwitchAPI()
+    {
+        if(is_null($this->twitchAPI))
+        {
+            $this->twitchAPI = TwitchApi::getInstance();
+        }
+        return $this->twitchAPI;
+    }
+
 }

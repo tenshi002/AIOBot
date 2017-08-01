@@ -20,7 +20,7 @@ modeles\Quest:
       type: text
   manyToOne:
     user:
-      targetEntity: modeles\Quest
+      targetEntity: modeles\User
       inversedBy: quetes
       joinColumn:
         name: id

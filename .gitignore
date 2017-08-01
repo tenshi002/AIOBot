@@ -10,5 +10,5 @@ vendor/*
 #composer
 composer.lock
 
-phpMyAdmin
-phpMyAdmin/*
+phpmyadmin
+phpmyadmin/*

@@ -20,6 +20,18 @@ modeles\User:
       type: integer
     permitLink:
       type: string
+    twitchAccount:
+      type: string
+    twitchType:
+      type: string
+    bio:
+      type: text
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+    logo:
+      type: string
   oneToMany:
     quetes:
       targetEntity: modeles\Quest
@@ -35,7 +47,7 @@ modeles\User:
     coffre:
       targetEntity: modeles\Item
       joinTable:
-        name: quantite
+        name: quantiteUserItem
         joinColumns:
           user_id:
             referencedColumnName: id
