@@ -1,7 +1,7 @@
-modeles\Personne:
+modeles\User:
   type: entity
-  table: personne
-  repositoryClass: repositories\PersonneRepository
+  table: user
+  repositoryClass: repositories\UserRepository
   id:
     id:
       type: integer
@@ -23,11 +23,11 @@ modeles\Personne:
   oneToMany:
     quetes:
       targetEntity: modeles\Quest
-      mappedBy: personne
+      mappedBy: user
   manyToOne:
     role:
       targetEntity: modeles\Role
-      inversedBy: personnes
+      inversedBy: users
       joinColumn:
         name: id
         referencedColumnName: id

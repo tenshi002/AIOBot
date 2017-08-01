@@ -19,7 +19,7 @@ modeles\Quest:
     resultat:
       type: text
   manyToOne:
-    personne:
+    user:
       targetEntity: modeles\Quest
       inversedBy: quetes
       joinColumn:

@@ -11,6 +11,6 @@ modeles\Role:
     nom:
       unique: true
   oneToMany:
-    personnes:
-      targetEntity: modeles\Personne
+    users:
+      targetEntity: modeles\User
       mappedBy: role

@@ -97,4 +97,43 @@ class Role
     {
         return $this->personnes;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $users;
+
+
+    /**
+     * Add user
+     *
+     * @param \modeles\User $user
+     *
+     * @return Role
+     */
+    public function addUser(\modeles\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \modeles\User $user
+     */
+    public function removeUser(\modeles\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }

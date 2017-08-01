@@ -196,4 +196,33 @@ class Quest
     {
         return $this->personne;
     }
+    /**
+     * @var \modeles\Quest
+     */
+    private $user;
+
+
+    /**
+     * Set user
+     *
+     * @param \modeles\Quest $user
+     *
+     * @return Quest
+     */
+    public function setUser(\modeles\Quest $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \modeles\Quest
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }
