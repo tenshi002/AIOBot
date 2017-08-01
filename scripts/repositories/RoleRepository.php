@@ -1,6 +1,7 @@
 <?php
 
 namespace repositories;
+use modeles\Role;
 
 /**
  * RoleRepository
@@ -10,4 +11,35 @@ namespace repositories;
  */
 class RoleRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @return null|Role
+     */
+    public function getAdminRole()
+    {
+        return $this->findOneBy(array('id' => 1));
+    }
+
+    /**
+     * @return null|Role
+     */
+    public function getEditorRole()
+    {
+        return $this->findOneBy(array('id' => 2));
+    }
+
+    /**
+     * @return null|Role
+     */
+    public function getRegularRole()
+    {
+        return $this->findOneBy(array('id' => 3));
+    }
+
+    /**
+     * @return null|Role
+     */
+    public function getViewerRole()
+    {
+        return $this->findOneBy(array('id' => 4));
+    }
 }

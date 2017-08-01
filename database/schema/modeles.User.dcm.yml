@@ -5,21 +5,26 @@ modeles\User:
   id:
     id:
       type: integer
-      generator:
-        strategy: AUTO
   fields:
     pseudo:
       unique: true
     life:
       type: integer
+    level:
+      type: integer
+    xp:
+      type: integer
     oauth:
       unique: true
+      nullable: true
     email:
       unique: true
+      nullable: true
     monnaie:
       type: integer
     permitLink:
       type: string
+      nullable: true
     twitchAccount:
       type: string
     twitchType:
@@ -36,13 +41,17 @@ modeles\User:
     quetes:
       targetEntity: modeles\Quest
       mappedBy: user
-  manyToOne:
-    role:
+  manyToMany:
+    roles:
       targetEntity: modeles\Role
-      inversedBy: users
-      joinColumn:
-        name: id
-        referencedColumnName: id
+      joinTable:
+        name: userStreamRole
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          stream_id:
+            referencedColumnName: id
   manyToMany:
     coffre:
       targetEntity: modeles\Item

@@ -5,6 +5,7 @@ namespace lib;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\YamlDriver;
 use Doctrine\ORM\Tools\Setup;
+use lib\HTTP\HTTPRequest;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -20,6 +21,8 @@ class Application
     private $entityManager;
 
     private $routeur;
+
+    private $twitchChannel;
 
     /**
      * @var $configurateur Configuration
@@ -55,9 +58,8 @@ class Application
 
     public function run()
     {
+        $this->twitchChannel = HTTPRequest::getInstance()->getGetParameter('tc');
         $this->routeur = Routeur::getInstance();
-        //Test
-        $this->getEntityManager();
         $this->routeur->route();
     }
 
@@ -124,10 +126,11 @@ class Application
     }
 
     /**
-     * @param mixed $entityManager
+     * @return mixed
      */
-    public function setEntityManager($entityManager)
+    public function getTwitchChannel()
     {
-        $this->entityManager = $entityManager;
+        return $this->twitchChannel;
     }
+
 }

@@ -9,6 +9,9 @@
 namespace modeles;
 
 
+use Doctrine\ORM\PersistentCollection;
+use lib\Application;
+
 class User
 {
 
@@ -109,6 +112,14 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -451,7 +462,7 @@ class User
     /**
      * Get role
      *
-     * @return \modeles\Role
+     * @return PersistentCollection
      */
     public function getRole()
     {
@@ -490,5 +501,103 @@ class User
     public function getCoffre()
     {
         return $this->coffre;
+    }
+    /**
+     * @var integer
+     */
+    private $level;
+
+    /**
+     * @var integer
+     */
+    private $xp;
+
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     *
+     * @return User
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set xp
+     *
+     * @param integer $xp
+     *
+     * @return User
+     */
+    public function setXp($xp)
+    {
+        $this->xp = $xp;
+
+        return $this;
+    }
+
+    /**
+     * Get xp
+     *
+     * @return integer
+     */
+    public function getXp()
+    {
+        return $this->xp;
+    }
+
+    /**
+     * Add role
+     *
+     * @param \modeles\Role $role
+     *
+     * @return User
+     */
+    public function addRole(\modeles\Role $role)
+    {
+        $this->role[] = $role;
+
+        return $this;
+    }
+
+    /**
+     * Remove role
+     *
+     * @param \modeles\Role $role
+     */
+    public function removeRole(\modeles\Role $role)
+    {
+        $this->role->removeElement($role);
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+
+    private $roles;
+
+
+    /**
+     * Get roles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRoles()
+    {
+        return $this->roles;
     }
 }

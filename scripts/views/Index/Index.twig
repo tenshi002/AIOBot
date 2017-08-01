@@ -5,7 +5,16 @@
 	<p class="important">
 		Welcome to my awesome BOT SHIT PAGE.
 	</p>
-	<code>
-		{{ json }}
-	</code>
+	<ul>
+		<li>Username : {{ user.pseudo }}</li>
+		<li>Bio : {{ user.bio }}</li>
+		<li>Level : {{ user.level}}</li>
+		<li>XP : {{ user.xp }}</li>
+		<li>Role : {{ role }}</li>
+		<li>
+			<a href="http://www.twitch.tv/{{ user.twitchAccount }}" target="_blank">
+				<img src="{{ user.logo }}" width="50" height="50" alt="{{ user.twitchAccount }}" />
+			</a>
+		</li>
+	</ul>
 {% endblock %}

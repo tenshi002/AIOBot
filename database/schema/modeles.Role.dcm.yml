@@ -10,7 +10,7 @@ modeles\Role:
   fields:
     nom:
       unique: true
-  oneToMany:
+  manyToMany:
     users:
       targetEntity: modeles\User
-      mappedBy: role
+      mappedBy: roles
