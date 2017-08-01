@@ -2,25 +2,25 @@
 
 namespace lib\Twitch;
 
-use TwitchApi\Api\Authentication;
-use TwitchApi\Api\Bits;
-use TwitchApi\Api\ChannelFeed;
-use TwitchApi\Api\Channels;
-use TwitchApi\Api\Chat;
-use TwitchApi\Api\Clips;
-use TwitchApi\Api\Collections;
-use TwitchApi\Api\Communities;
-use TwitchApi\Api\Games;
-use TwitchApi\Api\Ingests;
-use TwitchApi\Api\Root;
-use TwitchApi\Api\Search;
-use TwitchApi\Api\Streams;
-use TwitchApi\Api\Teams;
-use TwitchApi\Api\Users;
-use TwitchApi\Api\Videos;
-use TwitchApi\Exceptions\ClientIdRequiredException;
-use TwitchApi\Exceptions\InvalidTypeException;
-use TwitchApi\Exceptions\UnsupportedApiVersionException;
+use lib\Twitch\Api\Authentication;
+use lib\Twitch\Api\Bits;
+use lib\Twitch\Api\ChannelFeed;
+use lib\Twitch\Api\Channels;
+use lib\Twitch\Api\Chat;
+use lib\Twitch\Api\Clips;
+use lib\Twitch\Api\Collections;
+use lib\Twitch\Api\Communities;
+use lib\Twitch\Api\Games;
+use lib\Twitch\Api\Ingests;
+use lib\Twitch\Api\Root;
+use lib\Twitch\Api\Search;
+use lib\Twitch\Api\Streams;
+use lib\Twitch\Api\Teams;
+use lib\Twitch\Api\Users;
+use lib\Twitch\Api\Videos;
+use lib\Twitch\Exceptions\ClientIdRequiredException;
+use lib\Twitch\Exceptions\InvalidTypeException;
+use lib\Twitch\Exceptions\UnsupportedApiVersionException;
 
 class TwitchApi extends TwitchRequest
 {

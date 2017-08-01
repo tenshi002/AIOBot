@@ -3,6 +3,7 @@
 namespace lib\Twitch;
 
 use GuzzleHttp;
+use GuzzleHttp\Client;
 
 class TwitchRequest
 {
@@ -57,7 +58,7 @@ class TwitchRequest
     /**
      * Get a new HTTP Client
      *
-     * @param strring $method
+     * @param string $method
      * @param array   $params
      * @param string  $accessToken
      * @return Client
