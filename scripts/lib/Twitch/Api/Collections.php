@@ -2,11 +2,11 @@
 
 namespace lib\Twitch\Api;
 
-use TwitchApi\Exceptions\EndpointNotSupportedByApiVersionException;
-use TwitchApi\Exceptions\InvalidIdentifierException;
-use TwitchApi\Exceptions\InvalidLimitException;
-use TwitchApi\Exceptions\InvalidTypeException;
-use TwitchApi\Exceptions\TwitchApiException;
+use lib\Twitch\Exceptions\EndpointNotSupportedByApiVersionException;
+use lib\Twitch\Exceptions\InvalidIdentifierException;
+use lib\Twitch\Exceptions\InvalidLimitException;
+use lib\Twitch\Exceptions\InvalidTypeException;
+use lib\Twitch\Exceptions\TwitchApiException;
 
 trait Collections
 {

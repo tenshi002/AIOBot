@@ -2,11 +2,11 @@
 
 namespace lib\Twitch\Api;
 
-use TwitchApi\Exceptions\EndpointNotSupportedByApiVersionException;
-use TwitchApi\Exceptions\InvalidEmailAddressException;
-use TwitchApi\Exceptions\InvalidIdentifierException;
-use TwitchApi\Exceptions\InvalidParameterLengthException;
-use TwitchApi\Exceptions\InvalidTypeException;
+use lib\Twitch\Exceptions\EndpointNotSupportedByApiVersionException;
+use lib\Twitch\Exceptions\InvalidEmailAddressException;
+use lib\Twitch\Exceptions\InvalidIdentifierException;
+use lib\Twitch\Exceptions\InvalidParameterLengthException;
+use lib\Twitch\Exceptions\InvalidTypeException;
 
 trait Communities
 {

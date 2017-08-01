@@ -2,8 +2,8 @@
 
 namespace lib\Twitch\Api;
 
-use TwitchApi\Exceptions\EndpointNotSupportedByApiVersionException;
-use TwitchApi\Exceptions\InvalidIdentifierException;
+use lib\Twitch\Exceptions\EndpointNotSupportedByApiVersionException;
+use lib\Twitch\Exceptions\InvalidIdentifierException;
 
 trait Bits
 {

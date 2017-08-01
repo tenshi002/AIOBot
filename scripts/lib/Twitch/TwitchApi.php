@@ -87,13 +87,22 @@ class TwitchApi extends TwitchRequest
     protected $accessToken;
 
     /**
+     * @var TwitchApi
+     */
+    private static $instance;
+
+    /**
      * Instantiate a new TwitchApi instance
      *
      * @param array $options
+     * @throws ClientIdRequiredException
+     * @throws InvalidTypeException
+     * @throws UnsupportedApiVersionException
      */
-    public function __construct(array $options)
+    private function __construct(array $options)
     {
-        if (!isset($options['client_id'])) {
+        if(!isset($options['client_id']))
+        {
             throw new ClientIdRequiredException();
         }
 
@@ -103,6 +112,28 @@ class TwitchApi extends TwitchRequest
         $this->setApiVersion(isset($options['api_version']) ? $options['api_version'] : $this->getDefaultApiVersion());
         $this->setScope(isset($options['scope']) ? $options['scope'] : []);
     }
+
+    /**
+     * @param array $options
+     * @return TwitchApi
+     */
+    public static function getInstance(array $options = null)
+    {
+        if(is_null(self::$instance))
+        {
+            if(is_null($options) or empty($options))
+            {
+                $options = array(
+                    'client_id' => 'mkhfnaigie6r3v00odkhslexv31n28',
+                    'client_secret' => 'csladm4tcrvh6v40zohtinqg6ho7te',
+                    'redirect_uri' => 'localhost'
+                );
+            }
+            self::$instance = new TwitchApi($options);
+        }
+        return self::$instance;
+    }
+
 
     /**
      * Get defaultApiVersion
@@ -172,7 +203,8 @@ class TwitchApi extends TwitchRequest
      */
     public function setApiVersion($apiVersion)
     {
-        if (!in_array($apiVersion = intval($apiVersion), $this->getSupportedApiVersions())) {
+        if(!in_array($apiVersion = intval($apiVersion), $this->getSupportedApiVersions()))
+        {
             throw new UnsupportedApiVersionException();
         }
 
@@ -217,7 +249,8 @@ class TwitchApi extends TwitchRequest
      */
     public function setScope($scope)
     {
-        if (!is_array($scope)) {
+        if(!is_array($scope))
+        {
             throw new InvalidTypeException('Scope', 'array', gettype($scope));
         }
 
@@ -241,7 +274,8 @@ class TwitchApi extends TwitchRequest
      */
     protected function apiVersionIsGreaterThanV4()
     {
-        if ($this->getApiVersion() > 4) {
+        if($this->getApiVersion() > 4)
+        {
             return true;
         }
 
@@ -256,7 +290,8 @@ class TwitchApi extends TwitchRequest
      */
     protected function isValidLimit($limit)
     {
-        if (is_numeric($limit) && $limit > 0) {
+        if(is_numeric($limit) && $limit > 0)
+        {
             return true;
         }
 
@@ -271,7 +306,8 @@ class TwitchApi extends TwitchRequest
      */
     protected function isValidOffset($offset)
     {
-        if (is_numeric($offset) && $offset > -1) {
+        if(is_numeric($offset) && $offset > -1)
+        {
             return true;
         }
 
@@ -288,7 +324,8 @@ class TwitchApi extends TwitchRequest
     {
         $validDirections = ['asc', 'desc'];
 
-        if (in_array(strtolower($direction), $validDirections)) {
+        if(in_array(strtolower($direction), $validDirections))
+        {
             return true;
         }
 
@@ -306,8 +343,10 @@ class TwitchApi extends TwitchRequest
         $validBroadcastTypes = ['archive', 'highlight', 'upload'];
 
         $broadcastTypeArray = explode(',', $broadcastType);
-        foreach ($broadcastTypeArray as $type) {
-            if (!in_array($type, $validBroadcastTypes)) {
+        foreach($broadcastTypeArray as $type)
+        {
+            if(!in_array($type, $validBroadcastTypes))
+            {
                 return false;
             }
         }
@@ -325,7 +364,8 @@ class TwitchApi extends TwitchRequest
     {
         $validStreamTypes = ['live', 'playlist', 'all'];
 
-        if (in_array(strtolower($streamType), $validStreamTypes)) {
+        if(in_array(strtolower($streamType), $validStreamTypes))
+        {
             return true;
         }
 

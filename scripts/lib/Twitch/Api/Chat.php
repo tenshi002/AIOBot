@@ -2,8 +2,8 @@
 
 namespace lib\Twitch\Api;
 
-use TwitchApi\Exceptions\InvalidIdentifierException;
-use TwitchApi\Exceptions\InvalidTypeException;
+use lib\Twitch\Exceptions\InvalidIdentifierException;
+use lib\Twitch\Exceptions\InvalidTypeException;
 
 trait Chat
 {

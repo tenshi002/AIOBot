@@ -1,9 +1,9 @@
 <?php
 
 namespace lib\Twitch\Api;
-use TwitchApi\Exceptions\InvalidIdentifierException;
-use TwitchApi\Exceptions\InvalidLimitException;
-use TwitchApi\Exceptions\InvalidTypeException;
+use lib\Twitch\Exceptions\InvalidIdentifierException;
+use lib\Twitch\Exceptions\InvalidLimitException;
+use lib\Twitch\Exceptions\InvalidTypeException;
 
 trait ChannelFeed
 {

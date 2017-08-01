@@ -2,9 +2,9 @@
 
 namespace lib\Twitch\Api;
 
-use TwitchApi\Exceptions\InvalidTypeException;
-use TwitchApi\Exceptions\TwitchApiException;
-use TwitchApi\Exceptions\UnsupportedOptionException;
+use lib\Twitch\Exceptions\InvalidTypeException;
+use lib\Twitch\Exceptions\TwitchApiException;
+use lib\Twitch\Exceptions\UnsupportedOptionException;
 
 trait Clips
 {

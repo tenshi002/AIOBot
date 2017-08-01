@@ -2,8 +2,8 @@
 
 namespace lib\Twitch\Api;
 
-use TwitchApi\Exceptions\InvalidLimitException;
-use TwitchApi\Exceptions\InvalidOffsetException;
+use lib\Twitch\Exceptions\InvalidLimitException;
+use lib\Twitch\Exceptions\InvalidOffsetException;
 
 trait Games
 {
