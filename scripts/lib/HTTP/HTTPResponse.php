@@ -106,6 +106,8 @@ class HTTPResponse
 
     protected $jsFiles = array();
 
+    protected $cache;
+
 
     /**
      * Encodage de la réponse
@@ -128,7 +130,7 @@ class HTTPResponse
     {
         if(is_null(self::$instance))
         {
-            self::$instance = new HTTPResponse($module,$controller,$action);
+            self::$instance = new HTTPResponse($module, $controller, $action);
         }
         return self::$instance;
     }
@@ -164,6 +166,7 @@ class HTTPResponse
     private function setDefaultBaseTemplate()
     {
         $this->baseTemplate = 'standard.twig';
+        $this->addTemplateVar('baseTemplate', $this->baseTemplate);
     }
 
     public function sendResponse()
@@ -200,18 +203,7 @@ class HTTPResponse
     private function displayTemplate()
     {
         $template = $this->getTwig()->load($this->template);
-        $this->content = $template->display($this->templatesVars);
-
-//        $this->content = $this->getTwig()->render(
-//            $this->baseTemplate,
-//            $this->templatesVars
-//        );
-//        $this->content .= $this->getTwig()->render(
-//            $this->template,
-//            $this->templatesVars
-//        );
-
-        echo $this->content;
+        $template->display($this->templatesVars);
     }
 
     private function displayJSON()
@@ -223,11 +215,6 @@ class HTTPResponse
         /* Compatibilité Chrome avec Json version fat */
         header('Content-Length: ' . strlen($json));
         echo $json;
-    }
-
-    private function redirect()
-    {
-        header('Location: ' . $this->content);
     }
 
     private function displayDownload()
@@ -262,6 +249,11 @@ class HTTPResponse
         }
     }
 
+    private function redirect()
+    {
+        header('Location: ' . $this->content);
+    }
+
     private function headerNoCache()
     {
         header('Cache-Control: no-cache, must-revalidate');
@@ -270,13 +262,30 @@ class HTTPResponse
 
     private function getTwig()
     {
+
         if(is_null($this->twig))
         {
+            if(Application::getInstance()->getConfigurateur('html.cache') == 0)
+            {
+                $this->cache = false;
+            }
+            else
+            {
+                $this->cache = true;
+            }
             $loader = new \Twig_Loader_Filesystem(array(
                 Application::getInstance()->getApplicationBasePath() . '/scripts/views'),
                 Application::getInstance()->getApplicationBasePath() . '/scripts/views/' . $this->module
             );
-            $this->twig = new \Twig_Environment($loader /*, array('cache' => Application::getInstance()->getApplicationBasePath() . '/cache')*/);
+            if($this->cache)
+            {
+                $this->twig = new \Twig_Environment($loader, array('cache' => Application::getInstance()->getApplicationBasePath() . '/cache'));
+            }
+            else
+            {
+                $this->twig = new \Twig_Environment($loader);
+            }
+
         }
         return $this->twig;
     }
