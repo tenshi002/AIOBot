@@ -1,17 +1,12 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: nico
- * Date: 01/08/17
- * Time: 14:50
- */
 
 namespace modeles;
 
-
+/**
+ * Item
+ */
 class Item
 {
-
     /**
      * @var integer
      */
@@ -173,3 +168,4 @@ class Item
         return $this->heal;
     }
 }
+

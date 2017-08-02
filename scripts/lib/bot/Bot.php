@@ -15,7 +15,7 @@ use Thread;
  * Date: 07/03/17
  * Time: 15:26
  */
-class Bot extends Thread
+class Bot
 {
     private static $instance = null;
     private static $botName;
@@ -35,18 +35,18 @@ class Bot extends Thread
     private $logger;
     private $pathLogger = __DIR__ . '/../../../logs';
 
-//    public static function getInstance()
-//    {
-//        if(is_null(self::$instance))
-//        {
-//            Application::getInstance()->getLogger()->addDebug('le bot n\'est pas instancie');
-//            self::$instance = new Bot();
-//        }
-//        Application::getInstance()->getLogger()->addDebug('Le bot est instancie');
-//        return self::$instance;
-//    }
+    public static function getInstance()
+    {
+        if(is_null(self::$instance))
+        {
+            Application::getInstance()->getLogger()->addDebug('le bot n\'est pas instancie');
+            self::$instance = new Bot();
+        }
+        Application::getInstance()->getLogger()->addDebug('Le bot est instancie');
+        return self::$instance;
+    }
 
-    private function __construct(User $user)
+    private function __construct()
     {
         $this->application = Application::getInstance();
         $this->serveurHostName = $this->application->getConfigurateur('irctwitch.serveurHostName');
@@ -54,24 +54,17 @@ class Bot extends Thread
         $this->password = $this->application->getConfigurateur('irctwitch.password');
         $this->nickname = $this->application->getConfigurateur('irctwitch.nickname');
         $this->username = $this->application->getConfigurateur('irctwitch.username');
-        $this->channel = $this->application->getConfigurateur('irctwitch.channel');
         self::$botName = $this->application->getConfigurateur('irctwitch.username');
 
+        // On log l'intégralité des échanges Clients <-> Serveur twitch
         $this->logger = new Logger('bot');
         $this->logger->pushHandler(new StreamHandler($this->getPathLogger() . '/botLog.txt'));
+
+        // initialisation du parser de message
         $this->ircParser = new ircParser();
 
-        $this->connexionServeur();
-    }
-
-    /**
-     * Execution du multi-thread
-     * Pour lancer le thread :
-     * $thread = new Bot();
-     * $thread->start();
-     */
-    public function run()
-    {
+        // Connexion au serveur
+        $this->initSocket();
         $this->iniConnexion();
     }
 
@@ -103,24 +96,34 @@ class Bot extends Thread
             {
                 $this->writeMessage("Je suis à votre service Maitre.");
             }
+            //limitation du temps entre chaque message envoyé au serveur
+            //Pour les modos c'est 100 et les classiques 20
+            sleep(1 / (100 / 30));
         }
     }
 
-    public function joinChannel()
+    /**
+     * Permet de joindre les channels
+     *
+     * @param User $user
+     */
+    public function joinChannel(User $user)
     {
         Application::getInstance()->getLogger()->addInfo('on rejoind le channel : ' . $this->getChannel());
-        fwrite($this->getSocket(), "PART " . $this->getChannel() . "\r\n");
+        fwrite($this->getSocket(), "JOIN #" . $user->getTwitchAccount() . "\r\n");
     }
 
     /**
      * Le bot quitte le chat
      * il peut arriver qu'il apparaisse encore dans la liste des viewers mais c'est normal
      * le temps que twitch actualise
+     *
+     * @param User $user
      */
-    public function leaveChannel()
+    public function leaveChannel(User $user)
     {
         Application::getInstance()->getLogger()->addInfo('on quitte le channel : ' . $this->getChannel());
-        fwrite($this->getSocket(), "PART " . $this->getChannel() . "\r\n");
+        fwrite($this->getSocket(), "PART #" . $user->getTwitchAccount() . "\r\n");
     }
 
     /**
@@ -160,9 +163,9 @@ class Bot extends Thread
     }
 
     /**
-     *
+     * On ouvre le socket vers twitch
      */
-    private function connexionServeur()
+    public function initSocket()
     {
         $this->setSocket(fsockopen($this->getServeurHostName(), $this->getPort(), $errno, $errstr, 30));
         stream_set_blocking($this->socket, false);
@@ -175,7 +178,11 @@ class Bot extends Thread
         fwrite($this->getSocket(), "PASS " . $this->getPassword() . "\r\n");
         fwrite($this->getSocket(), "USER " . $this->getUsername() . $this->getUsername() . " tati toto\r\n");
         fwrite($this->getSocket(), "NICK " . $this->getNickname() . "\r\n");
-        fwrite($this->getSocket(), "JOIN " . $this->getChannel() . "\r\n");
+
+        //Par défaut on rejoind le channel du bot
+        fwrite($this->getSocket(), "JOIN #" . $this->getUsername() . "\r\n");
+
+        //On active les droits de départ pour les membres twitch
         fwrite($this->getSocket(), "CAP REQ :twitch.tv/membership\r\n");
     }
 

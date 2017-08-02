@@ -51,13 +51,13 @@ class Commandes
         //1 - traitement de la commande :
         if(class_exists(ucfirst($nameCommande)))
         {
-            // alors c'est une classe avancée et donc personnalisée
+            // c'est une classe avancée et donc personnalisée
             // init de la classe
             $nameClasse = ucfirst($nameCommande);
             $commandeAvancee = new $nameClasse;
 
             // execution de la commande
-            $commandeAvancee->executeAction();
+            $commandeAvancee->executeAction($args);
 
         }
         else

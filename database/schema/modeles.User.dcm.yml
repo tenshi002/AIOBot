@@ -23,8 +23,8 @@ modeles\User:
     monnaie:
       type: integer
     permitLink:
-      type: string
-      nullable: true
+      type: boolean
+      default: false
     twitchAccount:
       type: string
     twitchType:
@@ -38,13 +38,20 @@ modeles\User:
     logo:
       type: string
     botAntiSpam:
-      type: string
+      type: boolean
+      default: false
     botAntiMaj:
-      type: string
+      type: boolean
+      default: false
     botAntiLink:
-      type: string
+      type: boolean
+      default: false
     botActiveClip:
-      type: string
+      type: boolean
+      default: false
+    botFiltreWords:
+      type: text
+      nullable: true
   oneToMany:
     quetes:
       targetEntity: modeles\Quest

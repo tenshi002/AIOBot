@@ -1,20 +1,12 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: nico
- * Date: 01/08/17
- * Time: 14:50
- */
 
 namespace modeles;
 
-
-use Doctrine\ORM\PersistentCollection;
-use lib\Application;
-
+/**
+ * User
+ */
 class User
 {
-
     /**
      * @var integer
      */
@@ -29,6 +21,16 @@ class User
      * @var integer
      */
     private $life;
+
+    /**
+     * @var integer
+     */
+    private $level;
+
+    /**
+     * @var integer
+     */
+    private $xp;
 
     /**
      * @var string
@@ -81,19 +83,34 @@ class User
     private $logo;
 
     /**
+     * @var string
+     */
+    private $botAntiSpam;
+
+    /**
+     * @var string
+     */
+    private $botAntiMaj;
+
+    /**
+     * @var string
+     */
+    private $botAntiLink;
+
+    /**
+     * @var string
+     */
+    private $botActiveClip;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $quetes;
 
     /**
-     * @var \modeles\Role
-     */
-    private $role;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $coffre;
+    private $roles;
 
     /**
      * Constructor
@@ -101,7 +118,21 @@ class User
     public function __construct()
     {
         $this->quetes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->coffre = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return User
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -112,14 +143,6 @@ class User
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -140,7 +163,6 @@ class User
      * Get pseudo
      *
      * @return string
-     * @deprecated A utiliser que pour l'affichage - Préférer getTwitchAccount()
      */
     public function getPseudo()
     {
@@ -169,6 +191,54 @@ class User
     public function getLife()
     {
         return $this->life;
+    }
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     *
+     * @return User
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set xp
+     *
+     * @param integer $xp
+     *
+     * @return User
+     */
+    public function setXp($xp)
+    {
+        $this->xp = $xp;
+
+        return $this;
+    }
+
+    /**
+     * Get xp
+     *
+     * @return integer
+     */
+    public function getXp()
+    {
+        return $this->xp;
     }
 
     /**
@@ -412,6 +482,102 @@ class User
     }
 
     /**
+     * Set botAntiSpam
+     *
+     * @param string $botAntiSpam
+     *
+     * @return User
+     */
+    public function setBotAntiSpam($botAntiSpam)
+    {
+        $this->botAntiSpam = $botAntiSpam;
+
+        return $this;
+    }
+
+    /**
+     * Get botAntiSpam
+     *
+     * @return string
+     */
+    public function getBotAntiSpam()
+    {
+        return $this->botAntiSpam;
+    }
+
+    /**
+     * Set botAntiMaj
+     *
+     * @param string $botAntiMaj
+     *
+     * @return User
+     */
+    public function setBotAntiMaj($botAntiMaj)
+    {
+        $this->botAntiMaj = $botAntiMaj;
+
+        return $this;
+    }
+
+    /**
+     * Get botAntiMaj
+     *
+     * @return string
+     */
+    public function getBotAntiMaj()
+    {
+        return $this->botAntiMaj;
+    }
+
+    /**
+     * Set botAntiLink
+     *
+     * @param string $botAntiLink
+     *
+     * @return User
+     */
+    public function setBotAntiLink($botAntiLink)
+    {
+        $this->botAntiLink = $botAntiLink;
+
+        return $this;
+    }
+
+    /**
+     * Get botAntiLink
+     *
+     * @return string
+     */
+    public function getBotAntiLink()
+    {
+        return $this->botAntiLink;
+    }
+
+    /**
+     * Set botActiveClip
+     *
+     * @param string $botActiveClip
+     *
+     * @return User
+     */
+    public function setBotActiveClip($botActiveClip)
+    {
+        $this->botActiveClip = $botActiveClip;
+
+        return $this;
+    }
+
+    /**
+     * Get botActiveClip
+     *
+     * @return string
+     */
+    public function getBotActiveClip()
+    {
+        return $this->botActiveClip;
+    }
+
+    /**
      * Add quete
      *
      * @param \modeles\Quest $quete
@@ -446,122 +612,6 @@ class User
     }
 
     /**
-     * Set role
-     *
-     * @param \modeles\Role $role
-     *
-     * @return User
-     */
-    public function setRole(\modeles\Role $role = null)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return PersistentCollection
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Add coffre
-     *
-     * @param \modeles\Item $coffre
-     *
-     * @return User
-     */
-    public function addCoffre(\modeles\Item $coffre)
-    {
-        $this->coffre[] = $coffre;
-
-        return $this;
-    }
-
-    /**
-     * Remove coffre
-     *
-     * @param \modeles\Item $coffre
-     */
-    public function removeCoffre(\modeles\Item $coffre)
-    {
-        $this->coffre->removeElement($coffre);
-    }
-
-    /**
-     * Get coffre
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCoffre()
-    {
-        return $this->coffre;
-    }
-    /**
-     * @var integer
-     */
-    private $level;
-
-    /**
-     * @var integer
-     */
-    private $xp;
-
-
-    /**
-     * Set level
-     *
-     * @param integer $level
-     *
-     * @return User
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * Get level
-     *
-     * @return integer
-     */
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    /**
-     * Set xp
-     *
-     * @param integer $xp
-     *
-     * @return User
-     */
-    public function setXp($xp)
-    {
-        $this->xp = $xp;
-
-        return $this;
-    }
-
-    /**
-     * Get xp
-     *
-     * @return integer
-     */
-    public function getXp()
-    {
-        return $this->xp;
-    }
-
-    /**
      * Add role
      *
      * @param \modeles\Role $role
@@ -570,7 +620,7 @@ class User
      */
     public function addRole(\modeles\Role $role)
     {
-        $this->role[] = $role;
+        $this->roles[] = $role;
 
         return $this;
     }
@@ -582,14 +632,8 @@ class User
      */
     public function removeRole(\modeles\Role $role)
     {
-        $this->role->removeElement($role);
+        $this->roles->removeElement($role);
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-
-    private $roles;
-
 
     /**
      * Get roles
@@ -601,3 +645,4 @@ class User
         return $this->roles;
     }
 }
+

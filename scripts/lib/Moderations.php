@@ -14,26 +14,14 @@ use modeles\User;
 class Moderations
 {
     static private $instance = null;
-    static private $statusAntiLink;
-    static private $statusAuthorizeClipTwitch;
-    static private $statusAntiSpamUppercase;
-    static private $statusAntiSpamEmote;
 
     private $logger;
-    private $user;
 
     public function __construct()
     {
         $applicationInstance = Application::getInstance();
         // fichier log modération
         $this->logger = $applicationInstance->getLogger('logger.moderation');
-        $this->user = new User();
-
-        //TODO récupérer la conf web à partir du modele User ?
-//        self::$statusAntiLink = $applicationInstance->getConfigurateur('moderation.antiLink');
-//        self::$statusAuthorizeClipTwitch = $applicationInstance->getConfigurateur('moderation.authorizeClipTwitch');
-//        self::$statusAntiSpamUppercase = $applicationInstance->getConfigurateur('moderation.antiSpamUppercase');
-//        self::$statusAntiSpamEmote = $applicationInstance->getConfigurateur('moderation.antiSpamEmote');
     }
 
     public static function getInstance()
@@ -46,17 +34,18 @@ class Moderations
     }
 
     /**
+     * @param User $user
      * @param $message string texte du stream à vérifier
      * @return bool
      */
-    public function antiLink($message)
+    public function antiLink(User $user, $message)
     {
         //TODO à verifier et completer !
 
         $regexp = '((http[s]?):\/\/)?([^:\/\s]+)\/([\w\-\.]+[^#?\s]+)?$';
         $regexpClipTwitch = '^(www\.|http[s]?)(:\/\/)?(www\.)?(clips\.twitch\.tv)(\/)?([\w\-\.]+[^#?\s]+)?$';
 
-        if(self::getStatusAuthorizeClipTwitch() === 1)
+        if($user->getBotActiveClip() === 1)
         {
             // 1 - on verifie si le texte contient un lien clip twitch
             $matchClip = preg_match('/' . $regexpClipTwitch . '/', $message);
@@ -109,36 +98,5 @@ class Moderations
         return false;
     }
 
-    /**
-     * @return bool|string
-     */
-    public static function getStatusAntiLink()
-    {
-        return self::$statusAntiLink;
-    }
-
-    /**
-     * @return bool|string
-     */
-    public static function getStatusAuthorizeClipTwitch()
-    {
-        return self::$statusAuthorizeClipTwitch;
-    }
-
-    /**
-     * @return bool|string
-     */
-    public static function getStatusAntiSpamUppercase()
-    {
-        return self::$statusAntiSpamUppercase;
-    }
-
-    /**
-     * @return bool|string
-     */
-    public static function getStatusAntiSpamEmote()
-    {
-        return self::$statusAntiSpamEmote;
-    }
 
 }
