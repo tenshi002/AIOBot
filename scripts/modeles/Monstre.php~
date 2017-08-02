@@ -1,12 +1,17 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: nico
+ * Date: 01/08/17
+ * Time: 14:50
+ */
 
 namespace modeles;
 
-/**
- * Monstre
- */
+
 class Monstre
 {
+
     /**
      * @var integer
      */
@@ -156,4 +161,3 @@ class Monstre
         return $this->coffre;
     }
 }
-
