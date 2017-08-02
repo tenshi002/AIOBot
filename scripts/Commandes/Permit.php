@@ -6,7 +6,7 @@
  * Time: 17:15
  */
 
-namespace CommandesAvancee\Commandes;
+namespace Commandes;
 
 
 use lib\Application;
