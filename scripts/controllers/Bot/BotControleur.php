@@ -17,6 +17,11 @@ use lib\Session;
 class BotControleur extends Controller
 {
 
+    public function executeInitSocket()
+    {
+        $bot = Bot::getInstance()->getInstance();
+    }
+
     public function executeJoinChannel()
     {
         //A completer
