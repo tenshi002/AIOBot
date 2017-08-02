@@ -1,31 +1,23 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: ssouppaya
- * Date: 13/03/17
- * Time: 16:14
- */
 
-namespace controllers;
+namespace controllers\Bot;
 
 use lib\Application;
 use lib\bot\Bot;
-use lib\Commandes;
 use lib\Controller;
-use lib\Session;
 
-class BotControleur extends Controller
+class BotController extends Controller
 {
 
     public function executeInitSocket()
     {
-        $bot = Bot::getInstance()->getInstance();
+        Bot::getInstance();
     }
 
     public function executeJoinChannel()
     {
         //A completer
-        $bot = Bot::getInstance()->getInstance();
+        $bot = Bot::getInstance();
         $session = Application::getInstance()->getSession();
         $user = $session->getUser();
 

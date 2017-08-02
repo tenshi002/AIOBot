@@ -30,7 +30,7 @@ class ircParser
     {
         $this->logger = Application::getInstance()->getLogger();
         $this->entityManager = Application::getInstance()->getEntityManager();
-        $this->session = $this->entityManager->getSession();
+        $this->session = Application::getInstance()->getSession();
         $this->userRepository = $this->entityManager->getRepository('modeles\User');
         //TODO A intégrer dans le configurateur
 //        $this->commandeCaractere = Application::getInstance()->getConfigurateur('commande.caractere');

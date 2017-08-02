@@ -45,7 +45,7 @@ class Routeur
         {
             if(!file_exists($this->route->getPHPPath()))
             {
-                throw new Exception('Fichier controlleur introuvable');
+                throw new Exception('Fichier controlleur introuvable' . $this->route->getPHPPath());
             }
             require_once $this->route->getPHPPath();
         }
