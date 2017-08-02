@@ -6,13 +6,11 @@
  * Time: 20:31
  */
 
-namespace Commandes;
+namespace commandes;
 
 
 use lib\Application;
 use lib\bot\Bot;
-use modeles\Personne;
-use repositories\PersonneRepository;
 
 class Duel
 {

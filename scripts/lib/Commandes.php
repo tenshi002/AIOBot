@@ -9,8 +9,6 @@
 namespace lib;
 
 
-use Exception;
-use modeles\Commande\Commande;
 use Monolog\Logger;
 use repositories\CommandeRepository;
 
@@ -19,10 +17,6 @@ class Commandes
 
     private static $instance = null;
 
-    /**
-     * @var Commande[]
-     */
-    private $commandes = array();
     private $entityManager;
 
     private $logger;
