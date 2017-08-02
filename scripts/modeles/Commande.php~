@@ -2,9 +2,11 @@
 
 namespace modeles;
 
+/**
+ * Commande
+ */
 class Commande
 {
-
     /**
      * @var integer
      */
@@ -94,11 +96,11 @@ class Commande
     /**
      * Add reponse
      *
-     * @param Texte $reponse
+     * @param \modeles\Texte $reponse
      *
      * @return Commande
      */
-    public function addReponse(Texte $reponse)
+    public function addReponse(\modeles\Texte $reponse)
     {
         $this->reponses[] = $reponse;
 
@@ -110,7 +112,7 @@ class Commande
      *
      * @param \modeles\Texte $reponse
      */
-    public function removeReponse(Texte $reponse)
+    public function removeReponse(\modeles\Texte $reponse)
     {
         $this->reponses->removeElement($reponse);
     }
@@ -125,3 +127,4 @@ class Commande
         return $this->reponses;
     }
 }
+

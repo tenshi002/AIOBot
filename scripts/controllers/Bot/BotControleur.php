@@ -16,31 +16,14 @@ use lib\Controller;
 class BotControleur extends Controller
 {
 
-    public function executeInitConnexion()
+    public function executeJoinChannel()
     {
-        $bot = Bot::getInstance();
-        $bot->iniConnexion();
-    }
+        //A completer
+        $bot = Bot::getInstance()->getInstance();
 
-    public function executeGetCommands($args)
-    {
-        $elusionne = Bot::getInstance();
-        $listeCommande = Commandes::getInstance()->getListeCommands();
-        $commandsList = '';
-        foreach($listeCommande as $commandeName)
-        {
-            $commandsList = $commandsList . $commandeName . " | ";
-            Application::getInstance()->getLogger()->addDebug($commandsList);
-        }
-        $elusionne->privateMessage($args[1], $commandsList);
-    }
+        $twitchAccount = 'tata';
 
-    public function executeQuit()
-    {
-        $logger = Application::getInstance()->getLogger();
-        $elusionne = Bot::getInstance();
-        $elusionne->writeMessage('A bientot Maitre');
-        $elusionne->leaveChannel();
-        $logger->addInfo('le bot a quitte le channel');
+        $bot->joinChannel($twitchAccount);
+        $bot->writeMessage('/me a rejoint le salon');
     }
 }

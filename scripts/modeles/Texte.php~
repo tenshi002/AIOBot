@@ -2,6 +2,9 @@
 
 namespace modeles;
 
+/**
+ * Texte
+ */
 class Texte
 {
     /**
@@ -32,7 +35,7 @@ class Texte
      *
      * @return Texte
      */
-    public function setText(Commande $text = null)
+    public function setText(\modeles\Commande $text = null)
     {
         $this->text = $text;
 
@@ -49,3 +52,4 @@ class Texte
         return $this->text;
     }
 }
+

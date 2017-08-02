@@ -48,7 +48,7 @@ class User
     private $monnaie;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $permitLink;
 
@@ -83,24 +83,29 @@ class User
     private $logo;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $botAntiSpam;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $botAntiMaj;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $botAntiLink;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $botActiveClip;
+
+    /**
+     * @var string
+     */
+    private $botFiltreWords;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -316,7 +321,7 @@ class User
     /**
      * Set permitLink
      *
-     * @param string $permitLink
+     * @param boolean $permitLink
      *
      * @return User
      */
@@ -330,7 +335,7 @@ class User
     /**
      * Get permitLink
      *
-     * @return string
+     * @return boolean
      */
     public function getPermitLink()
     {
@@ -484,7 +489,7 @@ class User
     /**
      * Set botAntiSpam
      *
-     * @param string $botAntiSpam
+     * @param boolean $botAntiSpam
      *
      * @return User
      */
@@ -498,7 +503,7 @@ class User
     /**
      * Get botAntiSpam
      *
-     * @return string
+     * @return boolean
      */
     public function getBotAntiSpam()
     {
@@ -508,7 +513,7 @@ class User
     /**
      * Set botAntiMaj
      *
-     * @param string $botAntiMaj
+     * @param boolean $botAntiMaj
      *
      * @return User
      */
@@ -522,7 +527,7 @@ class User
     /**
      * Get botAntiMaj
      *
-     * @return string
+     * @return boolean
      */
     public function getBotAntiMaj()
     {
@@ -532,7 +537,7 @@ class User
     /**
      * Set botAntiLink
      *
-     * @param string $botAntiLink
+     * @param boolean $botAntiLink
      *
      * @return User
      */
@@ -546,7 +551,7 @@ class User
     /**
      * Get botAntiLink
      *
-     * @return string
+     * @return boolean
      */
     public function getBotAntiLink()
     {
@@ -556,7 +561,7 @@ class User
     /**
      * Set botActiveClip
      *
-     * @param string $botActiveClip
+     * @param boolean $botActiveClip
      *
      * @return User
      */
@@ -570,11 +575,35 @@ class User
     /**
      * Get botActiveClip
      *
-     * @return string
+     * @return boolean
      */
     public function getBotActiveClip()
     {
         return $this->botActiveClip;
+    }
+
+    /**
+     * Set botFiltreWords
+     *
+     * @param string $botFiltreWords
+     *
+     * @return User
+     */
+    public function setBotFiltreWords($botFiltreWords)
+    {
+        $this->botFiltreWords = $botFiltreWords;
+
+        return $this;
+    }
+
+    /**
+     * Get botFiltreWords
+     *
+     * @return string
+     */
+    public function getBotFiltreWords()
+    {
+        return $this->botFiltreWords;
     }
 
     /**

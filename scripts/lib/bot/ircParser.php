@@ -5,6 +5,7 @@ namespace lib\bot;
 use lib\Application;
 use lib\Commandes;
 use lib\Moderations;
+use modeles\User;
 use Phergie\Irc\Parser;
 
 /**
@@ -21,14 +22,19 @@ class ircParser
     //TODO Refaire le traitement des commandes
     private $commandes;
     private $moderation;
+    private $entityManager;
+    private $userRepository;
+    private $session;
 
     public function __construct()
     {
         $this->logger = Application::getInstance()->getLogger();
+        $this->entityManager = Application::getInstance()->getEntityManager();
+        $this->session = $this->entityManager->getSession();
+        $this->userRepository = $this->entityManager->getRepository('modeles\User');
         //TODO A intégrer dans le configurateur
 //        $this->commandeCaractere = Application::getInstance()->getConfigurateur('commande.caractere');
         $this->commandeCaractere = '~';
-        //TODO Refaire le traitement des commandes
         $this->commandes = Commandes::getInstance();
         $this->moderation = Moderations::getInstance();
         $this->phergieParser = new Parser();
@@ -44,12 +50,14 @@ class ircParser
         $this->logger->addDebug('mon message');
         $this->logger->addDebug(print_r($donneesExplode, true));
 
-        $user = $donneesExplode['user'];
+        $viewerName = $donneesExplode['user'];
         $text = $donneesExplode['params']['text'];
 
         //On détecte si c'est une commande ou non
         $regexCommande = '^' . $this->commandeCaractere . '([a-z])+';
 
+
+        //<editor-fold desc="Detection d'une commande">
         if(preg_match('/' . $regexCommande . '/', trim($text)))
         {
             $datas = array();
@@ -59,33 +67,52 @@ class ircParser
             $nameCommande = array_splice($textExplode, 0, 1);
             // on ajoute l'utilisateur en premier element des arguments
             $datas['nameCommand'] = substr($nameCommande[0], 1);
-            $datas['user'] = $user;
+            $datas['user'] = $viewerName;
             $datas['datas'] = $textExplode;
 
             $this->commandes->getCommandes($datas['nameCommand'], $datas);
         }
+        //</editor-fold>
 
+        //
+        $this->moderation($viewerName, $text);
+
+    }
+
+    private function moderation(User $viewerName, $text)
+    {
+        /** @var $streamerName User*/
+        $streamerName = $this->userRepository->findOneBy(array('twitchAccount', $this->session->get('twitchAccount')));
+        /** @var $viewer User*/
+        $viewer = $this->userRepository->findOneBy(array('twitchAccount', $viewerName));
         // Ce n'est pas une commande mais juste du texte
         // 1 - on modère le texte :
-        if(Moderations::getStatusAntiLink() === 1)
+        if($streamerName->getBotAntiLink() && !$viewer->getPermitLink())
         {
-            $status = $this->moderation->antiLink($text);
+            $status = $this->moderation->antiLink($streamerName, $text);
             if($status)
             {
                 //on time out le viewer
+                Bot::getInstance()->timeoutViewer($viewer->getTwitchAccount());
             }
+        }
+        if($viewer->getPermitLink())
+        {
+            $viewer->setPermitLink(false);
         }
 
         // 2 - filtre anti-majuscule
-        if(Moderations::getStatusAntiSpamUppercase() === 1)
+        if($streamerName->getBotAntiSpam() === 1)
         {
             $status = $this->moderation->antiSpam($text);
             if($status)
             {
                 //on time out le viewer
+                Bot::getInstance()->timeoutViewer($viewer->getTwitchAccount());
             }
         }
     }
+
 
     /**
      * @return Parser
