@@ -2,9 +2,22 @@
 <html>
 <head>
     <title>{{ title }}</title>
-    <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/public/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="/public/css/ripples.min.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+
     {% for css_file in css_files %}
         <link rel="stylesheet" href="/public/css/{{ css_file }}"/>
     {% endfor %}
+
     <script type="text/javascript" src="/public/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/public/js/material.min.js"></script>
+    <script type="text/javascript" src="/public/js/ripples.min.js"></script>
+
+    <script type="text/javascript">
+        $.material.init()
+    </script>
 </head>
