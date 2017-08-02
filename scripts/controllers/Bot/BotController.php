@@ -11,7 +11,8 @@ class BotController extends Controller
 
     public function executeInitSocket()
     {
-        Bot::getInstance();
+        Bot::getInstance()->start();
+        $this->redirect('Dashboard', 'Index');
     }
 
     public function executeJoinChannel()

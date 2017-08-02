@@ -18,12 +18,6 @@ class Session
     const TWITCH_ACCESS_TOKEN = 'tat';
     const TWITCH_REFRESH_TOKEN = 'trt';
 
-    public function __construct()
-    {
-        session_start();
-        $this->attributes = array();
-    }
-
     public function destroy()
     {
         session_destroy();

@@ -1,12 +1,16 @@
 <?php
 
+session_start();
+
 use lib\Application;
-use lib\Autoloader;
+use Zend\Loader\AutoloaderFactory;
 
-require_once __DIR__ . '/scripts/lib/Autoloader.php';
-require_once __DIR__ . '/vendor/autoload.php';
+define('APPLICATION_PATH', __DIR__);
 
-Autoloader::register();
+require_once APPLICATION_PATH . '/vendor/autoload.php';
+require_once APPLICATION_PATH . '/configurations/config.php';
+
+AutoloaderFactory::factory($config);
 
 $app = Application::getInstance();
 $app->run();

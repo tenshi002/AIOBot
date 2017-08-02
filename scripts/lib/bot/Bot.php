@@ -3,11 +3,9 @@
 namespace lib\bot;
 
 use lib\Application;
-use lib\bot\ircParser;
 use modeles\User;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Thread;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,7 +13,7 @@ use Thread;
  * Date: 07/03/17
  * Time: 15:26
  */
-class Bot
+class Bot extends \Thread
 {
     private static $instance = null;
     private static $botName;
@@ -39,11 +37,20 @@ class Bot
     {
         if(is_null(self::$instance))
         {
-            Application::getInstance()->getLogger()->addDebug('le bot n\'est pas instancie');
             self::$instance = new Bot();
         }
-        Application::getInstance()->getLogger()->addDebug('Le bot est instancie');
         return self::$instance;
+    }
+
+    public function run()
+    {
+        if($this->isRunning())
+        {
+            return;
+        }
+        $this->initSocket();
+        $this->iniConnexion();
+        $this->writeMessage('HI !');
     }
 
     private function __construct()
@@ -62,10 +69,6 @@ class Bot
 
         // initialisation du parser de message
         $this->ircParser = new ircParser();
-
-        // Connexion au serveur
-        $this->initSocket();
-        $this->iniConnexion();
     }
 
     /**
@@ -128,6 +131,7 @@ class Bot
 
     /**
      * Ecrit un message dans le chat
+     *
      * @param $message
      */
     public function writeMessage($message)
@@ -153,6 +157,7 @@ class Bot
 
     /**
      * Envoie d'un mp au destinataire passé en paramètre
+     *
      * @param $destinataire string pseudo du destinataire
      * @param $message string message à envoyer
      */
@@ -165,7 +170,7 @@ class Bot
     /**
      * On ouvre le socket vers twitch
      */
-    public function initSocket()
+    private function initSocket()
     {
         $this->setSocket(fsockopen($this->getServeurHostName(), $this->getPort(), $errno, $errstr, 30));
         stream_set_blocking($this->socket, false);

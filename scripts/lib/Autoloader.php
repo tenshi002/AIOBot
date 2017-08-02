@@ -19,7 +19,15 @@ class Autoloader
      */
     static function autoload($class)
     {
-        require_once __DIR__ . '/../../scripts/' . str_replace('\\', '/', $class) . '.php';
+        if(class_exists($class))
+        {
+            return;
+        }
+        $path = __DIR__ . '/../../scripts/' . str_replace('\\', '/', $class) . '.php';
+        if(file_exists($path))
+        {
+            require_once $path;
+        }
     }
 
 }
