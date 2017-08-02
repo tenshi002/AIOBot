@@ -8,6 +8,8 @@
 
 namespace lib;
 
+use modeles\User;
+
 class Session
 {
     const USER = 'user';
@@ -34,6 +36,14 @@ class Session
     public function addattribute($key, $value)
     {
         $_SESSION[$key] = $value;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->getAttribute(self::USER);
     }
 
     /**

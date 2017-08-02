@@ -12,6 +12,7 @@ use lib\Application;
 use lib\bot\Bot;
 use lib\Commandes;
 use lib\Controller;
+use lib\Session;
 
 class BotControleur extends Controller
 {
@@ -20,10 +21,12 @@ class BotControleur extends Controller
     {
         //A completer
         $bot = Bot::getInstance()->getInstance();
+        $session = Application::getInstance()->getSession();
+        $user = $session->getUser();
 
-        $twitchAccount = 'tata';
+        $bot->joinChannel($user);
+        $bot->writeMessage('/me a rejoint le salon wallah');
 
-        $bot->joinChannel($twitchAccount);
-        $bot->writeMessage('/me a rejoint le salon');
+        $this->redirect('Dashboard', 'Index');
     }
 }
