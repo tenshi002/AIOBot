@@ -15,4 +15,5 @@ class Constantes
     const BASE_CONTROLLER = 'Index';
     const BASE_VIEW = 'Index';
     const BASE_ACTION = 'Index';
+    const BASE_ACTION_PROFILE = 'IndexProfile';
 }

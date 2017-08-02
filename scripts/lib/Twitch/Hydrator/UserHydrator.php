@@ -20,10 +20,26 @@ class UserHydrator
     private $_id;
     private $name;
     private $type;
+    private $email;
     private $bio;
     private $created_at;
     private $updated_at;
     private $logo;
+
+    private static $instance;
+
+    private function __construct()
+    {
+    }
+
+    public static function getInstance()
+    {
+        if(is_null(self::$instance))
+        {
+            self::$instance = new self;
+        }
+        return self::$instance;
+    }
 
     public function getOrCreate(array $json)
     {
@@ -40,6 +56,7 @@ class UserHydrator
             $user->setPseudo($this->display_name);
             $user->setTwitchAccount($this->name);
             $user->setTwitchType($this->type);
+            $user->setEmail($this->email);
             $user->setBio($this->bio);
             $user->setCreatedAt(new \DateTime($this->created_at));
             $user->setUpdatedAt(new \DateTime($this->updated_at));

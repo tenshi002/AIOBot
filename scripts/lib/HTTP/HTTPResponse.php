@@ -148,6 +148,10 @@ class HTTPResponse
         $this->controller = $controller;
         $this->action = $action;
         $this->contentType = self::CONTENT_TYPE_DEFAULT;
+        /* Tous les modules ont a disposition un fichier /public/css/nom_module/style.css ou /public/js/nom_module/scripts.js chargé automatiquement */
+        $this->addCSSFile($this->module . '/style.css');
+        $this->addJSFile($this->module . '/scripts.css');
+
         $this->addTemplateVar('twitchChannel', Application::getInstance()->getTwitchChannel());
 
     }

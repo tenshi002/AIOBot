@@ -7,12 +7,6 @@ use lib\HTTP\HTTPRequest;
 use lib\HTTP\HTTPResponse;
 use Monolog\Logger;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Tenshi002
- * Date: 16/02/2017
- * Time: 21:42
- */
 class Routeur
 {
     const NODE_ROUTE = 'route';
@@ -27,11 +21,12 @@ class Routeur
     {
         $this->logger = new Logger(__DIR__ . '/../../' . Application::getInstance()->getConfigurateur('logger.general'));
         $HTTPRequest = HTTPRequest::getInstance();
-        $this->route = new Route(
-            $HTTPRequest->getGetParameter('module', Constantes::BASE_MODULE),
-            $HTTPRequest->getGetParameter('controller', Constantes::BASE_CONTROLLER),
-            $HTTPRequest->getGetParameter('action', Constantes::BASE_ACTION)
-        );
+
+        $module = $HTTPRequest->getGetParameter('module', Constantes::BASE_MODULE);
+        $controller = $HTTPRequest->getGetParameter('controller', $module);
+        $action = $HTTPRequest->getGetParameter('action', Constantes::BASE_ACTION);
+
+        $this->route = new Route($module, $controller, $action);
     }
 
     public static function getInstance()

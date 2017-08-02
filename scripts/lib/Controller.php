@@ -47,6 +47,74 @@ abstract class Controller
         //        $this->bot = Bot::getInstance();
     }
 
+    protected function checkAuthOrRedirect()
+    {
+        if(!$this->isAuth())
+        {
+            $this->redirectIndex();
+        }
+    }
+
+    protected function isAuth()
+    {
+        if(Application::getInstance()->getSession()->getAttribute(Session::LOGGED_IN) === true)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Redirige vers une autre page
+     *
+     * @param string $module Le module vers lequel rediriger l'utilisateur
+     * @param string $action L'action à executer
+     * @param array $httpGetVars Tableau de variables supplémentaires à passer en GET
+     */
+    public function redirect($module, $action, array $httpGetVars = array(), $controller = null)
+    {
+        $url = $this->generateUrl($module, $action, $httpGetVars, $controller);
+        $this->redirectUrl($url);
+    }
+
+    /**
+     * Redirige vers une autre page
+     *
+     * @param $url
+     */
+    public function redirectUrl($url)
+    {
+        header('Location: ' . $url);
+        exit(0);
+    }
+
+    public function redirectIndex()
+    {
+        $this->redirect(Constantes::BASE_MODULE, Constantes::BASE_ACTION);
+    }
+
+    public function generateUrl($module, $action, array $httpGetVars = array(), $controller = null)
+    {
+        $queryData = array_merge(array(
+            'module' => $module,
+            'action' => $action
+        ), $httpGetVars);
+        if(isset($controller))
+        {
+            $queryData = array_merge(
+                $queryData, array('controller' => $controller)
+            );
+        }
+        $urlGetVars = http_build_query($queryData);
+        return 'index.php?' . $urlGetVars;
+    }
+
+    /****************************************
+     *
+     *          GETTERS - SETTERS
+     *
+     ***************************************/
+
     /**
      * @return mixed
      */

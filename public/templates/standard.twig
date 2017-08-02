@@ -1,23 +1,34 @@
 {% include 'common/header.twig' %}
 <body>
-{% include 'common/navigation.twig' %}
-<div class="content">
-	{% block content %}
+	<div class="home">
 
-	{% endblock %}
-</div>
+		{% include 'common/navigation.twig' %}
 
-{#<script type="text/javascript" src="/public/js/jquery-3.2.1.min.js"></script>#}
-{#<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>#}
-<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/public/js/material.min.js"></script>
-<script type="text/javascript" src="/public/js/ripples.min.js"></script>
-{% for js_file in js_files %}
-<script type="text/javascript" src="/public/js/{{ js_file }}"></script>
-{% endfor %}
-<script type="text/javascript">
-	$.material.init()
-</script>
+		<div class="content">
+			{% block content %}
+
+			{% endblock %}
+		</div>
+
+		<div class="sidebar">
+			{% block sidebar %}
+
+			{% endblock %}
+		</div>
+	</div>
+
+
+	{#<script type="text/javascript" src="/public/js/jquery-3.2.1.min.js"></script>#}
+	{#<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>#}
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/public/js/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/public/js/bootstrap/material.min.js"></script>
+	<script type="text/javascript" src="/public/js/bootstrap/ripples.min.js"></script>
+	{% for js_file in js_files %}
+	<script type="text/javascript" src="/public/js/{{ js_file }}"></script>
+	{% endfor %}
+	<script type="text/javascript">
+		$.material.init()
+	</script>
 </body>
 </html>

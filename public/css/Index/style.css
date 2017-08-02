@@ -1,0 +1,35 @@
+body {
+    background: url('../../img/bg-index.jpg') no-repeat center center fixed #000;
+    opacity:1;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.home {
+
+}
+
+.content {
+    display:table;
+    width: 100%;
+    height: 80%;
+}
+
+.text-vcenter {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.login-wrapper {
+    padding: 25px;
+    background: rgba(255,255,255,0.5);
+    box-shadow: #0f0f0f 5px 1px 10px;
+    color: #333;
+}
+
+body .home .btn-twitch {
+    font-size: 2rem;
+}

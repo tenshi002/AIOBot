@@ -1,0 +1,30 @@
+html, body  {
+    height: 100%;
+    width: 100%;
+}
+
+.home {
+    height: 100%;
+    position: relative;
+    color: white;
+    width: 100%;
+}
+
+
+body .home .btn-twitch,
+body .home .btn-twitch:hover,
+body .home .btn-twitch:not(.btn-raised):not(.btn-link):hover {
+    background-color: #4b367c;
+    color: #eee;
+    text-decoration: none;
+}
+
+body .home .btn-twitch:not(.btn-raised):not(.btn-link):hover {
+    background-color: #574a7c;
+    color: white;
+}
+
+
+.btn-twitch:hover a {
+    color: #fff;
+}

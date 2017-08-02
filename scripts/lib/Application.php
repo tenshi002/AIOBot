@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\YamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use lib\HTTP\HTTPRequest;
+use lib\Twitch\TwitchApi;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -24,6 +25,8 @@ class Application
 
     private $twitchChannel;
 
+    private $session;
+
     /**
      * @var $configurateur Configuration
      */
@@ -39,6 +42,8 @@ class Application
         //1- initialisation du fichier config
         $this->configurateur = new Configuration();
         $this->configurateur->initContainer();
+        $this->session = new Session();
+
     }
 
     /**
@@ -131,6 +136,14 @@ class Application
     public function getTwitchChannel()
     {
         return $this->twitchChannel;
+    }
+
+    /**
+     * @return Session
+     */
+    public function getSession()
+    {
+        return $this->session;
     }
 
 }
