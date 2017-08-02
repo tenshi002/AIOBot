@@ -149,13 +149,6 @@ class HTTPResponse
         $this->action = $action;
         $this->contentType = self::CONTENT_TYPE_DEFAULT;
         $this->addTemplateVar('twitchChannel', Application::getInstance()->getTwitchChannel());
-        $this->addJSFiles(array(
-            'menu.js'
-        ));
-        $this->addCSSFiles(array(
-            'menu.css',
-            'style.css'
-        ));
 
     }
 
