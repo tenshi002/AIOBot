@@ -12,6 +12,7 @@ namespace lib\HTTP;
 use Exception;
 use lib\Application;
 use lib\Constantes;
+use lib\Twitch\TwitchApi;
 
 class HTTPResponse
 {
@@ -149,11 +150,29 @@ class HTTPResponse
         $this->action = $action;
         $this->contentType = self::CONTENT_TYPE_DEFAULT;
         /* Tous les modules ont a disposition un fichier /public/css/nom_module/style.css ou /public/js/nom_module/scripts.js chargé automatiquement */
-        $this->addCSSFile($this->module . '/style.css');
-        $this->addJSFile($this->module . '/scripts.css');
+        if(file_exists(APPLICATION_PATH . '/public/css/' . $this->module . '/style.css'))
+        {
+            $this->addCSSFile($this->module . '/style.css');
+        }
+        if(file_exists(APPLICATION_PATH . '/public/js/' . $this->module . '/scripts.js'))
+        {
+            $this->addJSFile($this->module . '/scripts.js');
+        }
+        $twitchApi = TwitchApi::getInstance();
+        $this->addTemplateVars(array(
+            'twitchChannel' => Application::getInstance()->getTwitchChannel(),
+            'twitchApi' => $twitchApi
+        ));
+        $this->setTitle($this->module);
+    }
 
-        $this->addTemplateVar('twitchChannel', Application::getInstance()->getTwitchChannel());
-
+    public function setTitle($title)
+    {
+        if(!is_string($title))
+        {
+            throw new Exception('Le titre doit être une chaine de caractères !');
+        }
+        $this->addTemplateVar('title', 'AIOBot - Best Twitch bot WORLD (> °o°)> <(°u° <) - ' . $title);
     }
 
     private function setDefaultTemplate()
@@ -330,6 +349,15 @@ class HTTPResponse
         return $this->templatesVars;
     }
 
+    public function getTemplatesVar($key)
+    {
+        if(isset($this->templatesVars[$key]))
+        {
+            return $this->templatesVars[$key];
+        }
+        return null;
+    }
+
     public function addTemplateVar($name, $value)
     {
         $this->templatesVars[$name] = $value;
@@ -374,4 +402,23 @@ class HTTPResponse
         $this->templatesVars['css_files'] = $this->cssFiles;
         $this->templatesVars['js_files'] = $this->jsFiles;
     }
+
+    /**
+     * @param string $contentType
+     */
+    public function setContentType($contentType)
+    {
+        $this->contentType = $contentType;
+    }
+
+    public function setJSONFlashMessageContent($title, $message, $type)
+    {
+        $this->content = array(
+            'title' => $title,
+            'message' => $message,
+            'type' => $type
+        );
+    }
+
+
 }

@@ -8,6 +8,7 @@
 
 namespace controllers\Auth;
 
+use lib\Application;
 use lib\Auth\Auth;
 use lib\Controller;
 use lib\Twitch\Hydrator\UserHydrator;
@@ -35,5 +36,12 @@ class AuthController extends Controller
         $user = UserHydrator::getInstance()->getOrCreate($userTwitch);
         $this->login($user, $code, $accessCredentials);
         $this->redirect('Dashboard', 'Index');
+    }
+
+    public function executeLogout()
+    {
+        $session = Application::getInstance()->getSession();
+        $session->destroy();
+        $this->redirectIndex();
     }
 }

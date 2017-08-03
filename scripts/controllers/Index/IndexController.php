@@ -17,10 +17,9 @@ class IndexController extends Controller
         {
             $this->redirect('Dashboard','Index');
         }
-        $twitchApi = TwitchApi::getInstance();
-        $this->getHTTPResponse()->addTemplateVars(array(
-            'twitchApi' => $twitchApi
-        ));
+//        $this->getHTTPResponse()->addTemplateVars(array(
+//            'title' => 'AIOBot - Best Twitch bot WORLD (> °o°)> <(°u° <)'
+//        ));
     }
 
     public function executeIndexProfile()

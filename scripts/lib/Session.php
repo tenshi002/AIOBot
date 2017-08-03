@@ -9,6 +9,7 @@
 namespace lib;
 
 use modeles\User;
+use repositories\UserRepository;
 
 class Session
 {
@@ -37,7 +38,12 @@ class Session
      */
     public function getUser()
     {
-        return $this->getAttribute(self::USER);
+        $userId = $this->getAttribute(self::USER);
+        $em = Application::getInstance()->getEntityManager();
+        /** @var UserRepository $userRepo */
+        $userRepo = $em->getRepository('\modeles\User');
+        $user = $userRepo->findOneBy(array('id' => $userId));
+        return $user;
     }
 
     /**

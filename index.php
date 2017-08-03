@@ -14,3 +14,12 @@ AutoloaderFactory::factory($config);
 
 $app = Application::getInstance();
 $app->run();
+
+
+/**
+ * DOC
+ *
+ * Lien icons : https://material.io/icons/
+ * Lien CSS : http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html
+ * Lien Material : http://fezvrasta.github.io/bootstrap-material-design/
+ */
