@@ -126,7 +126,7 @@ class TwitchApi extends TwitchRequest
                 $options = array(
                     'client_id' => 'mkhfnaigie6r3v00odkhslexv31n28',
                     'client_secret' => 'csladm4tcrvh6v40zohtinqg6ho7te',
-                    'redirect_uri' => 'http://localhost/login'
+                    'redirect_uri' => 'http://localhost'
                 );
             }
             self::$instance = new TwitchApi($options);

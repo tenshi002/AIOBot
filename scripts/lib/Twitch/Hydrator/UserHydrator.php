@@ -65,6 +65,7 @@ class UserHydrator
             $user->setMonnaie(0);
             $user->setLevel(Stats::LEVEL_MIN);
             $user->setLife(Stats::getHP(Stats::LEVEL_MIN));
+            $user->setPermitLink(false);
             if($user->getTwitchAccount() === Application::getInstance()->getTwitchChannel())
             {
                 $role = $roleRepo->getAdminRole();

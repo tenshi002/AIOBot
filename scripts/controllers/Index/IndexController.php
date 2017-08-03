@@ -15,6 +15,11 @@ class IndexController extends Controller
 
     public function executeIndex()
     {
+        if(!is_null($this->getHTTPRequest()->getGetParameter('code')) && !is_null($this->getHTTPRequest()->getGetParameter('scope')))
+        {
+            // Login depuis twitch -> redirection
+            $this->redirect('Auth', 'Index', $this->getHTTPRequest()->getGetParameters());
+        }
         // Si la session php est active on va sur le dashboard
         $session = Application::getInstance()->getSession();
         if($session->getAttribute(Session::LOGGED_IN) === true)

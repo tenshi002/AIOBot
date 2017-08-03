@@ -93,7 +93,7 @@ class HTTPRequest
     }
 
     /**
-     * Détermine si la requête est un appel Ajax
+     * Dï¿½termine si la requï¿½te est un appel Ajax
      *
      * @return boolean TRUE si appel Ajax
      */
@@ -131,6 +131,14 @@ class HTTPRequest
             return $value;
         }
         return $default;
+    }
+
+    /**
+     * Returns the value of all GET parameter.
+     */
+    public function getGetParameters()
+    {
+        return $this->getParameters;
     }
 
     /**
