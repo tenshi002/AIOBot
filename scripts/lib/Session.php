@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: nico
- * Date: 02/08/17
- * Time: 15:41
- */
 
 namespace lib;
 
@@ -36,9 +30,13 @@ class Session
     /**
      * @return User
      */
-    public function getUser()
+    public function getUserFromSession()
     {
         $userId = $this->getAttribute(self::USER);
+        if(is_null($userId))
+        {
+            return null;
+        }
         $em = Application::getInstance()->getEntityManager();
         /** @var UserRepository $userRepo */
         $userRepo = $em->getRepository('\modeles\User');

@@ -19,51 +19,44 @@ class DashboardController extends Controller
     {
         $this->checkAuthOrRedirect();
         $session = Application::getInstance()->getSession();
-        $user = $session->getUser();
+        $user = $session->getUserFromSession();
         $this->getHTTPResponse()->addTemplateVar('user', $user);
 
     }
 
     public function executeSaveModeration()
     {
-//        $botAntiLink = $this->getHTTPRequest()->getPostParameter('bot_filtre_link', false);
-//        $botActiveClip = $this->getHTTPRequest()->getPostParameter('bot_clip_link', false);
-//        $botAntiMaj = $this->getHTTPRequest()->getPostParameter('bot_maj_spam', false);
-//        $botAntiSpam = $this->getHTTPRequest()->getPostParameter('bot_emote_spam', false);
+        $botAntiLink = $this->getHTTPRequest()->getPostParameter('bot_filtre_link', false);
+        $botActiveClip = $this->getHTTPRequest()->getPostParameter('bot_clip_link', false);
+        $botAntiMaj = $this->getHTTPRequest()->getPostParameter('bot_maj_spam', false);
+        $botAntiSpam = $this->getHTTPRequest()->getPostParameter('bot_emote_spam', false);
 
-        $user = Application::getInstance()->getSession()->getUser();
-        if(isset($datas['bot_filtre_link']) && $datas['bot_filtre_link'] === 'on')
+        $user = Application::getInstance()->getSession()->getUserFromSession();
+        if($botAntiLink !== false)
         {
             $user->setBotAntiLink(true);
-        }
-        else
-        {
+        } else {
             $user->setBotAntiLink(false);
         }
-        if(isset($datas['bot_clip_link']) && $datas['bot_clip_link'] === 'on')
+        if($botActiveClip !== false)
         {
             $user->setBotActiveClip(true);
-        }
-        else
-        {
+        } else {
             $user->setBotActiveClip(false);
         }
-        if(isset($datas['bot_maj_spam']) && $datas['bot_maj_spam'] === 'on')
+        if($botAntiMaj !== false)
         {
             $user->setBotAntiMaj(true);
-        }
-        else
-        {
+        } else {
             $user->setBotAntiMaj(false);
         }
-        if(isset($datas['bot_emote_spam']) && $datas['bot_emote_spam'] === 'on')
+        if($botAntiSpam !== false)
         {
             $user->setBotAntiSpam(true);
-        }
-        else
-        {
+        } else {
             $user->setBotAntiSpam(false);
         }
+
         $em = Application::getInstance()->getEntityManager();
         $em->persist($user);
         $em->flush();

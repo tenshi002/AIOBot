@@ -150,13 +150,13 @@ class HTTPResponse
         $this->action = $action;
         $this->contentType = self::CONTENT_TYPE_DEFAULT;
         /* Tous les modules ont a disposition un fichier /public/css/nom_module/style.css ou /public/js/nom_module/scripts.js chargé automatiquement */
-        if(file_exists(APPLICATION_PATH . '/public/css/' . $this->module . '/style.css'))
+        if(file_exists(APPLICATION_PATH . '/public/css/' . $this->module . '.css'))
         {
-            $this->addCSSFile($this->module . '/style.css');
+            $this->addCSSFile($this->module . '.css');
         }
-        if(file_exists(APPLICATION_PATH . '/public/js/' . $this->module . '/scripts.js'))
+        if(file_exists(APPLICATION_PATH . '/public/js/' . $this->module . '.js'))
         {
-            $this->addJSFile($this->module . '/scripts.js');
+            $this->addJSFile($this->module . '.js');
         }
         $twitchApi = TwitchApi::getInstance();
         $this->addTemplateVars(array(

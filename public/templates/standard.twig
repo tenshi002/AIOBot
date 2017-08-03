@@ -22,6 +22,23 @@
 	</div>
 </div>
 
+<div class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 {#<script type="text/javascript" src="/public/js/jquery-3.2.1.min.js"></script>#}
 {#<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>#}
@@ -30,7 +47,7 @@
 <script type="text/javascript" src="/public/js/bootstrap/bootstrap.min.js"></script>
 <script type="text/javascript" src="/public/js/bootstrap/material.min.js"></script>
 <script type="text/javascript" src="/public/js/bootstrap/ripples.min.js"></script>
-<script type="text/javascript" src="/public/js/general.js"></script>
+<script type="text/javascript" src="/public/js/util.js"></script>
 {% for js_file in js_files %}
 	<script type="text/javascript" src="/public/js/{{ js_file }}"></script>
 {% endfor %}

@@ -23,7 +23,8 @@ body .home .btn-twitch:not(.btn-raised):not(.btn-link):hover {
     text-decoration: none;
 }
 
-body .home .btn-twitch:not(.btn-raised):not(.btn-link):hover {
+body .home .btn-twitch:not(.btn-raised):not(.btn-link):hover,
+body .home .btn-twitch:not(.btn-raised):not(.btn-link):visited {
     background-color: #574a7c;
     color: white;
 }

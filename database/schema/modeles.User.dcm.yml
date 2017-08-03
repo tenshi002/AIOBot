@@ -52,6 +52,9 @@ modeles\User:
     botFiltreWords:
       type: text
       nullable: true
+    token:
+      type: string
+      nullable: true
   oneToMany:
     quetes:
       targetEntity: modeles\Quest
