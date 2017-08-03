@@ -99,4 +99,24 @@ class Moderations
     }
 
 
+    /**
+     * @param User $streamer
+     * @param $text
+     * @return bool
+     */
+    public function wordsCensured(User $streamer, $text)
+    {
+        $wordsCensuredString = $streamer->getBotFiltreWords();
+        $wordsCensured = explode(';', $wordsCensuredString);
+        foreach($wordsCensured as $wordCensured)
+        {
+            $regexp = '(' . $wordCensured . ')';
+            $result = preg_match('/' . $regexp . '/', $text);
+            if($result === 1 && $result !== false)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
