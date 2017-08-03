@@ -3,6 +3,7 @@
 namespace lib\Auth;
 
 use lib\Application;
+use lib\Cookie;
 use lib\Session;
 use modeles\User;
 
@@ -31,6 +32,8 @@ trait Auth
         $session = Application::getInstance()->getSession();
         $session->addattribute(Session::LOGGED_IN, false);
         $session->destroy();
+        Cookie::deleteCookie(Cookie::TOKEN_KEY);
+        Cookie::deleteCookie(Cookie::USER_KEY);
     }
 
 }

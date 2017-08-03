@@ -63,8 +63,7 @@ class AuthController extends Controller
 
     public function executeLogout()
     {
-        $session = Application::getInstance()->getSession();
-        $session->destroy();
+        $this->logout();
         $this->redirectIndex();
     }
 }

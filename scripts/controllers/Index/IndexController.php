@@ -7,7 +7,6 @@ use lib\Auth\Auth;
 use lib\Controller;
 use lib\Cookie;
 use lib\Session;
-use lib\Twitch\Hydrator\UserHydrator;
 use modeles\User;
 
 class IndexController extends Controller
@@ -33,11 +32,6 @@ class IndexController extends Controller
 
     public function executeIndexProfile()
     {
-        $actualUser = Application::getInstance()->getTwitchChannel();
-        $channelIdentifier = $this->getTwitchAPI()->getUserByUsername($actualUser);
-        $user = UserHydrator::getInstance()->getOrCreate($channelIdentifier['users'][0]);
-        $this->getHTTPResponse()->addTemplateVars(array(
-            'user' => $user
-        ));
+        
     }
 }
