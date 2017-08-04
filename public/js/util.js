@@ -1,27 +1,27 @@
 var Util = {
-    checkSession: function() {
+    checkSession: function () {
         $.ajax({
             url: '/?module=Auth&action=check',
             type: 'GET',
             success: function (json) {
-                if(json.session !== true) {
+                if (json.session !== true) {
                     Util.redirect(json.url);
                 }
             }
         });
     },
-    checkSessionFlashMessage: function() {
+    checkSessionFlashMessage: function () {
         $.ajax({
             url: '/?module=Request&action=checkSessionFlashMessage',
             type: 'GET',
             success: function (json) {
-                if(json.flashMessage !== false) {
+                if (json.flashMessage !== false) {
                     Util.displayFlashMessage(json.title, json.message, json.type);
                 }
             }
         });
     },
-    saveConfig: function($url, $type, $data) {
+    saveConfig: function ($url, $type, $data) {
         Util.checkSession();
         $.ajax({
             url: $url,
@@ -35,19 +35,19 @@ var Util = {
             }
         });
     },
-    redirect: function(url) {
+    redirect: function (url) {
         window.location.replace(url);
     },
-    notifySuccess: function(title, msg) {
+    notifySuccess: function (title, msg) {
         Util.displayFlashMessage(title, msg, 'success');
     },
-    notifyInfo: function(title, msg) {
+    notifyInfo: function (title, msg) {
         Util.displayFlashMessage(title, msg, 'info');
     },
-    notifyWarning: function(title, msg) {
+    notifyWarning: function (title, msg) {
         Util.displayFlashMessage(title, msg, 'warning');
     },
-    notifyError: function(title, msg) {
+    notifyError: function (title, msg) {
         Util.displayFlashMessage(title, msg, 'danger');
     },
     displayFlashMessage: function (title, message, type) {
@@ -56,25 +56,56 @@ var Util = {
         $.ajax({
             url: '/?module=Request&action=getFlashMessageHTML',
             type: 'POST',
-            data: {title:title, message:message, type:type},
+            data: {title: title, message: message, type: type},
             success: function (response) {
                 //console.log('response : ' + response);
                 $content = response;
             },
-            complete: function() {
+            complete: function () {
                 $div.html($content);
                 $div.fadeIn(100);
             }
         });
-        return $content;
     },
-    displayModal: function(title, content) {
+    displayModal: function (title, content) {
         var $title = $('.modal-title');
         var $content = $('.modal-body');
         $title.text(title);
         $content.html(content);
         $('.modal').modal();
+    },
+    ajax: function (url, method, data, loaderDiv) {
+        Util.waiting(loaderDiv);
+        var $result = '';
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            success: function (response) {
+                $result = response;
+            },
+            error: function (json) {
+                Util.notifyError(json.title, json.message);
+            },
+            complete: function (response) {
+                return $result;
+            }
+        })
+    },
+    waiting: function (element) {
+    },
+    waitingStop: function (element) {
     }
 };
+
+var Twitch = {
+    getViewerListJSON: function () {
+        return Util.ajax('/?module=Request&action=getJSONViewerList', 'GET');
+    },
+    getViewerListHTML: function() {
+        return Util.ajax('/?module=Request&action=getHTMLViewerList', 'GET')
+    }
+};
+
 
 Util.checkSessionFlashMessage();

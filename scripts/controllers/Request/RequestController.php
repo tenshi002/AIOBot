@@ -48,5 +48,41 @@ class RequestController extends Controller
         $this->getHTTPResponse()->setContent(array('flashMessage' => $flash));
     }
 
+    public function executeGetHTMLViewerList()
+    {
+        $session = Application::getInstance()->getSession();
+        $user = $session->getUserFromSession();
+        if(is_null($user))
+        {
+            $this->getHTTPResponse()->setContentType(HTTPResponse::CONTENT_TYPE_JSON);
+            $this->getHTTPResponse()->setJSONFlashMessageContent(
+                'Erreur connexion', 'veuillez vous reconnecter à l\'application !', 'danger'
+            );
+        }
+        else
+        {
+            $viewerList = $this->getTwitchAPI()->getViewerList($user);
+            $this->getHTTPResponse()->addTemplateVar('viewerList', $viewerList);
+            $this->getHTTPResponse()->setTemplate('viewerList.twig');
+        }
+    }
+
+    public function executeGetJSONViewerList()
+    {
+        $this->getHTTPResponse()->setContentType(HTTPResponse::CONTENT_TYPE_JSON);
+        $session = Application::getInstance()->getSession();
+        $user = $session->getUserFromSession();
+        if(is_null($user))
+        {
+            $this->getHTTPResponse()->setJSONFlashMessageContent(
+                'Erreur connexion', 'veuillez vous reconnecter à l\'application !', 'danger'
+            );
+        }
+        else
+        {
+            $viewerList = $this->getTwitchAPI()->getViewerList($user);
+            $this->getHTTPResponse()->setContent($viewerList);
+        }
+    }
 
 }

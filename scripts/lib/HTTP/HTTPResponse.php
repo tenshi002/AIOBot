@@ -416,7 +416,7 @@ class HTTPResponse
         $this->contentType = $contentType;
     }
 
-    public function setJSONFlashMessageContent($title, $message, $type)
+    public function setJSONFlashMessageContent($title, $message, $type = 'info')
     {
         $this->content = array(
             'title' => $title,

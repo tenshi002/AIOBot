@@ -14,6 +14,7 @@ class DashboardController extends Controller
         $this->checkAuthOrRedirect();
         $session = Application::getInstance()->getSession();
         $user = $session->getUserFromSession();
+        $test = $this->getTwitchAPI()->getViewerList($user);
         $this->getHTTPResponse()->addTemplateVar('user', $user);
     }
 
