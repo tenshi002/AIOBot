@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: nico
- * Date: 02/08/17
- * Time: 16:14
- */
 
 namespace controllers\Dashboard;
 
@@ -21,7 +15,6 @@ class DashboardController extends Controller
         $session = Application::getInstance()->getSession();
         $user = $session->getUserFromSession();
         $this->getHTTPResponse()->addTemplateVar('user', $user);
-
     }
 
     public function executeSaveModeration()

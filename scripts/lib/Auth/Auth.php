@@ -14,8 +14,11 @@ trait Auth
         $session = Application::getInstance()->getSession();
         $session->addattribute(Session::USER, $user->getId());
         $session->addattribute(Session::LOGGED_IN, true);
-        $session->addattribute(Session::TWITCH_ACCESS_TOKEN, $accessCredentials['access_token']);
-        $session->addattribute(Session::TWITCH_REFRESH_TOKEN, $accessCredentials['refresh_token']);
+        if(!is_null($accessCredentials) && isset($accessCredentials['access_token']) && isset($accessCredentials['refresh_token']))
+        {
+            $session->addattribute(Session::TWITCH_ACCESS_TOKEN, $accessCredentials['access_token']);
+            $session->addattribute(Session::TWITCH_REFRESH_TOKEN, $accessCredentials['refresh_token']);
+        }
         $session->addattribute(Session::TWITCH_CODE, $code);
     }
 

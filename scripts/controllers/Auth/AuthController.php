@@ -34,12 +34,20 @@ class AuthController extends Controller
             $this->redirectIndex();
         }
         $accessCredentials = $this->getTwitchAPI()->getAccessCredentials($code);
-        $userTwitch = $this->getTwitchAPI()->getAuthenticatedUser($accessCredentials['access_token']);
-        $user = UserHydrator::getInstance()->getOrCreate($userTwitch);
-        $user->setToken($accessCredentials['access_token']);
-        $this->login($user, $code, $accessCredentials);
-        Cookie::saveUserCookie($user);
-        $this->redirect('Dashboard', 'Index');
+        if(isset($accessCredentials['access_token']))
+        {
+            $userTwitch = $this->getTwitchAPI()->getAuthenticatedUser($accessCredentials['access_token']);
+            $user = UserHydrator::getInstance()->getOrCreate($userTwitch);
+            $user->setToken($accessCredentials['access_token']);
+            $this->login($user, $code, $accessCredentials);
+            Cookie::saveUserCookie($user);
+            $this->redirect('Dashboard', 'Index');
+        }
+        else
+        {
+
+        }
+
     }
 
     /**

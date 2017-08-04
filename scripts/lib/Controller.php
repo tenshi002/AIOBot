@@ -36,6 +36,12 @@ abstract class Controller
      */
     protected $bot;
 
+    public function executeIndex()
+    {
+        $this->getHTTPResponse()->setContentType(HTTPResponse::CONTENT_TYPE_JSON);
+        $this->getHTTPResponse()->setContent(array());
+    }
+
     public function __construct($module, $controller, $action)
     {
         $this->module = $module;

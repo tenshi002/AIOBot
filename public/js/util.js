@@ -10,6 +10,17 @@ var Util = {
             }
         });
     },
+    checkSessionFlashMessage: function() {
+        $.ajax({
+            url: '/?module=Request&action=checkSessionFlashMessage',
+            type: 'GET',
+            success: function (json) {
+                if(json.flashMessage !== false) {
+                    Util.displayFlashMessage(json.title, json.message, json.type);
+                }
+            }
+        });
+    },
     saveConfig: function($url, $type, $data) {
         Util.checkSession();
         $.ajax({
@@ -17,41 +28,53 @@ var Util = {
             type: $type,
             data: $data,
             success: function (json) {
-                Util.notifyFlash(json.title, json.message, json.type);
+                Util.notifySuccess(json.title, json.message);
             },
             error: function (json) {
-                Util.notifyError(json.message);
+                Util.notifyError(json.title, json.message);
             }
         });
     },
     redirect: function(url) {
         window.location.replace(url);
     },
-    notifyError: function(message) {
-        Util.notifyFlash('Une erreur est survenue !', message, 'danger');
+    notifySuccess: function(title, msg) {
+        Util.displayFlashMessage(title, msg, 'success');
     },
-    notifyFlash: function(title, msg, type) {
+    notifyInfo: function(title, msg) {
+        Util.displayFlashMessage(title, msg, 'info');
+    },
+    notifyWarning: function(title, msg) {
+        Util.displayFlashMessage(title, msg, 'warning');
+    },
+    notifyError: function(title, msg) {
+        Util.displayFlashMessage(title, msg, 'danger');
+    },
+    displayFlashMessage: function (title, message, type) {
+        var $content = '';
         var $div = $('.flashmessages');
-        var content = '<div class="alert alert-' + type + ' alert-dismissible fade in" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                '<span aria-hidden="true">&times;</span></button>' +
-                '<strong>' + title + '</strong><p>' + msg + '</p></div>';
-        var currentContent = $div.html();
-        var newContent = currentContent + content;
-        if (currentContent.indexOf(title) >= 0) {
-            newContent = currentContent;
-        }
-        $div.html(newContent);
-        $div.fadeIn(1);
+        $.ajax({
+            url: '/?module=Request&action=getFlashMessageHTML',
+            type: 'POST',
+            data: {title:title, message:message, type:type},
+            success: function (response) {
+                //console.log('response : ' + response);
+                $content = response;
+            },
+            complete: function() {
+                $div.html($content);
+                $div.fadeIn(100);
+            }
+        });
+        return $content;
     },
-    showModal: function(title, html, saveButton) {
+    displayModal: function(title, content) {
         var $title = $('.modal-title');
         var $content = $('.modal-body');
-        var htmlSauvegarder = '';
-        if(saveButton) {
-            htmlSauvegarder = '<button type="button" class="btn btn-primary">Sauvegarder</button>';
-        }
         $title.text(title);
-        $content.html(hmtl);
+        $content.html(content);
         $('.modal').modal();
     }
 };
+
+Util.checkSessionFlashMessage();

@@ -217,6 +217,11 @@ class HTTPResponse
         }
     }
 
+    public function getRenderedTemplate()
+    {
+        return $this->getTwig()->render($this->template, $this->templatesVars);
+    }
+
     private function displayTemplate()
     {
         $template = $this->getTwig()->load($this->template);
