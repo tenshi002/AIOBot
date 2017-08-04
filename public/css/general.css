@@ -6,8 +6,12 @@ html, body  {
 .home {
     height: 100%;
     position: relative;
-    color: white;
+    /*color: white;*/
     width: 100%;
+}
+
+.content {
+    padding: 0 25px;
 }
 
 
@@ -19,12 +23,22 @@ body .home .btn-twitch:not(.btn-raised):not(.btn-link):hover {
     text-decoration: none;
 }
 
-body .home .btn-twitch:not(.btn-raised):not(.btn-link):hover {
+body .home .btn-twitch:not(.btn-raised):not(.btn-link):hover,
+body .home .btn-twitch:not(.btn-raised):not(.btn-link):visited {
     background-color: #574a7c;
     color: white;
 }
 
+.flash {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+}
 
 .btn-twitch:hover a {
     color: #fff;
+}
+
+a.btn.btn-dashboard {
+    margin-right: 10px;
 }

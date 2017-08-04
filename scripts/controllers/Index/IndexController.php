@@ -3,33 +3,40 @@
 namespace controllers\Index;
 
 use lib\Application;
+use lib\Auth\Auth;
 use lib\Controller;
+use lib\Cookie;
 use lib\Session;
-use lib\Twitch\Hydrator\UserHydrator;
-use lib\Twitch\TwitchApi;
+use modeles\User;
 
 class IndexController extends Controller
 {
+    use Auth;
+
     public function executeIndex()
     {
+        if(!is_null($this->getHTTPRequest()->getGetParameter('code')) && !is_null($this->getHTTPRequest()->getGetParameter('scope')))
+        {
+            // Login depuis twitch -> redirection
+            $this->redirect('Auth', 'Index', $this->getHTTPRequest()->getGetParameters());
+        }
+        // Si la session php est active on va sur le dashboard
         $session = Application::getInstance()->getSession();
         if($session->getAttribute(Session::LOGGED_IN) === true)
         {
-            $this->redirect('Dashboard','Index');
+            $this->redirect('Dashboard', 'Index');
         }
-        $twitchApi = TwitchApi::getInstance();
-        $this->getHTTPResponse()->addTemplateVars(array(
-            'twitchApi' => $twitchApi
-        ));
+        // Si le cookie est ok on login
+        $user = Cookie::loadUserFromCookie();
+        if($user instanceof User)
+        {
+            $this->loginFromCookie($user);
+            $this->redirect('Dashboard', 'Index');
+        }
     }
 
     public function executeIndexProfile()
     {
-        $actualUser = Application::getInstance()->getTwitchChannel();
-        $channelIdentifier = $this->getTwitchAPI()->getUserByUsername($actualUser);
-        $user = UserHydrator::getInstance()->getOrCreate($channelIdentifier['users'][0]);
-        $this->getHTTPResponse()->addTemplateVars(array(
-            'user' => $user
-        ));
+        
     }
 }

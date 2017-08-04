@@ -2,17 +2,19 @@
 <html>
 <head>
     <title>{{ title }}</title>
+    {#<!-- Material Design fonts -->#}
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    {#<!-- Bootstrap -->#}
     <link rel="stylesheet" href="/public/css/bootstrap/bootstrap.min.css">
-    {#<link rel="stylesheet" href="/public/css/bootstrap-theme.min.css">#}
+    {#<!-- Bootstrap Material Design -->#}
     <link rel="stylesheet" href="/public/css/bootstrap/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="/public/css/bootstrap/ripples.min.css">
+    {#Perso#}
     <link rel="stylesheet" href="/public/css/general.css">
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
 
     {% for css_file in css_files %}
         <link rel="stylesheet" href="/public/css/{{ css_file }}"/>
     {% endfor %}
-
-
-
-
 </head>

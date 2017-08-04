@@ -2,6 +2,8 @@
 
 namespace lib\Twitch;
 
+use lib\Application;
+use lib\Session;
 use lib\Twitch\Api\Authentication;
 use lib\Twitch\Api\Bits;
 use lib\Twitch\Api\ChannelFeed;
@@ -21,6 +23,7 @@ use lib\Twitch\Api\Videos;
 use lib\Twitch\Exceptions\ClientIdRequiredException;
 use lib\Twitch\Exceptions\InvalidTypeException;
 use lib\Twitch\Exceptions\UnsupportedApiVersionException;
+use modeles\User;
 
 class TwitchApi extends TwitchRequest
 {
@@ -126,7 +129,7 @@ class TwitchApi extends TwitchRequest
                 $options = array(
                     'client_id' => 'mkhfnaigie6r3v00odkhslexv31n28',
                     'client_secret' => 'csladm4tcrvh6v40zohtinqg6ho7te',
-                    'redirect_uri' => 'http://localhost/login'
+                    'redirect_uri' => 'http://localhost'
                 );
             }
             self::$instance = new TwitchApi($options);
@@ -370,5 +373,27 @@ class TwitchApi extends TwitchRequest
         }
 
         return false;
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function getViewerList(User $user)
+    {
+        $return = array();
+        $session = Application::getInstance()->getSession();
+        if(!$session->getAttribute(Session::LOGGED_IN))
+        {
+            return $return;
+        }
+        $url = sprintf('https://tmi.twitch.tv/group/user/%s/chatters', $user->getTwitchAccount());
+        $content = file_get_contents($url);
+        $json = json_decode($content, true);
+        if(isset($json['_links']))
+        {
+            return $json;
+        }
+        return $return;
     }
 }

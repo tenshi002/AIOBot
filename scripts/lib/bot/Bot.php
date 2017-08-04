@@ -13,7 +13,7 @@ use Monolog\Logger;
  * Date: 07/03/17
  * Time: 15:26
  */
-class Bot extends \Thread
+class Bot /* extends Task */
 {
     private static $instance = null;
     private static $botName;

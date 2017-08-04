@@ -1,5 +1,5 @@
 body {
-    background: url('../../img/bg-index.jpg') no-repeat center center fixed #000;
+    background: url('../img/bg-index.jpg') no-repeat center center fixed #000;
     opacity:1;
     -webkit-background-size: cover;
     -moz-background-size: cover;

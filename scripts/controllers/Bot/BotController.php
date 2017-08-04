@@ -20,7 +20,7 @@ class BotController extends Controller
         //A completer
         $bot = Bot::getInstance();
         $session = Application::getInstance()->getSession();
-        $user = $session->getUser();
+        $user = $session->getUserFromSession();
 
         $bot->joinChannel($user);
         $bot->writeMessage('/me a rejoint le salon wallah');

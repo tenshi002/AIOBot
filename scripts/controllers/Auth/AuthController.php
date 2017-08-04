@@ -8,9 +8,13 @@
 
 namespace controllers\Auth;
 
+use lib\Application;
 use lib\Auth\Auth;
 use lib\Controller;
+use lib\Cookie;
+use lib\HTTP\HTTPResponse;
 use lib\Twitch\Hydrator\UserHydrator;
+use modeles\User;
 
 class AuthController extends Controller
 {
@@ -29,11 +33,45 @@ class AuthController extends Controller
         {
             $this->redirectIndex();
         }
-        $this->getTwitchAPI()->setRedirectUri('http://localhost/login');
         $accessCredentials = $this->getTwitchAPI()->getAccessCredentials($code);
-        $userTwitch = $this->getTwitchAPI()->getAuthenticatedUser($accessCredentials['access_token']);
-        $user = UserHydrator::getInstance()->getOrCreate($userTwitch);
-        $this->login($user, $code, $accessCredentials);
-        $this->redirect('Dashboard', 'Index');
+        if(isset($accessCredentials['access_token']))
+        {
+            $userTwitch = $this->getTwitchAPI()->getAuthenticatedUser($accessCredentials['access_token']);
+            $user = UserHydrator::getInstance()->getOrCreate($userTwitch);
+            $user->setToken($accessCredentials['access_token']);
+            $this->login($user, $code, $accessCredentials);
+            Cookie::saveUserCookie($user);
+            $this->redirect('Dashboard', 'Index');
+        }
+        else
+        {
+
+        }
+
+    }
+
+    /**
+     * Permet au JS de savoir si la session PHP est toujour valide avant de lancer un appel AJAX au serveur
+     */
+    public function executeCheck()
+    {
+        $user = Application::getInstance()->getSession()->getUserFromSession();
+        if($user instanceof User)
+        {
+            $session = true;
+        }
+        else
+        {
+            $session = false;
+        }
+        $data = array('session' => $session);
+        $this->getHTTPResponse()->setContentType(HTTPResponse::CONTENT_TYPE_JSON);
+        $this->getHTTPResponse()->setContent($data);
+    }
+
+    public function executeLogout()
+    {
+        $this->logout();
+        $this->redirectIndex();
     }
 }

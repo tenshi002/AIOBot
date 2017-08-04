@@ -1,0 +1,22 @@
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">Liste des viewers (<strong>{{ viewerList.chatter_count }}</strong>)</h3>
+	</div>
+	<div class="panel-body">
+		{% for moderator in viewerList.chatters.moderators %}
+			<p><span class="label label-danger">Modérateur</span> {{ moderator }}</p>
+		{% endfor %}
+		{% for staff in viewerList.chatters.staff %}
+			<p><span class="label label-warning">Staff</span> {{ staff }}</p>
+		{% endfor %}
+		{% for admin in viewerList.chatters.admins %}
+			<p><span class="label label-warning">Administrateur</span> {{ admin }}</p>
+		{% endfor %}
+		{% for global_mod in viewerList.chatters.global_mods %}
+			<p><span class="label label-warning">Modérateur global</span> {{ global_mod }}</p>
+		{% endfor %}
+		{% for viewer in viewerList.chatters.viewers %}
+			<p><span class="label label-success">Viewer</span> {{ viewer }}</p>
+		{% endfor %}
+	</div>
+</div>

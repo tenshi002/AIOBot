@@ -11,6 +11,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 
 #RewriteRule ^(.+)?(.*)$ /index.php?tc=$1&$2 [QSA]
 RewriteRule ^login(.*)$ /?module=auth&action=login&$1 [QSA]
+RewriteRule ^logout$ /?module=auth&action=logout [QSA]
 
 #RewriteRule ^([A-Za-z]+)/([A-Za-z]+)$ /index.php?module=$1&controller=$1&action=$2 [QSA]
 #RewriteRule ^([A-Za-z]+)/([A-Za-z]+)?(.*)$ /index.php?module=$1&controller=$1&action=$2&$3 [QSA]

@@ -1,8 +1,103 @@
 {% extends baseTemplate %}
     
 {% block content %}
-    <h1>MON DASHBOARD {{ user.pseudo }}</h1>
-    <a href="/index.php?module=Bot&action=InitSocket" class="btn btn-twitch">DEMARRAY LE BOT</a><br/>
-    <a href="/index.php?module=Bot&action=JoinChannel" class="btn btn-twitch">ENVOYAY LE BOT</a>
+	<h1>{{ user.pseudo }} : <i>
+			<small>Configuration de AIOBot</small>
+		</i></h1>
+	<div class="row">
+		{#SIDEBAR GAUCHE#}
+		<div class="col-md-3">
+			<div class="well bs-component">
+				{#FORMULAIRE MODERATION#}
+				<form class="form-horizontal formModeration">
+					<fieldset>
+						<legend>Modération</legend>
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-10">
+								<div class="togglebutton">
+									<label>
+										<input type="checkbox" name="bot_filtre_link"
+											   {% if user.botAntiLink == true %}checked=""{% endif %}> Filtre des liens
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-10">
+								<div class="togglebutton">
+									<label>
+										<input type="checkbox" name="bot_clip_link"
+											   {% if user.botActiveClip == true %}checked=""{% endif %}> Autoriser les
+										liens de clips
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-10">
+								<div class="togglebutton">
+									<label>
+										<input type="checkbox" name="bot_maj_spam"
+											   {% if user.botAntiMaj == true %}checked=""{% endif %}> Anti-Spam
+										majuscules
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-10">
+								<div class="togglebutton">
+									<label>
+										<input type="checkbox" name="bot_emote_spam"
+											   {% if user.botAntiSpam == true %}checked=""{% endif %}> Anti-Spam emotes
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="text-right">
+								<input type="button" class="btn btn-primary btn-success saveModeration"
+									   value="Sauvegarder"/>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+				{#FIN FORMULAIRE MODERATION#}
+			</div>
+		</div>
+		{#CONTENU CENTRAL#}
+		<div class="col-md-6">
+			<div class="well bs-component">
+
+			</div>
+		</div>
+		{#SIDEBAR DROITE#}
+		<div class="col-md-3">
+			<div class="row">
+				<p><a href="/index.php?module=Bot&action=InitSocket" class="btn btn-success btn-fab btn-dashboard"><i
+								class="material-icons">play_arrow</i></a> Initialiser le bot</p>
+				<p><a href="/index.php?module=Bot&action=JoinChannel" class="btn btn-info btn-fab btn-dashboard"><i
+								class="material-icons">airplay</i></a> Envoyer le bot</p>
+				<p><a href="/logout" class="btn btn-fab btn-danger btn-dashboard"><i class="material-icons">power_settings_new</i></a>
+					Se déconnecter</p>
+			</div>
+			<div class="row">
+				<div class="viewer-list">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">Liste des viewers (...)</h3>
+						</div>
+						<div class="panel-body">
+							<div class="text-center">
+								<img src="/public/img/loader.gif" alt="ptdr" width="40" height="40"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 {% endblock %}
