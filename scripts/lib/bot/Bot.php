@@ -195,6 +195,14 @@ class Bot extends PhpTask
 //        $this->writeMessage('HI !');
     }
 
+    /**
+     * On ferme le socket
+     */
+    public function closeSocket()
+    {
+        fclose($this->socket);
+    }
+
     public static function getBotName()
     {
         return self::$botName;

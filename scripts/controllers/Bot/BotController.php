@@ -14,6 +14,11 @@ class BotController extends Controller
         Bot::getInstance()->run();
     }
 
+    public function executeCloseSocket()
+    {
+        Bot::getInstance()->closeSocket();
+    }
+
     public function executeJoinChannel()
     {
         //A completer
@@ -23,6 +28,18 @@ class BotController extends Controller
 
         $bot->joinChannel($user);
         $bot->writeMessage('/me a rejoint le salon wallah');
+
+        $this->redirect('Dashboard', 'Index');
+    }
+
+    public function executeLeaveChannel()
+    {
+        $bot = Bot::getInstance();
+        $session = Application::getInstance()->getSession();
+        $user = $session->getUserFromSession();
+
+        $bot->writeMessage('Bye bye les loosers Kappa ');
+        $bot->leaveChannel($user);
 
         $this->redirect('Dashboard', 'Index');
     }
