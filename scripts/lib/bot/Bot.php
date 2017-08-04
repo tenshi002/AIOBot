@@ -3,6 +3,7 @@
 namespace lib\bot;
 
 use lib\Application;
+use lib\Async\PhpTask;
 use modeles\User;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -13,7 +14,7 @@ use Monolog\Logger;
  * Date: 07/03/17
  * Time: 15:26
  */
-class Bot /* extends Task */
+class Bot extends PhpTask
 {
     private static $instance = null;
     private static $botName;
@@ -53,8 +54,10 @@ class Bot /* extends Task */
         $this->writeMessage('HI !');
     }
 
-    private function __construct()
+    public function __construct($statusFilename = null)
     {
+        parent::__construct($statusFilename);
+
         $this->application = Application::getInstance();
         $this->serveurHostName = $this->application->getConfigurateur('irctwitch.serveurHostName');
         $this->port = $this->application->getConfigurateur('irctwitch.port');
@@ -267,6 +270,4 @@ class Bot /* extends Task */
     {
         return $this->pathLogger;
     }
-
-
 }
