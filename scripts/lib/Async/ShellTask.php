@@ -22,7 +22,7 @@ class ShellTask extends Task
         parent::__construct($statusFileName);
         if (empty($command))
         {
-            throw new Exception();
+            throw new Exception('Commande non définie !');
         }
         $this->command = $command;
         $this->arguments = $arguments;

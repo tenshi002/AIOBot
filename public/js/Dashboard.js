@@ -1,6 +1,10 @@
 $('body').on('click', '.saveModeration', function () {
     Util.saveConfig('/?module=Dashboard&action=saveModeration', 'POST', $(this).closest('form').serialize());
 });
+
+$('body').on('click', '.initBot', function() {
+    Util.ajax('/index.php?module=Bot&action=InitSocket', 'GET', null, null);
+});
 var DashBoard = {
     refreshViewerList: function () {
         $.ajax({
