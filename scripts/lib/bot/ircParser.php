@@ -81,15 +81,15 @@ class ircParser
 
     private function moderation(User $viewerName, $text)
     {
-        /** @var $streamerName User*/
-        $streamerName = $this->userRepository->findOneBy(array('twitchAccount', $this->session->get('twitchAccount')));
+        /** @var $streamer User*/
+        $streamer = $this->userRepository->findOneBy(array('twitchAccount', $this->session->get('twitchAccount')));
         /** @var $viewer User*/
         $viewer = $this->userRepository->findOneBy(array('twitchAccount', $viewerName));
         // Ce n'est pas une commande mais juste du texte
         // 1 - on modère le texte :
-        if($streamerName->getBotAntiLink() && !$viewer->getPermitLink())
+        if($streamer->getBotAntiLink() && !$viewer->getPermitLink())
         {
-            $status = $this->moderation->antiLink($streamerName, $text);
+            $status = $this->moderation->antiLink($streamer, $text);
             if($status)
             {
                 //on time out le viewer
@@ -102,9 +102,20 @@ class ircParser
         }
 
         // 2 - filtre anti-majuscule
-        if($streamerName->getBotAntiSpam() === 1)
+        if($streamer->getBotAntiSpam() === 1)
         {
             $status = $this->moderation->antiSpam($text);
+            if($status)
+            {
+                //on time out le viewer
+                Bot::getInstance()->timeoutViewer($viewer->getTwitchAccount());
+            }
+        }
+
+        // 3 - mots interdit
+        if(!is_null($streamer->getBotFiltreWords()) && $streamer->getBotFiltreWords() !== '')
+        {
+            $status = $this->moderation->wordsCensured($streamer, $text);
             if($status)
             {
                 //on time out le viewer
