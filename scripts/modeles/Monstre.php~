@@ -156,3 +156,4 @@ class Monstre
         return $this->coffre;
     }
 }
+

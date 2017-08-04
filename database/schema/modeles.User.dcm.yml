@@ -39,16 +39,20 @@ modeles\User:
       type: string
     botAntiSpam:
       type: boolean
-      default: 0
+      default: false
+      nullable: false
     botAntiMaj:
       type: boolean
-      default: 0
+      default: false
+      nullable: false
     botAntiLink:
       type: boolean
-      default: 0
+      default: false
+      nullable: false
     botActiveClip:
       type: boolean
-      default: 0
+      default: false
+      nullable: false
     botFiltreWords:
       type: text
       nullable: true

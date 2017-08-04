@@ -50,8 +50,6 @@ class Bot extends PhpTask
             return;
         }
         $this->initSocket();
-        $this->iniConnexion();
-        $this->writeMessage('HI !');
     }
 
     public function __construct($statusFilename = null)
@@ -192,6 +190,9 @@ class Bot extends PhpTask
 
         //On active les droits de départ pour les membres twitch
         fwrite($this->getSocket(), "CAP REQ :twitch.tv/membership\r\n");
+
+        $this->iniConnexion();
+//        $this->writeMessage('HI !');
     }
 
     public static function getBotName()

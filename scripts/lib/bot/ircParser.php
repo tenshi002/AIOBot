@@ -75,11 +75,11 @@ class ircParser
         //</editor-fold>
 
         //
-        $this->moderation($viewerName, $text);
+//        $this->moderation($viewerName, $text);
 
     }
 
-    private function moderation(User $viewerName, $text)
+    private function moderation($viewerName, $text)
     {
         /** @var $streamer User*/
         $streamer = $this->userRepository->findOneBy(array('twitchAccount', $this->session->get('twitchAccount')));
