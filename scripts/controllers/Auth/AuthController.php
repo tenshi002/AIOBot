@@ -45,7 +45,7 @@ class AuthController extends Controller
         }
         else
         {
-
+            $this->redirect('Index', 'Index');
         }
 
     }
