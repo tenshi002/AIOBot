@@ -108,6 +108,11 @@ class User
     private $botFiltreWords;
 
     /**
+     * @var string
+     */
+    private $token;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $quetes;
@@ -607,6 +612,30 @@ class User
     }
 
     /**
+     * Set token
+     *
+     * @param string $token
+     *
+     * @return User
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
      * Add quete
      *
      * @param \modeles\Quest $quete
@@ -673,33 +702,5 @@ class User
     {
         return $this->roles;
     }
-    /**
-     * @var string
-     */
-    private $token;
-
-
-    /**
-     * Set token
-     *
-     * @param string $token
-     *
-     * @return User
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get token
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
 }
+

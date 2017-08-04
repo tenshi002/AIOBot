@@ -52,4 +52,3 @@ class Texte
         return $this->text;
     }
 }
-

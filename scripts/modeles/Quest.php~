@@ -197,4 +197,3 @@ class Quest
         return $this->user;
     }
 }
-
